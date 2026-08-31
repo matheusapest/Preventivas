@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Configuration\Preventive;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePreventiveTypeRequest;
 use App\Http\Requests\UpdatePreventiveTypeRequest;
 use App\Models\PreventiveType;

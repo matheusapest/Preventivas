@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Preventive;
 
-
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePreventiveRequest;
 use App\Http\Requests\StorePreventiveContinuationRequest;
+
 use App\Services\Preventive\CreatePreventiveContinuationService;
 use App\Models\Branch;
 use App\Models\Preventive;

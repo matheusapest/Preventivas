@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Preventive;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePreventiveActivityResponseRequest;
 use App\Models\Branch;
 use App\Models\Preventive;

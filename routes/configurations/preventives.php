@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\PreventiveController;
+use App\Http\Controllers\Preventive\PreventiveController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])

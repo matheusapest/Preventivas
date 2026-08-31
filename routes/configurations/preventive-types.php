@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\PreventiveTypeController;
+use App\Http\Controllers\Configuration\Preventive\PreventiveTypeController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'role:admin'])

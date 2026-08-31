@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\PreventiveProfileController;
-use App\Http\Controllers\PreventiveProfileRuleController;
+use App\Http\Controllers\Configuration\Preventive\PreventiveProfileController;
+use App\Http\Controllers\Configuration\Preventive\PreventiveProfileRuleController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'role:admin'])

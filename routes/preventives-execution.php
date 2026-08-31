@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\PreventiveExecutionController;
+use App\Http\Controllers\Preventive\PreventiveExecutionController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {

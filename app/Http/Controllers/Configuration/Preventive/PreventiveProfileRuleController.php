@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Configuration\Preventive;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePreventiveProfileRuleRequest;
 use App\Http\Requests\UpdatePreventiveProfileRuleRequest;
 use App\Http\Requests\StorePreventiveProfileSpecificRuleRequest;
