@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Equipment;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;

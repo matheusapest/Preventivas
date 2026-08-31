@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\MaintenanceOrderStatus;
 use App\Enums\MaintenanceShipmentStatus;
-use App\Models\Equipment;
+use App\Models\Equipment\Equipment;
 use App\Models\Maintenance\MaintenanceOrder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

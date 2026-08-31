@@ -16,7 +16,7 @@
             </x-slot:breadcrumb>
 
             <x-slot:actions>
-                @can('create', App\Models\EquipmentModel::class)
+                @can('create', App\Models\Equipment\EquipmentModel::class)
                     <div class="w-full sm:w-auto">
                         <x-buttons.primary
                             :href="route('modelos-equipamentos.create')"

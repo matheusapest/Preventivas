@@ -3,7 +3,7 @@
 namespace App\Models\Maintenance;
 
 use App\Enums\MaintenanceOrderStatus;
-use App\Models\Equipment;
+use App\Models\Equipment\Equipment;
 use App\Models\Maintenance\MaintenanceShipment;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;

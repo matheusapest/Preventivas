@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Enums\TransferStatus;
-use App\Models\Equipment;
+use App\Models\Equipment\Equipment;
 use App\Models\Transfer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

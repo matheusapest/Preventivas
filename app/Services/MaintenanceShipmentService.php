@@ -7,7 +7,7 @@ namespace App\Services;
 use App\Enums\MaintenanceOrderStatus;
 use App\Enums\MaintenanceShipmentStatus;
 use App\Enums\OperationalStatus;
-use App\Models\Equipment;
+use App\Models\Equipment\Equipment;
 use App\Models\Maintenance\MaintenanceOrder;
 use App\Models\Maintenance\MaintenanceShipment;
 use Carbon\Carbon;

@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEquipmentModelRequest;
 use App\Http\Requests\UpdateEquipmentModelRequest;
 use App\Models\Category;
-use App\Models\EquipmentModel;
-use App\Models\Manufacturer;
+use App\Models\Equipment\EquipmentModel;
+use App\Models\Equipment\Manufacturer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 

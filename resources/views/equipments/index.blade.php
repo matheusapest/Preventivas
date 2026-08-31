@@ -13,7 +13,7 @@
             </x-slot:breadcrumb>
 
             <x-slot:actions>
-                @can('create', App\Models\Equipment::class)
+                @can('create', App\Models\Equipment\Equipment::class)
                     <div class="w-full sm:w-auto">
                         <x-buttons.primary :href="route('equipamentos.create')" class="w-full justify-center sm:w-auto">
                             Novo Equipamento

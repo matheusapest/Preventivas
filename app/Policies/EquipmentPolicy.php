@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Equipment;
+use App\Models\Equipment\Equipment;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
