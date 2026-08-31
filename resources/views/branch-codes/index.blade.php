@@ -25,7 +25,7 @@
 
         <x-slot:actions>
             <div class="flex flex-wrap gap-2 items-center">
-                @can('create', App\Models\BranchCode::class)
+                @can('create', App\Models\Organization\BranchCode::class)
                     <x-buttons.secondary :href="route('filiais.index')">
                         <svg class="w-4 h-4 mr-1.5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>

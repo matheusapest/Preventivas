@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\CompanyType;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
-use App\Models\Company;
+use App\Models\Organization\Company;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 

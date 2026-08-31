@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEquipmentRequest;
 use App\Http\Requests\UpdateEquipmentRequest;
-use App\Models\Branch;
+use App\Models\Organization\Branch;
 use App\Models\Equipment\Equipment;
 use App\Models\Equipment\EquipmentModel;
 use App\Models\Transfer;

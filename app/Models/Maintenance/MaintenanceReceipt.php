@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Maintenance;
 
-use App\Models\Branch;
+use App\Models\Organization\Branch;
 use App\Models\Maintenance\MaintenanceShipment;
 use App\Models\Maintenance\MaintenanceValidation;
 use App\Models\User;

@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Preventive;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Preventive\StorePreventiveActivityResponseRequest;
 use App\Http\Requests\Preventive\StorePreventiveManualFinalizeRequest;
-use App\Models\Branch;
+use App\Models\Organization\Branch;
 use App\Models\Preventive\Preventive;
 use App\Models\Preventive\PreventiveCycleUnit;
 use App\Models\Configuration\Preventive\PreventiveType;

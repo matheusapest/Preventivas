@@ -6,9 +6,9 @@ use App\Enums\BranchType;
 use App\Enums\State;
 use App\Http\Requests\StoreBranchRequest;
 use App\Http\Requests\UpdateBranchRequest;
-use App\Models\Branch;
-use App\Models\BranchCode;
-use App\Models\Company;
+use App\Models\Organization\Branch;
+use App\Models\Organization\BranchCode;
+use App\Models\Organization\Company;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 

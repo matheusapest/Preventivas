@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOperationalUnitRequest;
 use App\Http\Requests\UpdateOperationalUnitRequest;
-use App\Models\Branch;
+use App\Models\Organization\Branch;
 use App\Models\Configuration\Operational\OperationalProfile;
 use App\Models\Configuration\Operational\OperationalUnit;
 use App\Models\Configuration\Operational\UnitType;

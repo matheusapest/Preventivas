@@ -2,7 +2,7 @@
 
 namespace App\Models\Equipment;
 
-use App\Models\Branch;
+use App\Models\Organization\Branch;
 use App\Models\Equipment\EquipmentModel;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;

@@ -9,7 +9,7 @@ use App\Http\Requests\Preventive\StorePreventiveRequest;
 use App\Http\Requests\Preventive\StorePreventiveContinuationRequest;
 
 use App\Services\Preventive\Continuation\CreatePreventiveContinuationService;
-use App\Models\Branch;
+use App\Models\Organization\Branch;
 use App\Models\Preventive\Preventive;
 use App\Models\Configuration\Preventive\PreventiveProfile;
 use App\Models\Configuration\Preventive\PreventiveType;

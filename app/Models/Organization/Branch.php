@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Organization;
 
 use App\Models\Configuration\Operational\OperationalUnit;
+use App\Models\Configuration\Operational\UnitType;
+use App\Models\Organization\BranchCode;
+use App\Models\Organization\Company;
 
 use App\Enums\BranchType;
 use App\Enums\State;

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBranchCodeRequest;
 use App\Http\Requests\UpdateBranchCodeRequest;
-use App\Models\BranchCode;
+use App\Models\Organization\BranchCode;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 

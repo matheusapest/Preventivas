@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreMaintenanceReceiptRequest;
 use App\Http\Requests\StoreMultipleMaintenanceReceiptRequest;
 use App\Http\Requests\UpdateMaintenanceReceiptRequest;
-use App\Models\Branch;
+use App\Models\Organization\Branch;
 use App\Models\Maintenance\MaintenanceReceipt;
 use App\Models\Maintenance\MaintenanceShipment;
 use App\Services\MaintenanceReceiptService;

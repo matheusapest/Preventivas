@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\CompanyType;
-use App\Models\Company;
+use App\Models\Organization\Company;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;

@@ -15,13 +15,13 @@
 
             <x-slot:actions>
                 <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
-                    @can('create', App\Models\BranchCode::class)
+                    @can('create', App\Models\Organization\BranchCode::class)
                         <x-buttons.secondary :href="route('codigos-filiais.index')" class="w-full justify-center sm:w-auto">
                             Gerenciar Números de Filiais
                         </x-buttons.secondary>
                     @endcan
 
-                    @can('create', App\Models\Branch::class)
+                    @can('create', App\Models\Organization\Branch::class)
                         <x-buttons.primary :href="route('filiais.create')" class="w-full justify-center sm:w-auto">
                             Nova Filial
                         </x-buttons.primary>

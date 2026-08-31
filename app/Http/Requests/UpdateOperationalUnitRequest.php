@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Branch;
+use App\Models\Organization\Branch;
 use App\Models\Configuration\Operational\OperationalProfile;
 use App\Models\Configuration\Operational\UnitType;
 use Illuminate\Foundation\Http\FormRequest;

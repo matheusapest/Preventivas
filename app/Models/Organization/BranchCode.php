@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Organization;
+
+use App\Models\Organization\Branch;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;

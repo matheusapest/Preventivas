@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Preventive;
 
 use App\Enums\PreventiveProfileRuleType;
-use App\Models\Branch;
+use App\Models\Organization\Branch;
 use App\Models\Configuration\Operational\OperationalUnit;
 use App\Models\Configuration\Preventive\PreventiveProfile;
 use App\Models\Configuration\Preventive\PreventiveProfileBranch;

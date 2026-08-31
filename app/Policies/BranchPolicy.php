@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Branch;
+use App\Models\Organization\Branch;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 

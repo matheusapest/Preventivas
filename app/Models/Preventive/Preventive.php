@@ -3,7 +3,7 @@
 namespace App\Models\Preventive;
 
 use App\Enums\StatusPreventiveEnum;
-use App\Models\Branch;
+use App\Models\Organization\Branch;
 use App\Models\Configuration\Preventive\PreventiveProfile;
 use App\Models\Configuration\Preventive\PreventiveType;
 use App\Models\User;

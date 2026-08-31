@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Preventive\Configuration;
 
-use App\Models\Branch;
+use App\Models\Organization\Branch;
 use App\Models\Configuration\Preventive\PreventiveProfile;
 use App\Models\Configuration\Preventive\PreventiveType;
 use Illuminate\Database\Eloquent\Collection;

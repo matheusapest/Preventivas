@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Enums\MaintenanceOrderStatus;
 use App\Enums\MaintenanceShipmentStatus;
-use App\Models\Branch;
-use App\Models\Company;
+use App\Models\Organization\Branch;
+use App\Models\Organization\Company;
 use App\Models\Maintenance\MaintenanceOrder;
 use App\Models\Maintenance\MaintenanceShipment;
 use Barryvdh\DomPDF\Facade\Pdf;
