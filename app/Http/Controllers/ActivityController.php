@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateActivityRequest;
 use App\Models\Configuration\Preventive\Activity;
 use App\Models\Configuration\Preventive\ActivityCategory;
 use App\Models\Configuration\Preventive\PreventiveType;
-use App\Services\ActivityService;
+use App\Services\Configuration\Preventive\ActivityService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 

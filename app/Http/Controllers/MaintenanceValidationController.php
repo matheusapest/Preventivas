@@ -8,7 +8,7 @@ use App\Enums\MaintenanceValidationStatus;
 use App\Http\Requests\StoreMaintenanceValidationRequest;
 use App\Models\Maintenance\MaintenanceReceipt;
 use App\Models\Maintenance\MaintenanceValidation;
-use App\Services\MaintenanceValidationService;
+use App\Services\Maintenance\MaintenanceValidationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 

@@ -12,7 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Http\Requests\StoreMultipleOperationalUnitRequest;
-use App\Services\OperationalUnitService;
+use App\Services\Configuration\Operational\OperationalUnitService;
 
 class OperationalUnitController extends Controller
 {

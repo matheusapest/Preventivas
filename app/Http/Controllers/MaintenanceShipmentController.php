@@ -11,7 +11,7 @@ use App\Models\Organization\Branch;
 use App\Models\Organization\Company;
 use App\Models\Maintenance\MaintenanceOrder;
 use App\Models\Maintenance\MaintenanceShipment;
-use App\Services\MaintenanceShipmentService;
+use App\Services\Maintenance\MaintenanceShipmentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use RuntimeException;

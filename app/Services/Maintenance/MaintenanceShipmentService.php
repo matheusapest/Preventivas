@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace App\Services\Maintenance;
 
 use App\Enums\MaintenanceOrderStatus;
 use App\Enums\MaintenanceShipmentStatus;

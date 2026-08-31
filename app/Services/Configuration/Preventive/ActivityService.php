@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Configuration\Preventive;
 
 use App\Models\Configuration\Preventive\Activity;
 use App\Models\Configuration\Preventive\PreventiveProfileRule;

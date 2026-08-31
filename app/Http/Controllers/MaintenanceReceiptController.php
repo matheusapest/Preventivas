@@ -16,7 +16,7 @@ use App\Http\Requests\UpdateMaintenanceReceiptRequest;
 use App\Models\Organization\Branch;
 use App\Models\Maintenance\MaintenanceReceipt;
 use App\Models\Maintenance\MaintenanceShipment;
-use App\Services\MaintenanceReceiptService;
+use App\Services\Maintenance\MaintenanceReceiptService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
