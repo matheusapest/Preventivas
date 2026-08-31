@@ -8,7 +8,7 @@ use App\Http\Requests\ReceiveTransferRequest;
 use App\Http\Requests\StoreTransferRequest;
 use App\Models\Organization\Branch;
 use App\Models\Equipment\Transfer;
-use App\Services\TransferService;
+use App\Services\Equipment\TransferService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
