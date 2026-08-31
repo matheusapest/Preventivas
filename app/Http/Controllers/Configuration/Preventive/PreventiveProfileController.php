@@ -10,7 +10,7 @@ use App\Http\Requests\Configuration\Preventive\StorePreventiveProfileRequest;
 use App\Http\Requests\Configuration\Preventive\UpdatePreventiveProfileRequest;
 use App\Models\Configuration\Preventive\PreventiveProfile;
 use App\Models\Configuration\Preventive\PreventiveType;
-use App\Services\PreventiveProfileService;
+use App\Services\Preventive\Configuration\PreventiveProfileService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;

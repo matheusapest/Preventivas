@@ -13,10 +13,10 @@ use App\Models\Configuration\Preventive\PreventiveProfile;
 use App\Models\Configuration\Preventive\PreventiveProfileRule;
 use App\Models\Configuration\Preventive\PreventiveProfileBranch;
 use App\Enums\PreventiveProfileRuleType;
-use App\Services\PreventiveProfileRuleService;
+use App\Services\Preventive\Configuration\ProfileRule\PreventiveProfileRuleService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use App\Services\PreventiveProfileRule\PreventiveProfileRuleQueryService;
+use App\Services\Preventive\Configuration\ProfileRule\PreventiveProfileRuleQueryService;
 use Illuminate\Http\Request;
 
 class PreventiveProfileRuleController extends Controller
