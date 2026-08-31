@@ -2,7 +2,7 @@
 
 namespace App\Models\Preventive;
 
-use App\Models\OperationalProfile;
+use App\Models\Configuration\Operational\OperationalProfile;
 use App\Models\OperationalUnit;
 use App\Models\UnitType;
 

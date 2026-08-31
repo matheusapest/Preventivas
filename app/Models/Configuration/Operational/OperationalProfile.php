@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Configuration\Operational;
 
+use App\Models\UnitType;
+use App\Models\Configuration\Operational\OperationalProfileCategory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

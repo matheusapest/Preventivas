@@ -16,7 +16,7 @@
             </x-slot:breadcrumb>
 
             <x-slot:actions>
-                @can('create', App\Models\OperationalProfile::class)
+                @can('create', App\Models\Configuration\Operational\OperationalProfile::class)
                     <div class="w-full sm:w-auto">
                         <x-buttons.primary
                             :href="route('configuracoes.perfis-operacionais.create')"

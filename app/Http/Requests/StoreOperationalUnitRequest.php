@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Branch;
-use App\Models\OperationalProfile;
+use App\Models\Configuration\Operational\OperationalProfile;
 use App\Models\UnitType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
