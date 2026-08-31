@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Models\PreventiveProfile;
-use App\Models\PreventiveProfileRule;
+use App\Models\Configuration\Preventive\PreventiveProfile;
+use App\Models\Configuration\Preventive\PreventiveProfileRule;
 use Illuminate\Validation\ValidationException;
 
 class PreventiveProfileRuleValidator

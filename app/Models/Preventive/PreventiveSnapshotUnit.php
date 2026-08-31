@@ -1,6 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Preventive;
+
+use App\Models\OperationalProfile;
+use App\Models\OperationalUnit;
+use App\Models\UnitType;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

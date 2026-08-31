@@ -9,9 +9,9 @@ use App\Http\Requests\Configuration\Preventive\StorePreventiveProfileRuleRequest
 use App\Http\Requests\Configuration\Preventive\UpdatePreventiveProfileRuleRequest;
 use App\Http\Requests\Configuration\Preventive\StorePreventiveProfileSpecificRuleRequest;
 use App\Http\Requests\Configuration\Preventive\UpdatePreventiveProfileSpecificRuleRequest;
-use App\Models\PreventiveProfile;
-use App\Models\PreventiveProfileRule;
-use App\Models\PreventiveProfileBranch;
+use App\Models\Configuration\Preventive\PreventiveProfile;
+use App\Models\Configuration\Preventive\PreventiveProfileRule;
+use App\Models\Configuration\Preventive\PreventiveProfileBranch;
 use App\Enums\PreventiveProfileRuleType;
 use App\Services\PreventiveProfileRuleService;
 use Illuminate\Http\RedirectResponse;

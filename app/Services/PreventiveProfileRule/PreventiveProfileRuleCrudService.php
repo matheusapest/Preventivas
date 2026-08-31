@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Services\PreventiveProfileRule;
 
 use App\Enums\PreventiveProfileRuleType;
-use App\Models\PreventiveProfile;
-use App\Models\PreventiveProfileBranch;
-use App\Models\PreventiveProfileRule;
+use App\Models\Configuration\Preventive\PreventiveProfile;
+use App\Models\Configuration\Preventive\PreventiveProfileBranch;
+use App\Models\Configuration\Preventive\PreventiveProfileRule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 

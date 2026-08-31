@@ -10,9 +10,9 @@ use App\Http\Requests\Preventive\StorePreventiveContinuationRequest;
 
 use App\Services\Preventive\CreatePreventiveContinuationService;
 use App\Models\Branch;
-use App\Models\Preventive;
-use App\Models\PreventiveProfile;
-use App\Models\PreventiveType;
+use App\Models\Preventive\Preventive;
+use App\Models\Configuration\Preventive\PreventiveProfile;
+use App\Models\Configuration\Preventive\PreventiveType;
 use App\Models\User;
 use App\Services\Preventive\CreatePreventiveService;
 use App\Services\Preventive\ResolvePreventiveConfigurationService;

@@ -2,7 +2,7 @@
 
 namespace App\Policies\Preventive;
 
-use App\Models\Preventive;
+use App\Models\Preventive\Preventive;
 use App\Models\User;
 
 class PreventiveExecutionPolicy

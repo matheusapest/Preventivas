@@ -1,6 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Preventive;
+
+use App\Models\Branch;
+use App\Models\Configuration\Preventive\PreventiveProfile;
+use App\Models\Configuration\Preventive\PreventiveType;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

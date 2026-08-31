@@ -30,7 +30,7 @@
 
                     {{-- Novo Tipo de Preventiva --}}
 
-                    @can('create', App\Models\PreventiveType::class)
+                    @can('create', App\Models\Configuration\Preventive\PreventiveType::class)
                         <x-buttons.primary :href="route('configuracoes.tipos-preventivas.create')" class="w-full justify-center sm:w-auto">
                             Novo Tipo de Preventiva
                         </x-buttons.primary>

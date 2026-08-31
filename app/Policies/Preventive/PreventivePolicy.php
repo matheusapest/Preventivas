@@ -4,7 +4,7 @@ namespace App\Policies\Preventive;
 
 use App\Enums\CycleReviewStatusEnum;
 use App\Enums\StatusPreventiveEnum;
-use App\Models\Preventive;
+use App\Models\Preventive\Preventive;
 use App\Models\User;
 
 class PreventivePolicy

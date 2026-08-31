@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services\Preventive;
 
-use App\Models\Preventive;
-use App\Models\PreventiveActivityResponse;
-use App\Models\PreventiveCycle;
-use App\Models\PreventiveCycleUnit;
-use App\Models\PreventiveSnapshotRuleActivity;
+use App\Models\Preventive\Preventive;
+use App\Models\Preventive\PreventiveActivityResponse;
+use App\Models\Preventive\PreventiveCycle;
+use App\Models\Preventive\PreventiveCycleUnit;
+use App\Models\Preventive\PreventiveSnapshotRuleActivity;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 

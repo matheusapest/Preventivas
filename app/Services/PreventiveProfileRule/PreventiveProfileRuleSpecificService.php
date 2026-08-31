@@ -7,8 +7,8 @@ namespace App\Services\PreventiveProfileRule;
 use App\Enums\PreventiveProfileRuleType;
 use App\Models\Activity;
 use App\Models\OperationalUnit;
-use App\Models\PreventiveProfile;
-use App\Models\PreventiveProfileRule;
+use App\Models\Configuration\Preventive\PreventiveProfile;
+use App\Models\Configuration\Preventive\PreventiveProfileRule;
 use Illuminate\Support\Facades\DB;
 
 /**

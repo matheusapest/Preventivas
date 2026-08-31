@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Preventive;
 
 use App\Enums\StatusPreventiveEnum;
-use App\Models\Preventive;
+use App\Models\Preventive\Preventive;
 use Illuminate\Database\Eloquent\Builder;
 
 class GetPreventiveExecutionService

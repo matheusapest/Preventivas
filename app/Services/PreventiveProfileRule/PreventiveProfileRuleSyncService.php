@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\PreventiveProfileRule;
 
-use App\Models\PreventiveProfileRule;
+use App\Models\Configuration\Preventive\PreventiveProfileRule;
 
 /**
  * Sincronização de unidades e atividades vinculadas a uma regra.

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Services\Preventive;
 
 use App\Enums\StatusPreventiveEnum;
-use App\Models\Preventive;
-use App\Models\PreventiveProfile;
-use App\Models\PreventiveProfileBranch;
+use App\Models\Preventive\Preventive;
+use App\Models\Configuration\Preventive\PreventiveProfile;
+use App\Models\Configuration\Preventive\PreventiveProfileBranch;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Preventive;
 
 use App\Enums\ActivityKind;
-use App\Models\PreventiveSnapshotRuleActivity;
+use App\Models\Preventive\PreventiveSnapshotRuleActivity;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

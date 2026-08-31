@@ -2,7 +2,7 @@
 
 namespace App\Policies\Configuration\Preventive;
 
-use App\Models\PreventiveType;
+use App\Models\Configuration\Preventive\PreventiveType;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 

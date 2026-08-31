@@ -8,8 +8,8 @@ use App\Enums\CycleReviewStatusEnum;
 use App\Enums\StatusCycleEnum;
 use App\Enums\StatusPreventiveEnum;
 use App\Models\Branch;
-use App\Models\Preventive;
-use App\Models\PreventiveType;
+use App\Models\Preventive\Preventive;
+use App\Models\Configuration\Preventive\PreventiveType;
 use Illuminate\Database\Eloquent\Builder;
 
 class GetPreventivesService

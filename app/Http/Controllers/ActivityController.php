@@ -7,7 +7,7 @@ use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
 use App\Models\Activity;
 use App\Models\ActivityCategory;
-use App\Models\PreventiveType;
+use App\Models\Configuration\Preventive\PreventiveType;
 use App\Services\ActivityService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;

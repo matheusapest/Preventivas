@@ -8,8 +8,8 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\Configuration\Preventive\StorePreventiveProfileRequest;
 use App\Http\Requests\Configuration\Preventive\UpdatePreventiveProfileRequest;
-use App\Models\PreventiveProfile;
-use App\Models\PreventiveType;
+use App\Models\Configuration\Preventive\PreventiveProfile;
+use App\Models\Configuration\Preventive\PreventiveType;
 use App\Services\PreventiveProfileService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;

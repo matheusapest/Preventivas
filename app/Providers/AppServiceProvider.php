@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Models\Preventive;
-use App\Models\PreventiveProfile;
-use App\Models\PreventiveType;
+use App\Models\Preventive\Preventive;
+use App\Models\Configuration\Preventive\PreventiveProfile;
+use App\Models\Configuration\Preventive\PreventiveType;
 use App\Policies\Preventive\PreventivePolicy;
 use App\Policies\Configuration\Preventive\PreventiveProfilePolicy;
 use App\Policies\Configuration\Preventive\PreventiveTypePolicy;

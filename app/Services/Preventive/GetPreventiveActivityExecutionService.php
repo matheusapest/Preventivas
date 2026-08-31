@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Services\Preventive;
 
 use App\Enums\ActivityKind;
-use App\Models\Preventive;
-use App\Models\PreventiveCycleUnit;
+use App\Models\Preventive\Preventive;
+use App\Models\Preventive\PreventiveCycleUnit;
 use Illuminate\Validation\ValidationException;
 
 class GetPreventiveActivityExecutionService

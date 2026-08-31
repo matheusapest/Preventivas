@@ -1,8 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Preventive;
 
 use App\Enums\StatusPreventiveEnum;
+use App\Models\Branch;
+use App\Models\Configuration\Preventive\PreventiveProfile;
+use App\Models\Configuration\Preventive\PreventiveType;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

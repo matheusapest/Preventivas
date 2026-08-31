@@ -6,8 +6,8 @@ namespace App\Services\PreventiveProfileRule;
 
 use App\Models\OperationalUnit;
 use App\Enums\PreventiveProfileRuleType;
-use App\Models\PreventiveProfile;
-use App\Models\PreventiveProfileRule;
+use App\Models\Configuration\Preventive\PreventiveProfile;
+use App\Models\Configuration\Preventive\PreventiveProfileRule;
 use App\Models\Activity;
 use Illuminate\Validation\ValidationException;
 

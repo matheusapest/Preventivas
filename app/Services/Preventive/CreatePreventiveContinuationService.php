@@ -7,9 +7,9 @@ namespace App\Services\Preventive;
 use App\Enums\CycleReviewStatusEnum;
 use App\Enums\StatusCycleEnum;
 use App\Enums\StatusPreventiveEnum;
-use App\Models\Preventive;
-use App\Models\PreventiveCycle;
-use App\Models\PreventiveSnapshot;
+use App\Models\Preventive\Preventive;
+use App\Models\Preventive\PreventiveCycle;
+use App\Models\Preventive\PreventiveSnapshot;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 

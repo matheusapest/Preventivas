@@ -20,7 +20,7 @@
 
             <x-slot:actions>
 
-                @can('create', App\Models\PreventiveProfile::class)
+                @can('create', App\Models\Configuration\Preventive\PreventiveProfile::class)
 
                     <div class="w-full sm:w-auto">
 

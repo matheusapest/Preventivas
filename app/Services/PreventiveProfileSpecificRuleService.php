@@ -6,9 +6,9 @@ namespace App\Services;
 
 use App\Models\Activity;
 use App\Models\OperationalUnit;
-use App\Models\PreventiveProfile;
-use App\Models\PreventiveProfileBranch;
-use App\Models\PreventiveProfileRule;
+use App\Models\Configuration\Preventive\PreventiveProfile;
+use App\Models\Configuration\Preventive\PreventiveProfileBranch;
+use App\Models\Configuration\Preventive\PreventiveProfileRule;
 use App\Enums\PreventiveProfileRuleType;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace App\Models\Configuration\Preventive;
 
 use App\Enums\PreventiveProfileRuleType;
 use Illuminate\Database\Eloquent\Attributes\Fillable;

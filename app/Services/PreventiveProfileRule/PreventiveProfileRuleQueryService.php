@@ -6,9 +6,9 @@ namespace App\Services\PreventiveProfileRule;
 
 use App\Enums\PreventiveProfileRuleType;
 use App\Models\OperationalUnit;
-use App\Models\PreventiveProfile;
-use App\Models\PreventiveProfileBranch;
-use App\Models\PreventiveProfileRule;
+use App\Models\Configuration\Preventive\PreventiveProfile;
+use App\Models\Configuration\Preventive\PreventiveProfileBranch;
+use App\Models\Configuration\Preventive\PreventiveProfileRule;
 
 /**
  * Consultas e listagens relacionadas às regras de perfil preventivo.

@@ -60,7 +60,7 @@
 
         <div class="grid grid-cols-1 gap-3 p-3.5 sm:p-5">
 
-            @can('create', \App\Models\Preventive::class)
+            @can('create', \App\Models\Preventive\Preventive::class)
 
                 <div
                     class="flex flex-col gap-3 rounded-lg border border-slate-200 p-3.5 transition hover:border-slate-300 hover:bg-slate-50 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:p-4"

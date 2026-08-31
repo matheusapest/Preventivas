@@ -7,8 +7,8 @@ namespace App\Services\Preventive;
 use App\Enums\PreventiveProfileRuleType;
 use App\Models\Branch;
 use App\Models\OperationalUnit;
-use App\Models\PreventiveProfile;
-use App\Models\PreventiveProfileBranch;
+use App\Models\Configuration\Preventive\PreventiveProfile;
+use App\Models\Configuration\Preventive\PreventiveProfileBranch;
 use Illuminate\Support\Collection;
 
 class ResolvePreventiveConfigurationService

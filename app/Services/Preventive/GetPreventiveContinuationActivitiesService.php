@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Services\Preventive;
 
 use App\Enums\StatusPreventiveEnum;
-use App\Models\Preventive;
-use App\Models\PreventiveSnapshot;
+use App\Models\Preventive\Preventive;
+use App\Models\Preventive\PreventiveSnapshot;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
 

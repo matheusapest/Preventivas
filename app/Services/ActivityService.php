@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Activity;
-use App\Models\PreventiveProfileRule;
+use App\Models\Configuration\Preventive\PreventiveProfileRule;
 
 class ActivityService
 {
