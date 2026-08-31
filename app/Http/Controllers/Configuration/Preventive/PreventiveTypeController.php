@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Configuration\Preventive;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorePreventiveTypeRequest;
-use App\Http\Requests\UpdatePreventiveTypeRequest;
+use App\Http\Requests\Configuration\Preventive\StorePreventiveTypeRequest;
+use App\Http\Requests\Configuration\Preventive\UpdatePreventiveTypeRequest;
 use App\Models\PreventiveType;
 use App\Models\UnitType;
 use Illuminate\Http\RedirectResponse;

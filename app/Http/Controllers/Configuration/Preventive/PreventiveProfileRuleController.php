@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Configuration\Preventive;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorePreventiveProfileRuleRequest;
-use App\Http\Requests\UpdatePreventiveProfileRuleRequest;
-use App\Http\Requests\StorePreventiveProfileSpecificRuleRequest;
-use App\Http\Requests\UpdatePreventiveProfileSpecificRuleRequest;
+use App\Http\Requests\Configuration\Preventive\StorePreventiveProfileRuleRequest;
+use App\Http\Requests\Configuration\Preventive\UpdatePreventiveProfileRuleRequest;
+use App\Http\Requests\Configuration\Preventive\StorePreventiveProfileSpecificRuleRequest;
+use App\Http\Requests\Configuration\Preventive\UpdatePreventiveProfileSpecificRuleRequest;
 use App\Models\PreventiveProfile;
 use App\Models\PreventiveProfileRule;
 use App\Models\PreventiveProfileBranch;

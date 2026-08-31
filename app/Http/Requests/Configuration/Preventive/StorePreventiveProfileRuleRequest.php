@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Configuration\Preventive;
 
 use App\Enums\PreventiveProfileRuleType;
 use Illuminate\Foundation\Http\FormRequest;

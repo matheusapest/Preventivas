@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Preventive;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorePreventiveActivityResponseRequest;
+use App\Http\Requests\Preventive\StorePreventiveActivityResponseRequest;
+use App\Http\Requests\Preventive\StorePreventiveManualFinalizeRequest;
 use App\Models\Branch;
 use App\Models\Preventive;
 use App\Models\PreventiveCycleUnit;
@@ -13,7 +14,6 @@ use App\Models\PreventiveType;
 use App\Models\PreventiveActivityResponse;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use App\Http\Requests\StorePreventiveManualFinalizeRequest;
 use App\Services\Preventive\FinalizePreventiveService;
 use App\Services\Preventive\GetPreventiveActivityExecutionService;
 use App\Services\Preventive\GetPreventiveExecutionDetailsService;

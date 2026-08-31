@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Configuration\Preventive;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorePreventiveProfileRequest;
-use App\Http\Requests\UpdatePreventiveProfileRequest;
+
+use App\Http\Requests\Configuration\Preventive\StorePreventiveProfileRequest;
+use App\Http\Requests\Configuration\Preventive\UpdatePreventiveProfileRequest;
 use App\Models\PreventiveProfile;
 use App\Models\PreventiveType;
 use App\Services\PreventiveProfileService;

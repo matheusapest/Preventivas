@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Configuration\Preventive;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePreventiveProfileSpecificRuleRequest extends FormRequest
+class UpdatePreventiveProfileSpecificRuleRequest extends FormRequest
 {
     public function authorize(): bool
     {
