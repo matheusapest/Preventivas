@@ -2,7 +2,7 @@
 
 namespace App\Models\Configuration\Operational;
 
-use App\Models\Category;
+use App\Models\Configuration\Operational\Category;
 use App\Models\Configuration\Operational\OperationalProfile;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;

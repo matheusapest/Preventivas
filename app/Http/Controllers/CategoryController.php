@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
-use App\Models\Category;
+use App\Models\Configuration\Operational\Category;
 use App\Models\Configuration\Operational\UnitType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

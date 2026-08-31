@@ -3,7 +3,7 @@
 namespace App\Models\Configuration\Operational;
 
 use App\Models\Organization\Branch;
-use App\Models\Category;
+use App\Models\Configuration\Operational\Category;
 use App\Models\Configuration\Operational\OperationalProfile;
 use App\Models\Configuration\Preventive\PreventiveType;
 

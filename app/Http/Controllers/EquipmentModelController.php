@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEquipmentModelRequest;
 use App\Http\Requests\UpdateEquipmentModelRequest;
-use App\Models\Category;
+use App\Models\Configuration\Operational\Category;
 use App\Models\Equipment\EquipmentModel;
 use App\Models\Equipment\Manufacturer;
 use Illuminate\Http\RedirectResponse;

@@ -2,7 +2,7 @@
 
 namespace App\Models\Equipment;
 
-use App\Models\Category;
+use App\Models\Configuration\Operational\Category;
 use App\Models\Equipment\Manufacturer;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;

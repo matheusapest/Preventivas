@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOperationalProfileRequest;
 use App\Http\Requests\UpdateOperationalProfileRequest;
-use App\Models\Category;
+use App\Models\Configuration\Operational\Category;
 use App\Models\Configuration\Operational\OperationalProfile;
 use App\Models\Configuration\Operational\UnitType;
 use Illuminate\Http\RedirectResponse;
