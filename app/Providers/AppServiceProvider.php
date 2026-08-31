@@ -2,6 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Preventive;
+use App\Models\PreventiveProfile;
+use App\Models\PreventiveType;
+use App\Policies\Preventive\PreventivePolicy;
+use App\Policies\Configuration\Preventive\PreventiveProfilePolicy;
+use App\Policies\Configuration\Preventive\PreventiveTypePolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::policy(Preventive::class, PreventivePolicy::class);
+        Gate::policy(PreventiveProfile::class, PreventiveProfilePolicy::class);
+        Gate::policy(PreventiveType::class, PreventiveTypePolicy::class);
     }
 }

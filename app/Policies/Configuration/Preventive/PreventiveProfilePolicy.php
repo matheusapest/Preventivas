@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Policies;
+namespace App\Policies\Configuration\Preventive;
 
 use App\Models\PreventiveProfile;
 use App\Models\User;
