@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\MaintenanceOrder;
+use App\Models\Maintenance\MaintenanceOrder;
 use App\Models\User;
 
 class MaintenanceOrderPolicy

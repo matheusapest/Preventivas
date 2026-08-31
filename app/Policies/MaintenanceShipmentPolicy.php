@@ -6,7 +6,7 @@ namespace App\Policies;
 
 use App\Enums\MaintenanceOrderStatus;
 use App\Enums\MaintenanceShipmentStatus;
-use App\Models\MaintenanceShipment;
+use App\Models\Maintenance\MaintenanceShipment;
 use App\Models\User;
 
 class MaintenanceShipmentPolicy

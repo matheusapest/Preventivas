@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Maintenance;
 
 use App\Enums\MaintenanceOrderStatus;
+use App\Models\Equipment;
+use App\Models\Maintenance\MaintenanceShipment;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

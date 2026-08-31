@@ -6,8 +6,8 @@ namespace App\Services;
 
 use App\Enums\MaintenanceOrderStatus;
 use App\Enums\MaintenanceShipmentStatus;
-use App\Models\MaintenanceReceipt;
-use App\Models\MaintenanceShipment;
+use App\Models\Maintenance\MaintenanceReceipt;
+use App\Models\Maintenance\MaintenanceShipment;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
 

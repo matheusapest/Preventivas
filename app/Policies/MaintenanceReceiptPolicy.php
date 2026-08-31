@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Models\MaintenanceReceipt;
-use App\Models\MaintenanceShipment;
+use App\Models\Maintenance\MaintenanceReceipt;
+use App\Models\Maintenance\MaintenanceShipment;
 use App\Models\User;
 
 class MaintenanceReceiptPolicy

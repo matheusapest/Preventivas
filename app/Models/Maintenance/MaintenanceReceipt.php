@@ -2,7 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace App\Models\Maintenance;
+
+use App\Models\Branch;
+use App\Models\Maintenance\MaintenanceShipment;
+use App\Models\Maintenance\MaintenanceValidation;
+use App\Models\User;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;

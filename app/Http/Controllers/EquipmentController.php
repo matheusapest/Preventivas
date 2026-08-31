@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Enums\OperationalStatus;
 use App\Enums\MaintenanceOrderStatus;
-use App\Models\MaintenanceOrder;
+use App\Models\Maintenance\MaintenanceOrder;
 
 class EquipmentController extends Controller
 {
