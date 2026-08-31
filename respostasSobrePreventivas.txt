@@ -1,0 +1,2648 @@
+DOMÍNIO DO MÓDULO PREVENTIVAS
+ETAPA 1 — DEFINIÇÃO DO PROCESSO REAL
+
+Objetivo:
+Definir o domínio do módulo Preventivas antes de iniciar qualquer implementação.
+As respostas devem considerar o processo real da empresa, não a implementação atual do sistema.
+
+============================================================
+1. O QUE É UMA PREVENTIVA?
+============================================================
+
+No processo real da empresa, o que exatamente vocês chamam de uma preventiva?
+
+O que caracteriza uma preventiva?
+
+O que faria determinado processo deixar de ser considerado uma preventiva?
+
+RESPOSTA:
+
+Preventiva é a ação de testes e analises sobre um conjunto de equipamentos separaria por escopo
+por isso da categoria do item, se amamnha o gestor quiser criar uma nova preventiva sobre um equipamento que nao existe ou nao possui cadastro
+com a categoria de equipamento resolveriamos isso, ele poderia criar um cadastro individual e especifico para aquela categoria de equipamento
+Categoria PDV ( ponto de venda mercado ) :
+
+temos o monitor do pdv,temos a impressora do pdv, temos a gaveta do pdv, temos o scanner do pdv
+temos o cpu do pdv , o teclado pdv , a balança do pdv, e temos um equipamento que é scanner e balanca ao mesmo tempo
+
+Não deixaria engessado apenas para o pdv, preciso de sugestoes de como fariamos para o sistema saber o que é um pdv(conjunto de equipamentos do pdv)
+hoje em equipamentos temos categorias de equipamentos, como o sistema nao procura ser um GLPI de controle ativos
+como funciona todo o contexto de um mercado ou uma filial de mercado:
+
+temos pdvs com numeros fixos inicialmente, que podem ser mudado o numero porem sao como se fosse entidades no sistema
+um pdv é conjunto de equipamentos, entao temos do numero 1 ao 30 matriz, igual como temos filiais, poderiamos cadastrar por filial quantos pdvs tem disponivel, nao seguindo um numero fixos
+pois tem lojas que pulam a numeracao , por conta do selfiescheckout que é outra subcategoria de pdv.
+============================================================
+2. QUEM CRIA UMA PREVENTIVA?
+============================================================
+
+Quem é responsável por criar ou definir uma preventiva?
+
+É um gestor, supervisor, administrador, técnico ou outro perfil?
+
+O que essa pessoa precisa definir no momento da criação?
+
+RESPOSTA:
+
+O resposavel por criar uma preventiva é semrpe o gestor, supervisor ou administrador. o tecnico executa apenas
+hoje no sistema temos apenas role ( administrador e técnico ), porem como nao quero complexar agora, o administrador é o gestor/supervisor
+faria sentido separar essa roles se o sistema tivesse nescessidade como nao temos hoje nao criaria uma complexidade que nao preicisa
+
+A pessao precisa definir, a data de inicio da atividade, qual é o tipo de preventiva, isso vamos ter que discutir o tipo de preventiva
+a categoria do item seria atrelado ao tipo de preventiva, precisariamos criar as entidades no sistema(equipamentos estaticos por filiais)
+pois hoje se eu fizer 15 preventivas de pdv, eu nao tendo uma referencia de quantos pdvs( entidades) temos perdemos o controle de quantas preventivas
+foram executadas sobre aquele item. e nao gostaria de criar um pdv ou gerar um cadastro gigantesco de itens para usar esse modulo
+talvez se alguma observacao preciarmos criar cadastro fisicos ai sim justificaria, porem no glpi da empresa ja temos
+todos esses dados de cadastro
+============================================================
+3. O QUE É UMA ATIVIDADE?
+============================================================
+
+Dentro de uma preventiva, o que significa uma atividade?
+
+O que diferencia uma atividade de uma preventiva?
+
+Uma atividade pode ser reutilizada em diferentes preventivas?
+
+Dê exemplos de atividades reais utilizadas pela empresa.
+
+RESPOSTA:
+
+Atividades são acoes que fizemos sobre aquele equipamento.
+
+VendaTeste: é um nome chamado para um procedimento interno que o tecnico do TI , faz um simulacao de venda no PDV
+Entao ele abre o caixa(lendo o codigo do cracha de acesso no scanner do pdv, e clicando no teclado do pdv(tecla abrir caixa))
+ele pesa um produto na balança , ele clica em finalizar em cartao de credito( testando o PINPAD(LEITOR DE CARTAO)), e clica em cancelar a compra.
+passa o cracha novamente para cancelar a compra, e fecha o caixa sem nenhuma venda no turno dele, ao fechar o caixa imprimimos o relatorio de fechamento de caixa(testando a impressao) e fechando a gaveta
+
+Kitbackup verificacao: outra atividade essencial toda filial possui um conjunto de reposicao de equipamentos para o pdv,
+cada filial tem uma sala de ti , nela consta todos os items do kitbackup, uma preventiva de kitbackup, seria a ativade de verificar se todos os items,
+estao em backup, entao se possui todos os items de reposicao para o backup.
+
+Validar Kitbackup: é uma preventiva sobre o conjunto que esta na sala do ti , é similar a vendateste porem ela apenas testa cada item e valida se nescessario usar futuramente como peça de reposicao
+o tecnico consegue retirar um item dali
+
+Validar balanças etiquetadoras: toda filial possui balanças de pesagem para itens pesaveis e pereciveis, exeplo padaria , acougue ,
+todas as balanças de loja tem que estar pesando bem , e imprimindo bem , recebendo carga de parametros preços, e suas teclas funcionais.
+
+Validação MITS: são validocoes se o MIT(equipamento que exibe preços e propagandas da empresa no setores de padaria e acougue)
+testar se eles estao exibindo corretamente as informacoes se esta ligado.
+
+Validacao impressoras terminal de preço: validar se as impressoras de etiqueta e cartazes estao imprimindo corretamente.
+============================================================
+4. O QUE É UMA PERGUNTA / CHECKLIST?
+============================================================
+
+O que representa uma pergunta dentro de uma atividade?
+
+Toda atividade possui perguntas?
+
+Uma pergunta sempre precisa possuir uma resposta?
+
+Existem perguntas que são apenas informativas?
+
+Existem diferentes tipos de perguntas ou respostas?
+
+RESPOSTA:
+
+essa é uma boa pergunta, como eu trabalhava la no sistema e tentei resolver esse problema
+dividindo entre categorias de equipamentos, e criando preventivas, que eram atreladas a um tipo de equipamento
+fiz isso pois se eu deixasse generica uma ativade exemplo preventivas de pdv, se eu nao fizesse a tipagem,
+como o sistema iria saber o que é um pdv, poderia criar perguntas genericas sobre o equipamento porem como eu consultava
+direto no cadastro do glpi, e nao tinha entidades(pdv por loja e selfiescheckout), acabava caindo no limpo do processo e
+nao saia do lugar.
+
+Entao perguntas sao acoes sobre aquele equipamento
+uma preventiva de pdv, possui uma atividade( venda teste), se amanha eu criar uma nova atividade exemplo validar saude do ssd do pdv,
+uma preventivas de kitbackup : possui ativadades:  Kitbackup verificacao(possui pergunta ou perguntas, tipo o kit esta completo: marque os itens que tem no kitbackup), validar kitbackup(dentro dela possui perguntas o kitbackup esta funcional? marque todos os itens do kitbackup que estao funcional)
+
+
+============================================================
+5. COMO UMA PREVENTIVA DEFINE OS EQUIPAMENTOS?
+============================================================
+
+A preventiva é criada para equipamentos específicos?
+
+É criada para uma categoria ou tipo de equipamento?
+
+É criada para todos os equipamentos de uma determinada filial?
+
+Os equipamentos são definidos no planejamento ou selecionados pelo técnico durante a execução?
+
+Como vocês determinam quais equipamentos precisam passar pela preventiva?
+
+RESPOSTA:
+
+Geralmente é por escopo e categoria, entao gostaria de sugestoes sobre como melhorar essa modelagem, qual é solucao
+nao quero gera um sistema generico, mas tambem nao quero complexar
+============================================================
+6. COMO A PREVENTIVA ENTRA NO CRONOGRAMA?
+============================================================
+
+Como vocês determinam quando uma preventiva precisa ser realizada?
+
+Existe periodicidade?
+
+Pode ser semanal, mensal, trimestral, semestral, anual etc.?
+
+Existe um cronograma por filial?
+
+Existe um cronograma por tipo de preventiva?
+
+Como vocês sabem que determinada preventiva precisa ser realizada em determinado dia?
+
+RESPOSTA:
+
+Hoje a preventiva não possui um processo definido(por isso criamos o preventivas)
+para organizar o fluxo, hoje genericamente criamos um chamado no GPLI, onde diz preventiva semanal filial x
+
+equipamentos a serem validados:
+
+PDVS, balanças, MIT, Setores, impressora terminal de preço coisas genericas
+
+
+============================================================
+7. QUANDO NASCE UMA EXECUÇÃO?
+============================================================
+
+Existe diferença entre uma preventiva planejada e uma preventiva executada?
+
+Quando o registro da execução deve nascer?
+
+No momento em que a preventiva é planejada?
+
+No momento em que o técnico inicia?
+
+Somente quando alguma atividade é executada?
+
+Explique como isso funciona no processo real.
+
+RESPOSTA:
+
+hoje nao existe uma distincao é feita de forma generica preventiva planejada e uma preventiva executada, hoje nao temos controle
+algum sobre o processo, quem entra na empresa aprende o processo, e nao temos um processo bem definido.
+
+uma preventiva com criacao planejada, o que faria engessar o processo:
+
+1 - criar multiplas preventivas, ou um cronograma, mensal , para o tecnico vistoriar,
+
+hoje temos duas pessoas que trabalham no suporte em loja
+
+temos 9 filiais em erechim:
+
+pensa como vamos criar uma recorrencia, de preventivas: sendo que 1 preventiva de pdv possui em alguns casos 40 pdvs(podendo ou nao ser testados)
+
+como criamos um sistema sem engessar o proceso, se o tecnico conseguir testar 15 equipamentos, dos 40 e registrar na filial matriz:
+no exemplo dia a dia, vamos empilhar ativadades e preventivas nunca documentadas de fato: pois o tecnico que tem
+testar 40 equipamentos em uma filial, surgiu o problema em outra filial, qual é fluxo ele para a preventiva e vai na filial que tem o equipamento parado
+
+viu como complexa e engessa o sistema, se eu criar cronogramas, fixos, sem validar o processo humano acabo , sobrecarregando
+o processo e nao entrego um sistema consiso.
+
+
+============================================================
+8. QUEM EXECUTA A PREVENTIVA?
+============================================================
+
+O técnico responsável é definido antecipadamente?
+
+Qualquer técnico autorizado pode executar?
+
+Pode haver mais de um técnico na mesma preventiva?
+
+Uma preventiva pode começar com um técnico e terminar com outro?
+
+Existe algum responsável pela validação da execução?
+
+RESPOSTA:
+
+o tecnico sempre executa a preventiva, ou usuario que foi citado na criacao da preventiva.
+
+
+============================================================
+9. COMO O TÉCNICO REGISTRA UMA RESPOSTA?
+============================================================
+
+Como o técnico realiza o registro durante uma preventiva?
+
+Ele apenas marca o resultado?
+
+Precisa escrever observações?
+
+Pode anexar fotos?
+
+Precisa informar valores ou medições?
+
+Precisa justificar determinadas respostas?
+
+Quais informações são realmente necessárias para comprovar que a preventiva foi realizada?
+
+RESPOSTA:
+
+geralmente temos um coletor da yep(um dispositovo android que ele consegue bipar patrimonio e registrar no sistema)
+por isso o modo de execucao acaba sendo algo a se pensar: a preventiva tem que entregar um fluxo simples
+exemplo preventiva do pdv 1: tecnico seleciona os equipamentos que estao funcionais, e se tiver algum com defeito
+ele nao marca e justica na resposta podendo colocar exemplo impressa pdv esta com falhas. vou efetuar a troca pela impressora do kitbackup, vai para pdv 2, testa e esta tudo ok, simples e conciso
+
+quero um processo transparente, nao algo que o tecnico tenha que gerar um relatorio completo, isso pode ficar como resumo semanal no final da semana sobre aquela preventiva
+onde o tecnico descreve , deu 5 problemas em alguns itens dos pdvs, seria um campo mais descritivo,
+
+
+============================================================
+10. QUAIS TIPOS DE RESPOSTA EXISTEM?
+============================================================
+
+Quais tipos de resposta existem no processo real?
+
+Exemplos apenas para referência:
+
+SIM / NÃO
+CONFORME / NÃO CONFORME
+OK / PROBLEMA
+N/A
+VALOR NUMÉRICO
+TEXTO
+SELEÇÃO
+
+Quais desses existem?
+
+Existem outros?
+
+Existem perguntas que permitem mais de uma resposta?
+
+RESPOSTA:
+
+as respostas vao ser variaveis, vamos ter selects: fotos:se marcado com obrigatoriamente:
+
+entao nesse fluxo o tecnico pode colocar uma evidencia com foto ja que o coletor tem camera
+
+quero que o fluxo seja simples, até pensei em um fluxo mas quero discutir com validocoes
+
+tipo o tecnico vai fazer a preventiva de pdv:
+
+ele vai ter a lista completa dos pdvs, ele vai marcar todos os pdvs que ele testou exemplo tenho um array de 40 pdvs
+ele vai la e seleciona 10 pdv no dia 1 daquela preventiva, ele no segundo dia ele sabe quais ele testou ja, entao ele vai para os proximos
+caso ele ache um defeito o algo que nao esta operando, ele pode mencionar criar uma observacao tipo
+testei o caixa 10 e caixa 15, e ambos nao estavam ligados. Apos apertar o botao os dois ligaram.
+
+entende como fica simples o fluxo e nao engessa. ou no futuro o tecnico cria uma observacao personalizada sobre aquela
+preventiva tipo seleciona o caixa 10 e seleciona a impressora do caixa: e menciona caixa 10 estava com falhas na impressora, tive que enviar para reparo externo
+ele seleciona enviar foto ou evidencia e anexa entao todas as acoes e tomadas de decicsao ficam expostas no processo sem engessar
+
+
+
+============================================================
+11. O QUE ACONTECE QUANDO EXISTE UMA NÃO CONFORMIDADE?
+============================================================
+
+Quando o técnico encontra um problema durante uma preventiva, o que acontece?
+
+O problema é apenas registrado?
+
+É criada uma ocorrência?
+
+É criada uma OS?
+
+O equipamento precisa ser retirado de operação?
+
+O equipamento pode continuar sendo utilizado?
+
+Existe classificação de gravidade ou prioridade?
+
+O problema pode gerar automaticamente algum outro processo?
+
+Descreva o fluxo real.
+
+RESPOSTA:
+
+como acima mencionei , um problema que foi resolvido ou uma observacao tem que ser criada sobre aquela preventiva
+pois se amanha criarmos uma atividade de organizacao de cabos, ela é uma atividade onde o tecnico organiza os cabos do pdv
+
+ele vai tomar uma acao no mundo fisico, e vai registrar uma foto do cabos do caixa 1, caixa 2, entende
+
+eu criaria assim como criamos a OS que centraliza o fluxo de um equipamento enviado para reparo externo
+com o mesmo system designe ou modelo de dominio parecido: eu tenho 40 pdvs, 10 foram validados e aprovados, no futuro
+o gestor pode ir na loja e validar como se fosse uma errata da atividade que o tecnico criou
+
+ele vai la e diz assim, bom validei o caixa 1 que voce organizou e precisa revisar,esta mal organizado. o tecnico entra no sistema
+o gestor ja vai ter respondido tipo o CHECKLIST daquela atividade que ele fez, ai ele vai la e organiza novamente, e gera um
+fluxo colaborativo.
+
+============================================================
+12. QUANDO UMA PREVENTIVA É CONSIDERADA CONCLUÍDA?
+============================================================
+
+Quais condições precisam ser satisfeitas para considerar uma preventiva concluída?
+
+Todas as atividades precisam ser executadas?
+
+Todos os equipamentos precisam ser verificados?
+
+Todas as perguntas precisam ser respondidas?
+
+O que acontece quando alguma atividade não pode ser realizada?
+
+É possível concluir parcialmente?
+
+Existe algum status intermediário?
+
+RESPOSTA:
+
+uma preventiva somente é finalizada quando todos os equipamentos sao validados, entao é humanamente impossivel
+eu testar 40 caixas em um dia, em uma filia, mais 30 em outra, mais 40 em outra, entao qual é objetivo da preventiva
+é testar sem ter um prazo curto de testes, entao podemos tratar apenas um gestor nao pode criar outra preventiva do mesmo tipo enquanto o tecnico
+nao receber a aprovacao sobre aquela preventiva, entao ficou faltando testar 10 caixas em uma filial, enquanto ele nao testar
+e gestor nao aprovar a preventiva, fica em aberto, isso gera um fluxo colaborativo onde o tecnico executa o gestor aprova ou reabre uma preventiva,
+
+entao o objetivo do modulo preventiva nao é criar 1000 preventivas nao finalizadas no mundo real, é definir metricas
+e qualidade de como tem que ser feito o processo. rastreando gaps de manutenção entre equipamentos e diminuindo o tempo de indisponibilidade daquele equipamento
+
+entao nao vamos engessar o processo, se o tecnico disse testei esse equipamento, de inicio nao vamos
+
+fazer assim o tecnico comecou o teste e testou em 10 segundos, e finalizou, vamos deixar ele entender o seu papel
+depois vamos melhorando o fluxo, antes uma ferramenta utilizada e simples do que uma ferramenta complexa e que nao entrega o dominio.
+
+============================================================
+13. O QUE ACONTECE COM UMA PREVENTIVA ATRASADA?
+============================================================
+
+Se uma preventiva estava planejada para determinado dia e não foi realizada, o que acontece?
+
+Ela fica atrasada?
+
+É reagendada?
+
+Vai automaticamente para outro dia?
+
+Precisa de justificativa?
+
+Alguém precisa aprovar o reagendamento?
+
+Continua aparecendo no cronograma?
+
+Existe algum alerta ou indicador?
+
+RESPOSTA:
+
+Antes de criar um processo de reagendamento deveriamos responder, ela é uma preventiva que é padrao, ou é uma preventiva
+com nivel de prioridade , maior o que deve ter prazo e entrega ? Uma preventiva sobre servidores e nobreak, Existem
+prazos, pois se eles param, impactam na operacao, uma preventiva de teste de ssd de pdv, ou de limpeza de equipamentos,
+precisam ser tao urgentes, podemos gerar um prazo, o gestor entrando no sistema, ele vai ser notificado ja no dashboard, existem preventivas respondidas
+aprove as preventivas ou valide as preventivas dos tecnicos, tem uma preventiva de nobreak da filial x que tem que ser efetuada dia x
+nenhum tecnico foi selecionado por favor direcione essa atividade algum tecnico, viu que é uma preventiva
+diferente? ela tem um prazo e tem que ser executada, nao nescessariamente na sua criacao e no seu job, teria que ter
+um responsavel, inicial.
+
+
+============================================================
+14. COMO TRATAMOS EQUIPAMENTOS QUE NÃO PODEM SER VERIFICADOS?
+============================================================
+
+Imagine que uma preventiva possui os seguintes equipamentos:
+
+PDV
+Monitor
+Impressora
+Scanner
+
+Porém, um deles está ausente, quebrado, em manutenção ou foi enviado para reparo.
+
+O que o técnico faz?
+
+Ele pula o equipamento?
+
+Marca como indisponível?
+
+Registra um motivo?
+
+Isso gera uma não conformidade?
+
+A preventiva pode ser concluída mesmo assim?
+
+Como esse caso é tratado atualmente na empresa?
+
+RESPOSTA:
+
+O pdv é algo como se fosse o coracao da operacao do mercado, um pdv desligado ou nao operaciona=perda de valor financeiro
+entao ele é prioridade, o tecnico pode registrar uma observacao mas nunca pode deixar o pdv parado,
+entao ele sempre tem que deixar operacional o item, uma preventiva nao pode ser encerrada com um pdv nao conforme,
+ou faltando algo. vao existir cenarios que o tecnico nao consegue testar o pdv, por conta que tem uma operadora vendendo
+entao ele vai para o proximo ou deixa pendente por isso a nescessidade do tecncio ter uma lista x de pdv(entidades) para testar
+se ele nao testou ele nao seleciona, se testou ou disse que testou, quando para de funcionar ou tiver com uma evidencia clara que nao foi testados
+vai ser conversado tecnico x voce nao testou o pdv 15, esta com um cabo rompido ou o scanner esta desligado
+se algum chamado da loja for registrado, o tecnico que disse que testou no dia x , vai ser comunicado no sistema no dia x voce disse que testou porem o pdv esta a 4 dias desligado exemplo ou com defeito no monitor
+ve que vamos ter indicadores de testes ?
+
+
+============================================================
+15. COMO PRESERVAMOS O HISTÓRICO?
+============================================================
+
+Quais informações vocês precisam conseguir consultar daqui a seis meses, um ano ou vários anos?
+
+Por exemplo:
+
+Quando o equipamento foi preventivado?
+Quem executou?
+Qual filial?
+Qual preventiva?
+Quais atividades foram realizadas?
+Quais perguntas foram respondidas?
+Quais problemas foram encontrados?
+Quais não conformidades ocorreram?
+Quantas vezes determinado problema apareceu?
+
+O que é importante manter historicamente?
+
+RESPOSTA:
+
+uma preventiva vai ser um entidade igual a OS de reparo externo
+
+vamos ter dados historicos de quando foi testado o equipamento, quais equipamentos foram testados
+quantos equipamentosa apresentaram defeito,o tecncio vai poder encerrar um preventiva sem testar todos equipamentos
+e gestor vai poder analisar entao faltou 15 pdvs da loja matriz para testar, e voce finalizou a preventiva
+precisamos testar esses equipamentos, claro que sempre ao tentar finalizar , vai ser notificado para o tecnico
+existem 10 equipamentos para serem testados, deseja mesmo finalizar ? se ele selecionar sim , finalizamos a preventiva
+porem o gestor vai aprovar ou nao aquela preventiva.
+
+sempre vamos ter um relatorio por preventiva, para o gestor poder agregar na reuniao com os donos do grupo empresarial
+
+
+
+
+============================================================
+16. O QUE PERTENCE À CONFIGURAÇÃO E O QUE PERTENCE À EXECUÇÃO?
+============================================================
+
+Considere a diferença entre:
+
+CONFIGURAÇÃO
+
+Aquilo que define como uma preventiva deve funcionar.
+
+E:
+
+EXECUÇÃO
+
+Aquilo que efetivamente aconteceu quando o técnico realizou a preventiva.
+
+Exemplo:
+
+Configuração:
+"Verificar impressora."
+
+Execução:
+"Impressora apresentou problema de impressão."
+
+O que pertence à configuração?
+
+O que pertence à execução?
+
+Quais informações precisam ser preservadas na execução mesmo que a configuração da preventiva seja alterada posteriormente?
+
+RESPOSTA:
+
+configuracao , vai ter o tipo de preventiva e a categoria daquele equipamento
+vamos ter que criar entidades sobre aquele equipamento,por isso é algo situacional onde vamos ter que pensar como resolver
+esse dominio
+exemplo: PDV(entidade) LOJA 001 => POSSUI 40 PDVS, SENDO 30 PDVS, 10 selfiescheckout => PDV pode possuir :(monitor,teclado, scanner, balança , impressora, CPU , gaveta, PIN PAD, MONITOR SECUNDARIO(SE POSSUIR), scanner bioptico(balança e scanner juntos)) selfiescheckout pode possuir:(Monitor, impressora , balanca , scanner , scanner bioptico, balança de conferencia)
+
+a execucao,é acao criada sobre aquela preventiva, entao o tecnico vai saber tenho que fazer preventiva de pdv , em 4 filais nessa semana, ele vai
+fazer por dia , e ir fazendo, nao conseguiu testar todos os pdvs daquela preventiva em um dia ou até em uma semana, ele vai fazendo conforme consegue
+porem o gestor nao vai poder criar uma outra preventiva de pdv enquanto uma preventiva nao for aprovada,
+
+CONFIGURAÇÃO
+
+Aquilo que define como uma preventiva deve funcionar.
+igual voce pediu, vamos ter que pensar no fluxo de como vamos configurar esse modelo de preventiva.
+
+eu pensei em separar por categoria de equipamento, e derivado dessa categoria criariamos entidades no sistema
+imutaveis somente podendo ser editadas, e desativadas igual fizemos com os outros cadastros,
+
+entao primeiro nosso foco é fazer uma preventiva de pdv com o fluxo completo. validamos o modelo nao ficou tao engessado
+criamos a preventiva de balanças , depois de kitbackup
+
+============================================================
+OBSERVAÇÕES GERAIS
+============================================================
+
+Existe alguma parte importante do processo real de preventivas que não foi abordada nas 16 perguntas?
+
+Existe alguma regra de negócio importante que devemos conhecer antes de desenhar o módulo?
+
+Existe alguma situação excepcional que acontece com frequência e que o sistema obrigatoriamente precisa conseguir tratar?
+
+Existe alguma coisa que você NÃO gostaria que o módulo Preventivas fizesse para evitar que ele invada o domínio de outros módulos?
+
+RESPOSTA:
+
+por enquanto vamos seguir com essas perguntas quero que monte um modelo com essas respostas e vamos discutir melhorias no fluxo
+
+============================================================
+FIM
+============================================================
+                   DOMINIO DO SISTEMA:
+
+                 ┌─────────────────────┐
+                 │ Tipo de Preventiva  │
+                 └──────────┬──────────┘
+                            │
+                            │
+                 ┌──────────▼──────────┐
+                 │     Preventiva      │
+                 │                     │
+                 │ início              │
+                 │ prazo               │
+                 │ prioridade          │
+                 │ responsável         │
+                 │ status              │
+                 └───────┬─────┬───────┘
+                         │     │
+              ┌──────────┘     └─────────────┐
+              │                              │
+              ▼                              ▼
+      ┌───────────────┐              ┌────────────────┐
+      │    Escopo     │              │   Atividades   │
+      │               │              │                │
+      │ Filiais       │              │ Venda Teste    │
+      │ Entidades     │              │ Verificar SSD  │
+      │               │              │ etc.           │
+      └───────┬───────┘              └───────┬────────┘
+              │                              │
+              │                              ▼
+              │                       ┌──────────────┐
+              │                       │ Verificações │
+              │                       │ / Perguntas  │
+              │                       └──────┬───────┘
+              │                              │
+              └──────────────┬───────────────┘
+                             ▼
+                     ┌────────────────┐
+                     │    Execução    │
+                     │                │
+                     │ Técnico        │
+                     │ Entidade       │
+                     │ Data           │
+                     │ Resultado      │
+                     │ Observação     │
+                     │ Evidência      │
+                     └───────┬────────┘
+                             │
+                             ▼
+                     ┌────────────────┐
+                     │    Aprovação   │
+                     │                │
+                     │ Gestor         │
+                     │ Aprovado       │
+                     │ Reaberto       │
+                     └────────────────┘
+
+
+A composição operacional deve ser uma estrutura de domínio própria, e sua completude deve ser validada por uma regra de domínio, não pelo Controller.
+
+
+O que o tipo representa.:
+o tipo representa como ele é chamado no mundo real , entidade por conta que possuimos multiplos pdvs conjuntos de equipamentos de um grupo de equipamentos
+
+ O que ele deve saber.
+ ele deve saber qual é os itens pertencentes pelo perfil, entao um pdv(entidade) = perfil bioptico[monitor, teclado , cpu , scanner bioptico( scanner + balanca), impressora , gaveta , pinpad,]
+                                                                                   perfil pdv dois monitores [ monitor primario , monitor secundario , scanner , balanca , teclado , gaveta , cpu, pinpad]
+
+ O que ele não deve saber.
+ ele nao deve saber, caracteristicas sobre o equipamento completas ele nao representa o modelo do equipamento completo ele é entidade fisica em uma filial, exemplo cpu do pdv = [ ip , placa de rede, ssd, modelo, marca, fonte de energia, mac de rede , patrimonio , numero de serie]
+
+ Se ele possui alguma configuração própria.
+ ele nao deve ter configuracoes , e caracteristicas que tiram o dominio da entidade, na minha opiniao quero que voce me diga se estou errado
+ Um servidor como entidade: Perfil HARDWARE 2026[ CPU DO SERVIDOR, SE TIVER UM MONITOR  ]: vai ter testes unitarios, exemplo : preventiva de servidor : atividade :validacao de discos: saude dos discos , PERGUNTAS ? TODOS OS DISCOS ESTAO SAUDAVEIS? SIM OU NÃO SELECIONOU NÃO CPU DO SERVIDOR FORA DO CONFORME ALGO DO TIPO
+ eu posso ter 10 servidores entre 10 filiais cada uma possuir um HARDWARE ou um modelo porem todas sao servidores, sao entidades fisicas que represando um equipamento que precisa de manutencao, entao um mouse e um teclado nao sao entidades,podem compor uma entidade mas nao o conjunto ou valor unitario
+
+ Se ele pode existir sem estar vinculado a uma filial.
+ eu posso ter a entidade PDV , em todas filiais, faz sentido eu criar uma entidade que nao vai ser usada de forma
+ exemplo ar condicionado, crio essa entidade, porem o TI não cuida de arcondicionado normalmente , porem ele cuida do servidor, faz
+ sentido eu criar um equipamento arcondicionado ou categoria arcondicionado, para validar se o arcondicionado esta operacional ou na temperatura correta ?
+ eu criaria um entidade pois existem em todos os servidores o arcondicionado, porem nao queremos ter que cadastrar um arcondicionado por filial,
+ acho que vamos ter entidades compartilhadas entre filias quando for de ambito geral, podendo vincular a multiplas entidades,
+ facilitando até o cadastro de entidades, faz sentido eu criar uma entidade pdv por filial sendo que queremos facilitar o processo
+ o perfil pode ser unitario daquela entidade porem se em 10 filiais utilizamos um padrao de equipamento de pdv(conjunto)
+ poderiamos apenas selecionar quais filiais podem ter esse perfil de entidade tipo Cancela do estacionamento
+ entende?
+
+ Quem deve poder criar/alterar/excluir esse tipo.
+ Apenas administradores inicialmente futuramente quero evoluir o permissionamento utilizando roles, reais
+ tipo tencico N1 , N2 , supervisor, algo do tipo, porem a nivel de nao deixar o sistema e ter configuracoes sensiveis nao quero
+ deixar o tecnico modificar ele nem vai exibir na sidebar pra ele o modulo de configuracoes se surgir uma nescessidade ele chama o gestor
+ que altera pra ele algo ou cadastra algo. deixar muito aberto podem causar problemas
+ Se depois que um tipo já foi utilizado em preventivas ele poderá ser alterado ou excluído.
+ Eu acredito que alterar um tipo Exemplo nomenclatura até algo valido porem ele pode ser apenas inativado nao excluido, pois
+ se ja foi utilizado em alguma preventiva inativar nao vai deletar o registro porem acredito que entidades nao vao ser inativadas apenas mudado
+ o nome ou contexto dela sem alterar o id e o modo operacional dele
+
+                   CONFIGURAÇÃO
+                       │
+                       ▼
+              TIPO DE ENTIDADE
+                       │
+              ┌────────┴────────┐
+              ▼                 ▼
+          PERFIL 1          PERFIL 2
+              │                 │
+              ▼                 ▼
+       Composição A       Composição B
+              │
+              ▼
+       Categorias esperadas
+
+
+                    FILIAL
+                   │
+        ┌──────────┼──────────┐
+        ▼          ▼          ▼
+      PDV 01     PDV 02     PDV 03
+        │          │          │
+     Perfil A    Perfil B    Perfil A
+
+
+GESTOR
+   │
+   ▼
+CRIA PREVENTIVA
+   │
+   ├── Filial
+   ├── Entidades
+   ├── Atividades
+   ├── Técnico
+   │
+   ▼
+SNAPSHOT
+   │
+   ▼
+EXECUÇÃO
+   │
+   ▼
+RESULTADOS
+   │
+   ▼
+VALIDAÇÃO DO GESTOR
+
+TIPO DE ENTIDADE
+        ↓
+Define o conceito operacional
+        ↓
+PERFIL OPERACIONAL
+        ↓
+Define uma composição operacional
+        ↓
+ENTIDADE OPERACIONAL
+        ↓
+Representa uma unidade daquele conceito
+        ↓
+FILIAL
+        ↓
+Onde aquela entidade existe
+        ↓
+PREVENTIVA
+        ↓
+Define o que será executado
+        ↓
+ATIVIDADES
+        ↓
+Define as ações
+        ↓
+PERGUNTAS / RESPOSTAS
+        ↓
+Registra o resultado
+
+
+Um perfil operacional não deve ser utilizado para representar uma entidade operacional que possua comportamento ou finalidade operacional própria.
+Ou seja, antes de criar um perfil novo, perguntamos:
+
+“Isso ainda é a mesma entidade operacional, apenas com uma composição diferente?”
+
+Se sim → novo perfil.
+
+Se não → nova entidade operacional.
+
+Essa regra vai ser muito útil para evitar que daqui a alguns meses alguém tente resolver tudo criando dezenas de perfis.
+
+E eu manteria também a outra regra que você definiu anteriormente:
+
+O tipo de entidade é administrado separadamente dos perfis e das entidades físicas/operacionais.
+
+Assim conseguimos evoluir o cadastro sem permitir que o técnico altere a estrutura do domínio.
+
+Com isso, considero que Tipo de Entidade → Perfil Operacional → Entidade Operacional está conceitualmente fechado.
+
+TIPO DE UNIDADE
+    Cadastro reutilizável.
+    Ex.: PDV, Self Checkout, Servidor.
+
+PERFIL OPERACIONAL
+    Pertence a um Tipo de Unidade.
+    Define a composição esperada.
+    Pode ser utilizado por várias unidades.
+
+UNIDADE OPERACIONAL
+    É uma ocorrência concreta do tipo dentro de uma filial.
+    Possui identificador único dentro da filial + tipo.
+    Possui um perfil operacional atual.
+    Pode ser ativada/inativada.
+    Não muda de filial.
+    Não é excluída após utilização.
+
+
+E temos uma consequência muito boa para a Preventiva:
+
+Preventiva
+   ↓
+Filial
+   ↓
+Tipo de Unidade
+   ↓
+Unidades Operacionais selecionadas
+   ↓
+Cada unidade possui seu próprio perfil
+   ↓
+Perfil fornece a composição esperada
+   ↓
+Atividades serão executadas sobre essas unidades
+
+
+O domínio começa a ficar assim
+                    CONFIGURAÇÕES
+                         │
+        ┌────────────────┼────────────────┐
+        │                │                │
+        ▼                ▼                ▼
+ Tipo de Unidade    Perfil Operacional   Tipo de Preventiva
+        │                │                │
+        │                │                └── Atividades
+        │                │
+        └───────┐        │
+                ▼        ▼
+             Unidade Operacional
+                    │
+                    │
+                    ▼
+             PREVENTIVA
+              EXECUÇÃO
+                    │
+        ┌───────────┼───────────┐
+        ▼           ▼           ▼
+      Filial     Unidades    Atividades
+                    │           │
+                    └─────┬─────┘
+                          ▼
+                      Técnico
+                          │
+                          ▼
+                     Execução
+                          │
+                          ▼
+                       Resultado
+                          │
+                          ▼
+                 Validação do Gestor
+                          │
+                 ┌────────┴────────┐
+                 ▼                 ▼
+              Aprovada           Reprovada
+                 │                 │
+                 ▼                 ▼
+             Finalizada       Retorna ao técnico
+
+A atividade apenas diz:
+
+"Verifique a composição operacional desta unidade."
+
+Isso é uma abstração bastante forte e, ao mesmo tempo, simples.
+
+Eu fecharia essa parte do domínio assim:
+
+Atividade
+    ├── nome
+    ├── descrição
+    └── tipo de resposta
+
+
+Tipos de resposta disponíveis:
+    ├── Composição Operacional
+    ├── Booleano
+    ├── Texto
+    ├── Número
+    └── Foto
+
+Mas no MVP vamos implementar primeiro:
+
+Composição Operacional
+Foto
+
+e deixar os demais tipos preparados para evolução.
+
+
+O que já está definido:
+
+
+Tipo de Unidade
+    ↓
+Perfil Operacional
+    ↓
+Composição do Perfil
+    ↓
+Unidade Operacional
+    ↓
+Tipo de Preventiva
+    ↓
+Atividades
+    ↓
+Execução da Preventiva
+    ↓
+Unidades + Atividades selecionadas
+    ↓
+Técnico executa
+    ↓
+Resultado
+    ↓
+Gestor aprova/reprova
+
+
+1 -Status da execução
+
+Precisamos definir os estados exatos. Pela nossa conversa, eu usaria:
+
+RASCUNHO - Não precisa
+DISPONIVEL - sim
+EM_EXECUCAO - sim
+PAUSADA - não
+AGUARDANDO_APROVACAO - sim
+REPROVADA - sim
+APROVADA - SIM
+FINALIZADA - SIM
+
+
+VOU DESCREVER PRA VOCÊ o fluxo que eu pensei o gestor vai criar a preventiva, e vai avisar o tecnico de inicio
+até ele se habituar ao sistema, até integramos com o glpi no futuro
+
+entao ele cria a preventiva, nao existe rascunho existe a preventiva criada e disponivel , rascunho seria
+bom ia criar a preventiva , mas acabei clicando em fechar e quis voltar naquele estado ? ai faria sentido
+
+2 - SNAPSHOT : concordo com essa decisão, pois a preventiva é a fonte da verdade, se o tecnico saber que antes tinha uma atividade
+e depois o gestor tirou ou desativou a atividade ele vai acabar nao aderindo a ferramenta.
+
+Tipo de preventiva
+Atividades selecionadas
+Unidades selecionadas
+Perfil das unidades
+Composição dos perfis
+Configurações necessárias das atividades
+
+Assim alterações futuras nas configurações não alteram uma preventiva histórica.
+
+3. Resultado da Composição Operacional
+
+Precisamos definir o mínimo necessário.
+
+Eu sugiro:
+
+CONFORME
+NAO_CONFORME
+
+gostei dos dois deixa abastrato e pode ser usado para esta operacional e esta com um defeito sem ter que DESCREVER
+
+4- evidencia fotografica = isso mesmo nao queremos ter 10 fotos sobre um teste
+Atividade: Teste de Hardware
+Tipo: Foto
+Foto: obrigatória
+Máximo: 1 por atividade/unidade
+
+5 - permissoes
+
+Administrador/Gestor
+    → configurações
+    → cria preventiva
+    → seleciona técnico
+    → aprova/reprova
+
+Técnico
+    → visualiza preventivas atribuídas
+    → inicia
+    → pausa -> pra mim nao existiria essa pausa, pois o tecnico pauso em 2015, preventiva e esqueceu de voltar a fazer
+    vai dar brecha para ele nao fazer pois ele pode alterar em pausa,faria sentido esse status se o tecnico fosse ter que
+    documentar , tipo pausei a preventiva por que fui na outra filial resolver outro problema, porem ele nao vai ter que ficar documentando
+    toda pausa e sobrecarregando cada acao do mundo real por esse motivo eu teria disponivel preventiva, tecnico abriu a preventiva e executou uma atividade relacionada a essa preventiva
+    preventiva em execucao, ele viu que nao testou todos os caixas porem ele concientemente vai la e finaliza , recebe o aviso
+    e 15 unidades nao testada deseja mesmo finalizar ? sim ou não ele nao teria que pausar apenas descidir.
+    fechou o sistema foi fazer algo na loja , nao tem o pausa nada ele so vai executando e pronto.
+    → executa
+    → finaliza
+
+
+6- Estrutura inicial do módulo
+
+Eu separaria fisicamente o código para não criar um módulo gigantesco:
+Aprovado seu modelo
+Configuracoes
+├── Tipos de Unidade
+├── Perfis Operacionais
+├── Unidades Operacionais
+└── Tipos de Preventiva
+    └── Atividades
+
+Preventivas
+└── Execuções
+
+
+Uma execução de preventiva representa uma fotografia da configuração utilizada no momento de sua criação.
+
+
+Estrutura física inicial
+
+Eu começaria o módulo com estes domínios:
+
+Configuração
+├── TipoUnidade
+├── PerfilOperacional
+├── PerfilOperacionalCategoria
+├── UnidadeOperacional
+├── TipoPreventiva
+├── TipoPreventivaFilial
+└── Atividade
+
+Execução
+├── Preventiva
+├── PreventivaUnidade
+├── PreventivaAtividade
+└── PreventivaResposta
+
+
+TipoUnidade = REPRESENTA O TIPO DE UNIDADE
+    ↓
+PerfilOperacional - NOME DO PERFIL E POSSUI AS CATEGORIAS ESPERADAS PARA AQUELE PERFIL
+    ↓
+PerfilOperacionalCategoria - FK DE Categorias De equipamentos la que vamos cadastrar as categorias existentes
+no dominio e ai vamos conseguir atrelar ao perfil se amanha surgir um pdv diferente criamos um perfil novo e uma categoria
+nova de categoria de equipamento.
+    ↓
+UnidadeOperacional
+Representa o tipo + perfil = a unidade operacional fisica na filial
+
+
+TipoUnidade
+    │
+    │ 1:N
+    ▼
+PerfilOperacional
+    │
+    │ 1:N
+    ▼
+PerfilOperacionalCategoria
+    │
+    │ N:1
+    ▼
+CategoriaEquipamento
+
+E :
+
+TipoUnidade
+       │
+       │
+       ├──────────────┐
+       │              │
+       ▼              ▼
+PerfilOperacional   UnidadeOperacional
+                       │
+                       ├── Filial
+                       ├── TipoUnidade
+                       └── PerfilOperacional
+
+
+1. TipoUnidade
+
+Representa o conceito operacional existente no mundo real.
+
+Exemplos:
+
+PDV
+Self Checkout
+Kit Backup
+Servidor
+Balança Etiquetadora
+
+Ele não conhece equipamentos específicos.
+
+2. PerfilOperacional
+
+Representa uma composição operacional específica de determinado TipoUnidade.
+
+Exemplo:
+
+
+Tipo: PDV
+
+Perfil: PDV Padrão
+
+Composição:
+
+Monitor              1
+Teclado              1
+CPU                  1
+Scanner               1
+Balança               1
+Impressora            1
+Gaveta                1
+Pinpad                1
+
+
+O sistema não precisa criar uma lógica especial dizendo:
+
+"Scanner bióptico é scanner + balança."
+
+Se isso for uma categoria própria no domínio, basta:
+
+
+3. PerfilOperacionalCategoria
+
+Essa é a tabela que materializa a composição.
+
+Ela terá essencialmente:
+
+perfil_operacional_id
+categoria_equipamento_id
+quantidade
+
+Perfil: PDV Padrão
+
+Por exemplo:
+
+Categoria              Quantidade
+---------------------------------
+CPU                         1
+Monitor                     1
+Teclado                     1
+Scanner                     1
+Balança                     1
+Impressora                  1
+Gaveta                      1
+Pinpad                      1
+
+
+4. UnidadeOperacional
+
+Aqui acontece a transformação do modelo abstrato em algo existente fisicamente na filial.
+
+Exemplo:
+
+TipoUnidade:
+PDV
+
+PerfilOperacional:
+PDV Bióptico
+
+Filial:
+Matriz
+
+Identificador:
+18
+
+Isso representa:
+
+PDV 18 da Matriz, seguindo atualmente o perfil operacional PDV Bióptico.
+
+Outro:
+
+TipoUnidade:
+PDV
+
+Perfil:
+PDV Scanner + Balança
+
+Filial:
+Torres
+
+Identificador:
+10
+
+E podemos ter:
+
+Matriz
+    PDV 18
+    PDV 19
+    PDV 20
+
+Torres
+    PDV 10
+    PDV 11
+    PDV 12
+
+O identificador 10 pode existir nas duas filiais porque a unicidade será contextual:
+
+filial + tipo_unidade + identificador
+
+ou, dependendo da regra final que adotarmos:
+
+filial + tipo_unidade + identificador
+
+deve ser único.
+
+A relação conceitual completa
+
+Eu desenharia o domínio inicial assim:
+
+
+                 ┌──────────────────────┐
+                 │     TipoUnidade       │
+                 │                      │
+                 │ PDV                  │
+                 │ Self Checkout        │
+                 │ Servidor             │
+                 │ Kit Backup            │
+                 └──────────┬───────────┘
+                            │
+                            │ 1:N
+                            ▼
+                 ┌──────────────────────┐
+                 │ PerfilOperacional    │
+                 │                      │
+                 │ PDV Padrão           │
+                 │ PDV Bióptico         │
+                 │ PDV 2 Monitores      │
+                 └──────────┬───────────┘
+                            │
+                            │ 1:N
+                            ▼
+              ┌─────────────────────────────┐
+              │ PerfilOperacionalCategoria  │
+              │                             │
+              │ categoria_id                │
+              │ quantidade                  │
+              └─────────────┬───────────────┘
+                            │
+                            │ N:1
+                            ▼
+                 ┌──────────────────────┐
+                 │ CategoriaEquipamento │
+                 │                      │
+                 │ CPU                  │
+                 │ Monitor              │
+                 │ Scanner              │
+                 │ Impressora           │
+                 │ etc.                 │
+                 └──────────────────────┘
+
+
+                 ┌──────────────────────┐
+                 │ UnidadeOperacional   │
+                 │                      │
+                 │ identificador        │
+                 │ filial_id            │
+                 │ tipo_unidade_id      │
+                 │ perfil_id            │
+                 └──────────────────────┘
+
+
+Um Perfil Operacional não pode mudar de Tipo de Unidade após sua criação.
+
+
+UNIDADE OPERACIONAL
+
+- Representa uma unidade física identificável no mundo real.
+- Pertence a uma filial.
+- Possui um Tipo de Unidade imutável.
+- Possui um identificador imutável.
+- Possui um Perfil Operacional atual, que pode ser alterado.
+- Pode ser inativada.
+- Não deve ser excluída.
+- Não deve ser reutilizada para representar outra unidade física.
+
+
+PERFIL OPERACIONAL
+
+- Pertence a um único Tipo de Unidade.
+- O Tipo de Unidade não pode ser alterado.
+- Define uma composição operacional.
+- Pode ser inativado.
+- Não deve ser excluído.
+- Uma alteração que represente uma nova composição operacional deve gerar um novo perfil.
+
+
+Essa regra deixa a distinção muito clara:
+
+Unidade = identidade física.
+
+Perfil = configuração operacional dessa identidade.
+
+Tipo = classificação conceitual da unidade.
+
+Composição = o que aquele perfil espera encontrar.
+
+
+Portanto, neste momento temos praticamente fechado o primeiro subdomínio:
+
+Tipo de Unidade
+       ↓
+Perfis Operacionais
+       ↓
+Composição dos Perfis
+
+              ↓
+
+Unidades Operacionais
+       ↓
+Filial + Tipo + Perfil + Identificador
+
+E o fluxo administrativo fica bem definido:
+
+1. Cadastrar Categorias de Equipamentos
+2. Cadastrar Tipo de Unidade
+3. Dentro do Tipo, cadastrar Perfis Operacionais
+4. Definir a composição de cada Perfil
+5. Cadastrar as Unidades Operacionais por filial
+6. Selecionar o Tipo
+7. Selecionar o Perfil
+8. Definir o Identificador
+
+
+O mais importante é que já definimos as fronteiras:
+
+TipoUnidade representa o conceito do mundo real: PDV, Servidor, Self Checkout etc.
+PerfilOperacional representa uma composição operacional específica daquele tipo.
+PerfilOperacionalCategoria define quais categorias e quantidades compõem o perfil.
+UnidadeOperacional representa a unidade física dentro de uma filial, com identificador próprio.
+TipoPreventiva representa o modelo de trabalho aplicável a um tipo de unidade.
+Atividade representa uma ação concreta que o técnico executará.
+A execução será criada a partir dessa configuração e trabalhará com um snapshot.
+O técnico não configura o sistema; ele executa o que foi definido.
+A composição operacional será tratada como uma regra de domínio, não como uma pergunta genérica.
+A seleção de quais unidades recebem cada atividade pertence à execução específica.
+Alterações futuras na configuração não podem modificar o histórico das execuções anteriores.
+
+Também temos uma decisão importante já consolidada: não vamos tentar transformar cada equipamento individual em uma entidade do domínio. O sistema trabalha com unidades operacionais e suas composições. Isso é justamente o que impede o módulo de virar um segundo GLPI.
+
+Eu considero que já podemos sair da fase de descoberta e entrar na fase de modelagem técnica.
+
+O próximo passo que eu faria não é ainda criar todas as migrations. Primeiro desenharia as entidades Laravel e os relacionamentos:
+
+
+TipoUnidade
+    hasMany PerfilOperacional
+
+PerfilOperacional
+    belongsTo TipoUnidade
+    hasMany PerfilOperacionalCategoria
+    hasMany UnidadesOperacionais
+
+PerfilOperacionalCategoria
+    belongsTo PerfilOperacional
+    belongsTo Categoria
+
+UnidadeOperacional
+    belongsTo Filial
+    belongsTo TipoUnidade
+    belongsTo PerfilOperacional
+
+TipoPreventiva
+    belongsTo TipoUnidade
+    hasMany Atividades
+
+Atividade
+    belongsTo TipoPreventiva
+
+
+O sistema não precisa compreender a composição física ou funcional de um equipamento. Ele precisa saber quais equipamentos pertencem à unidade e registrar o estado operacional de cada um.
+
+O Preventivas representa a realidade operacional da empresa. O GLPI é uma integração externa, não uma dependência estrutural do domínio de preventivas.
+
+Tipo de Unidade
+    ↓
+Perfil Operacional
+    ↓
+Composição Operacional
+    ↓
+PDV
+    ↓
+Tipo de Preventiva
+    ↓
+Atividade: Teste operacional do PDV
+    ↓
+Tipo de resposta: Composição Operacional
+    ↓
+Validação dos componentes
+    ↓
+Ocorrência / solução quando houver divergência
+
+
+Se duas verificações pertencem à mesma rotina de manutenção e são executadas sobre a mesma unidade, elas devem ser atividades da mesma preventiva, e não tipos de preventiva diferentes.
+
+
+CONFIGURAÇÃO
+│
+├── Tipo de Preventiva
+│      └── Preventiva de PDV
+│
+├── Atividades
+│      ├── Teste operacional
+│      ├── Teste de impressão
+│      └── Teste de SSD
+│
+└── Tipos de Entidade / Perfis / Entidades
+       └── PDVs da filial
+
+
+GESTOR
+│
+▼
+NOVA PREVENTIVA
+│
+├── Seleciona Tipo
+├── Seleciona Filial
+├── Seleciona Data Inicial
+├── Seleciona Responsável
+│
+▼
+SISTEMA
+│
+├── Carrega atividades do tipo
+└── Carrega unidades operacionais compatíveis
+│
+▼
+GESTOR DEFINE A COMPOSIÇÃO
+│
+├── PDV 04 → atividade A
+├── PDV 05 → atividade A
+├── PDV 18 → atividade A + B
+├── PDV 19 → atividade A + B
+└── PDV 24 → atividade A + B + C
+│
+▼
+PREVENTIVA CRIADA
+│
+▼
+TÉCNICO
+│
+├── Executa atividade A no PDV 04
+├── Executa atividade A no PDV 05
+├── Executa A + B no PDV 18
+└── ...
+│
+▼
+RESULTADOS
+│
+▼
+TÉCNICO FINALIZA
+│
+▼
+GESTOR VALIDA
+│
+├── Aprova
+└── Reprova / Reabre
+
+
+Então a regra de domínio poderia ser:
+
+Uma execução somente pode existir se possuir pelo menos uma atividade delegada.
+
+
+PERFIL DE PREVENTIVA
+        │
+        ├── Filial: Matriz
+        │
+        ├── Regra: TODAS AS UNIDADES
+        │       └── Atividade: Teste Operacional
+        │
+        ├── Regra: UNIDADES ESPECÍFICAS
+        │       ├── PDV 04
+        │       ├── PDV 05
+        │       └── PDV 06
+        │              └── Atividade: Teste de Impressão
+        │
+        └── Regra: UNIDADES ESPECÍFICAS
+                ├── PDV 18
+                ├── PDV 19
+                └── PDV 20
+                       └── Atividade: Teste de SSD
+
+
+PERFIL: Preventiva Semanal de PDV
+
+MATRIZ
+
+REGRA PADRÃO
+TODAS AS UNIDADES
+    ├── Teste Operacional
+    └── Teste de Impressão
+
+EXCEÇÃO
+PDV 05
+    └── Teste Operacional
+
+EXCEÇÃO
+PDV 10
+    ├── Teste Operacional
+    └── Teste de SSD
+
+EXCEÇÃO
+PDV 15
+    └── Formatação
+
+
+Para isso, é melhor simplesmente o PDV não fazer parte do escopo da preventiva.
+
+Então teríamos:
+
+TODAS
+    → atividades padrão
+
+ESPECÍFICA
+    → substitui TODAS e precisa ter pelo menos uma atividade
+
+E no futuro, se precisarmos de exclusão explícita, podemos criar:
+
+EXCLUÍDA
+    → não participa da preventiva
+
+Mas eu não adicionaria isso agora sem necessidade.
+
+Com isso, o Perfil de Preventiva fica bastante limpo:
+
+TIPO DE PREVENTIVA
+        ↓
+PERFIL DE PREVENTIVA
+        │
+        ├── Filiais
+        │
+        └── Regras de composição
+              │
+              ├── TODAS
+              │      └── atividades padrão
+              │
+              └── UNIDADES ESPECÍFICAS
+                     └── atividades específicas
+                              ↓
+                         RESOLUÇÃO
+                              ↓
+                         SNAPSHOT
+                              ↓
+                         PREVENTIVA
+
+Esse desenho é compatível com o que já definimos para Unidade Operacional, Perfil Operacional, Tipo de Preventiva e Atividades. Eu manteria exatamente essa regra antes de começarmos a criar as migrations do Perfil de Preventiva.
+
+
+CONFIGURAÇÃO
+
+Tipo de Unidade
+    → conceito da entidade
+
+Perfil Operacional
+    → composição possível daquela entidade
+
+Unidade Operacional
+    → entidade física real
+
+
+PREVENTIVA
+
+Tipo de Preventiva
+    → tipo de manutenção/validação
+
+Atividade
+    → ação que pode ser executada
+
+Perfil de Preventiva
+    → modelo reutilizável de execução
+
+Preventiva
+    → instância concreta daquele modelo
+
+Execução
+    → execução sobre uma unidade operacional
+
+Validação
+    → resultado produzido pelo técnico
+
+
+A arquitetura passa a ser modular em dois níveis:
+
+PERFIL OPERACIONAL
+    reutiliza composição de equipamentos
+
+
+PERFIL DE PREVENTIVA
+    reutiliza composição de atividades
+
+Isso é particularmente interessante porque os dois perfis têm papéis conceitualmente semelhantes:
+
+Perfil Operacional
+    "Como este tipo de unidade normalmente é composto?"
+
+Perfil de Preventiva
+    "Como normalmente executamos este tipo de preventiva?"
+
+Depois a realidade física e operacional é materializada:
+
+Perfil Operacional
+        ↓
+Unidade Operacional
+
+Perfil de Preventiva
+        ↓
+Preventiva
+
+
+Uma configuração específica deve resultar em uma composição diferente da configuração padrão daquela filial.
+
+uma unidade só pode pertencer a uma regra específica
+dentro do mesmo perfil e filial
+
+preventive_profiles
+-------------------
+id
+preventive_type_id
+name
+description
+active
+created_at
+updated_at
+
+
+preventive_profile_branches
+---------------------------
+id
+preventive_profile_id
+branch_id
+created_at
+updated_at
+
+preventive_profile_rules
+------------------------
+id
+preventive_profile_branch_id
+type              // all | specific
+created_at
+updated_at
+
+
+preventive_profile_rule_units
+------------------------------
+id
+preventive_profile_rule_id
+operational_unit_id
+
+
+Eu considero o domínio fechado
+
+Com o que você acabou de definir, temos:
+
+TIPO DE PREVENTIVA
+    ↓
+define qual tipo de unidade pode participar
+    ↓
+PERFIL DE PREVENTIVA
+    ↓
+define como normalmente aquela preventiva será executada
+    ↓
+FILIAIS
+    ↓
+cada filial possui uma regra TODAS
+    +
+zero ou mais regras específicas
+    ↓
+UNIDADES OPERACIONAIS
+    ↓
+atividade padrão ou composição específica
+
+E depois:
+
+Eu faria o novo domínio desta forma:
+
+TIPO DE PREVENTIVA
+        │
+        │ 1:N
+        ▼
+PERFIL DE PREVENTIVA
+        │
+        ├── Filiais participantes
+        │
+        └── Regras de atividades
+                 │
+                 ├── REGRA PADRÃO
+                 │      TODOS
+                 │      └── atividades
+                 │
+                 └── REGRAS ESPECÍFICAS
+                        ├── Unidade A
+                        │     └── atividades
+                        │
+                        ├── Unidade B
+                        │     └── atividades
+                        │
+                        └── Unidade C
+                              └── atividades
+
+
+
+E há uma distinção importante:
+
+
+PERFIL
+    ↓
+resolução das regras
+    ↓
+snapshot
+    ↓
+PREVENTIVA
+    ↓
+EXECUÇÕES
+    ↓
+VALIDAÇÕES
+
+Perfil de Preventiva
+        ↓
+TEMPLATE / CONFIGURAÇÃO REUTILIZÁVEL
+
+Preventiva
+        ↓
+INSTÂNCIA CONCRETA
+
+Snapshot
+        ↓
+CÓPIA IMUTÁVEL DA CONFIGURAÇÃO USADA
+
+
+REGRAS DE DOMÍNIO — PERFIL DE PREVENTIVA
+
+1. CONCEITO
+
+O Perfil de Preventiva é um template reutilizável para configurar como uma determinada preventiva será aplicada às unidades operacionais de uma ou mais filiais.
+
+Ele não representa uma preventiva executada. Ele representa uma configuração prévia que poderá ser utilizada para criar futuras instâncias de Preventiva.
+
+Exemplo:
+
+Perfil: Preventiva Semanal de PDV
+Tipo de Preventiva: Preventiva de PDV
+Filiais participantes:
+- Matriz
+- Filial Centro
+- Filial Norte
+
+Cada filial poderá possuir suas próprias regras de aplicação dentro do mesmo perfil.
+
+
+2. RELAÇÃO COM O TIPO DE PREVENTIVA
+
+Um Perfil de Preventiva pertence obrigatoriamente a um único Tipo de Preventiva.
+
+O Tipo de Preventiva determina:
+
+- qual Tipo de Unidade Operacional será utilizado;
+- quais atividades estão disponíveis;
+- qual domínio operacional será validado.
+
+O Perfil de Preventiva não poderá utilizar unidades operacionais de outro tipo.
+
+Exemplo:
+
+Tipo de Preventiva:
+Preventiva de PDV
+
+Tipo de Unidade:
+PDV
+
+Unidades elegíveis:
+Somente unidades operacionais cujo unit_type_id corresponda ao tipo de unidade definido pela Preventiva de PDV.
+
+
+3. FILIAIS PARTICIPANTES
+
+Um Perfil de Preventiva poderá estar associado a várias filiais.
+
+A associação do perfil com a filial determina onde aquela configuração poderá ser aplicada.
+
+Exemplo:
+
+Perfil:
+Preventiva Semanal de PDV
+
+Filiais:
+- Matriz
+- Filial Centro
+- Filial Norte
+
+Cada filial poderá possuir configurações próprias das unidades operacionais participantes.
+
+
+4. UNIDADES OPERACIONAIS
+
+As unidades operacionais não serão copiadas ou recriadas dentro do Perfil de Preventiva.
+
+O perfil referencia as unidades operacionais existentes.
+
+As unidades elegíveis serão determinadas por:
+
+- filial;
+- tipo de unidade operacional;
+- situação ativa da unidade.
+
+Exemplo:
+
+Tipo de Preventiva:
+Preventiva de PDV
+
+Filial:
+Matriz
+
+Unidades disponíveis:
+PDV 01
+PDV 02
+PDV 03
+...
+PDV 40
+
+
+5. REGRA PADRÃO
+
+Cada filial participante deverá possuir uma única regra padrão.
+
+A regra padrão representa o comportamento aplicado ao grupo "TODOS" daquela filial.
+
+Exemplo:
+
+Filial: Matriz
+Grupo: TODOS
+Atividades:
+- Teste Operacional
+
+Isso significa:
+
+PDV 01 → Teste Operacional
+PDV 02 → Teste Operacional
+PDV 03 → Teste Operacional
+...
+PDV 40 → Teste Operacional
+
+Não devem ser criados 40 registros individuais para representar essa configuração.
+
+
+6. REGRA ESPECÍFICA
+
+Uma filial poderá possuir regras específicas para determinadas unidades operacionais.
+
+A regra específica possui prioridade sobre a regra padrão.
+
+Exemplo:
+
+Regra padrão:
+
+TODOS → Teste Operacional
+
+Regra específica:
+
+PDV 05 → Teste de SSD
+
+Resultado:
+
+PDV 01 → Teste Operacional
+PDV 02 → Teste Operacional
+PDV 03 → Teste Operacional
+PDV 04 → Teste Operacional
+PDV 05 → Teste de SSD
+PDV 06 → Teste Operacional
+
+
+7. REGRA ESPECÍFICA COM MÚLTIPLAS UNIDADES
+
+Uma regra específica poderá ser aplicada a uma ou várias unidades operacionais.
+
+Exemplo:
+
+Regra padrão:
+
+TODOS → Teste Operacional
+
+Regra específica:
+
+PDV 05, PDV 06, PDV 07 → Teste Operacional + Teste de Impressão
+
+Isso evita a necessidade de criar uma regra individual para cada unidade quando várias unidades possuem exatamente a mesma exceção.
+
+
+8. PRIORIDADE DAS REGRAS
+
+A prioridade de aplicação será:
+
+1. Regra específica da unidade
+2. Regra padrão da filial
+
+Uma unidade operacional não poderá receber simultaneamente uma regra específica e uma segunda regra específica conflitante.
+
+O sistema deve garantir que não existam duas configurações diferentes para a mesma unidade dentro da mesma filial e perfil.
+
+
+9. NÃO CRIAR REGRA ESPECÍFICA DESNECESSÁRIA
+
+Uma regra específica somente deve existir quando representar uma exceção ao comportamento padrão.
+
+Exemplo:
+
+Regra padrão:
+TODOS → Teste Operacional
+
+Não faz sentido criar:
+
+PDV 05 → Teste Operacional
+
+pois o PDV 05 já recebe essa atividade pela regra padrão.
+
+Caso seja necessário alterar o comportamento:
+
+PDV 05 → Teste de SSD
+
+ou:
+
+PDV 05 → Teste Operacional + Teste de SSD
+
+Nesse caso a regra específica passa a ter significado.
+
+
+10. NOVAS UNIDADES OPERACIONAIS
+
+O Perfil de Preventiva não deverá criar automaticamente registros de configuração individuais para todas as unidades existentes.
+
+Uma nova unidade operacional criada posteriormente deverá participar automaticamente da regra padrão da filial, desde que:
+
+- esteja ativa;
+- pertença ao tipo de unidade compatível;
+- a filial esteja associada ao perfil.
+
+Exemplo:
+
+Perfil:
+Preventiva Semanal de PDV
+
+Regra:
+TODOS → Teste Operacional
+
+Posteriormente é criado:
+
+PDV 41
+
+O PDV 41 passa automaticamente a receber:
+
+PDV 41 → Teste Operacional
+
+Não é necessário criar uma nova configuração no perfil.
+
+
+11. NOVAS UNIDADES COM EXCEÇÃO
+
+Caso uma nova unidade precise de um comportamento diferente, o gestor poderá criar uma regra específica para ela.
+
+Exemplo:
+
+Regra padrão:
+TODOS → Teste Operacional
+
+Nova unidade:
+PDV 41
+
+Exceção:
+PDV 41 → Teste de SSD + Teste de Impressão
+
+A regra específica passa a ter prioridade sobre a regra padrão.
+
+
+12. ATIVIDADES DO PERFIL
+
+As atividades disponíveis para configuração são exclusivamente as atividades pertencentes ao Tipo de Preventiva selecionado.
+
+O Perfil de Preventiva não poderá inventar ou cadastrar atividades próprias.
+
+Exemplo:
+
+Tipo de Preventiva:
+Preventiva de PDV
+
+Atividades cadastradas:
+- Teste Operacional
+- Teste de Impressão
+- Teste de SSD
+
+Somente essas atividades poderão ser utilizadas nas regras do perfil.
+
+
+13. PERFIL NÃO ALTERA O TIPO DE PREVENTIVA
+
+O Perfil de Preventiva utiliza a configuração do Tipo de Preventiva, mas não altera sua definição.
+
+O perfil serve para determinar:
+
+"Como este Tipo de Preventiva será aplicado às unidades operacionais desta filial?"
+
+
+14. PERFIL NÃO É UMA EXECUÇÃO
+
+O Perfil de Preventiva não possui:
+
+- técnico responsável pela execução;
+- data de execução;
+- resultados;
+- respostas;
+- observações de execução;
+- evidências;
+- aprovação;
+- status de execução.
+
+Essas informações pertencem à Preventiva criada a partir do perfil.
+
+
+15. CRIAÇÃO DA PREVENTIVA A PARTIR DO PERFIL
+
+Ao criar uma nova Preventiva, o gestor poderá utilizar um Perfil de Preventiva como configuração inicial.
+
+O sistema deverá carregar as regras configuradas no perfil.
+
+O gestor poderá revisar e, quando permitido pelo fluxo, ajustar a composição da nova Preventiva antes de sua criação.
+
+O Perfil permanece como template e não é alterado pela criação da Preventiva.
+
+
+16. SNAPSHOT NA CRIAÇÃO DA PREVENTIVA
+
+Ao criar uma Preventiva a partir de um Perfil, a configuração utilizada deverá ser materializada em um snapshot próprio da Preventiva.
+
+O snapshot deverá preservar pelo menos:
+
+- Tipo de Preventiva utilizado;
+- atividades utilizadas;
+- regras de aplicação;
+- unidades operacionais selecionadas;
+- relação entre unidades e atividades.
+
+Após a criação da Preventiva, alterações futuras no Perfil, Tipo de Preventiva ou Atividades não deverão modificar a Preventiva já criada.
+
+
+17. INDEPENDÊNCIA HISTÓRICA
+
+A Preventiva criada representa o estado da configuração no momento de sua criação.
+
+Exemplo:
+
+Perfil:
+TODOS → Teste Operacional
+
+Preventiva criada:
+01/08/2026
+
+Depois o gestor altera o perfil:
+
+TODOS → Teste Operacional + Teste de SSD
+
+A Preventiva criada em 01/08/2026 continua utilizando somente:
+
+Teste Operacional
+
+A nova configuração será utilizada somente por futuras Preventivas.
+
+
+18. CONFIGURAÇÃO POR FILIAL
+
+Embora o Perfil possa possuir várias filiais participantes, as regras de unidades devem ser tratadas dentro do contexto da filial.
+
+Exemplo:
+
+Perfil:
+Preventiva Semanal de PDV
+
+Matriz:
+TODOS → Teste Operacional
+PDV 05 → Teste de SSD
+
+Filial Centro:
+TODOS → Teste Operacional + Teste de Impressão
+PDV 12 → Teste Operacional
+
+As configurações de uma filial não interferem nas configurações de outra.
+
+
+19. REGRA DE CONSISTÊNCIA
+
+O sistema deve impedir configurações inválidas, como:
+
+- perfil sem Tipo de Preventiva;
+- perfil sem filial participante;
+- filial sem regra padrão;
+- mais de uma regra padrão para a mesma filial;
+- unidade pertencente a outra filial;
+- unidade pertencente a outro tipo de unidade;
+- atividade pertencente a outro Tipo de Preventiva;
+- duas regras específicas conflitantes para a mesma unidade;
+- regra específica idêntica à regra padrão sem necessidade.
+
+
+20. RESPONSABILIDADE DO DOMÍNIO
+
+A validade da composição do Perfil de Preventiva não deverá depender exclusivamente do Controller.
+
+O domínio deverá garantir que a configuração seja consistente antes de permitir sua utilização para criação de uma Preventiva.
+
+O Controller deve coordenar o fluxo da aplicação.
+
+A regra de negócio deve permanecer no domínio/service/action apropriado.
+
+
+21. RELAÇÃO COM A EXECUÇÃO
+
+O fluxo completo será:
+
+TIPO DE UNIDADE
+    ↓
+PERFIL OPERACIONAL
+    ↓
+UNIDADE OPERACIONAL
+    ↓
+TIPO DE PREVENTIVA
+    ↓
+ATIVIDADES
+    ↓
+PERFIL DE PREVENTIVA
+    ↓
+REGRAS POR FILIAL
+    ├── TODOS → atividades padrão
+    └── ESPECÍFICAS → exceções
+    ↓
+PREVENTIVA
+    ↓
+SNAPSHOT
+    ↓
+EXECUÇÕES POR UNIDADE OPERACIONAL
+    ↓
+VALIDAÇÕES
+    ↓
+FINALIZAÇÃO
+    ↓
+APROVAÇÃO DO GESTOR
+
+
+22. PRINCÍPIO CENTRAL
+
+O Perfil de Preventiva deve funcionar como um template de configuração.
+
+A regra geral é definida uma única vez através do grupo "TODOS".
+
+As regras específicas existem exclusivamente para representar exceções.
+
+Uma nova unidade operacional deve herdar automaticamente a regra padrão da filial.
+
+A Preventiva criada posteriormente deve receber um snapshot próprio, garantindo histórico e independência das alterações futuras no Perfil.
+
+O objetivo é permitir que o gestor configure uma Preventiva complexa uma única vez e reutilize essa configuração, sem precisar cadastrar manualmente cada unidade operacional.
+
+
+A estrutura que eu recomendaria para começarmos a implementar é:
+
+preventive_profiles
+    ↓
+preventive_profile_branches
+    ↓
+preventive_profile_rules
+    ↓
+preventive_profile_rule_units
+    ↓
+preventive_profile_rule_activities
+
+
+Com isso conseguimos representar:
+
+um perfil reutilizável;
+várias filiais;
+uma regra padrão por filial;
+várias regras específicas por filial;
+várias unidades dentro de uma regra específica;
+várias atividades dentro de qualquer regra;
+prioridade natural da regra específica sobre ALL;
+novas unidades herdando automaticamente ALL;
+nenhuma necessidade de criar 40 configurações para 40 PDVs.
+
+
+Migration → Model → Policy → Form Request → Service → Controller → Routes → Blade
+
+A responsabilidade de cada camada fica bem definida:
+
+Migration
+    ↓
+Estrutura e integridade do banco
+
+Model
+    ↓
+Relacionamentos e representação dos dados
+
+Policy
+    ↓
+Quem pode visualizar/criar/alterar/excluir
+
+Form Request
+    ↓
+Validação dos dados recebidos
+
+Service
+    ↓
+Regra de negócio e composição do PreventiveProfile
+    ↓
+Transação
+    ↓
+Filiais
+    ↓
+Regras ALL / SPECIFIC
+    ↓
+Unidades
+    ↓
+Atividades
+
+Controller
+    ↓
+Orquestra a requisição
+    ↓
+Chama Policy / Request / Service
+    ↓
+Retorna resposta ou View
+
+Routes
+    ↓
+Define os endpoints
+
+Blade
+    ↓
+Interface do gestor
+
+
+
+REGRAS DE DOMÍNIO — PREVENTIVE PROFILE
+
+1. PERFIL
+────────────────────────────────────────
+
+1.1. Um PreventiveProfile pertence obrigatoriamente a um PreventiveType.
+
+1.2. O PreventiveType define o UnitType que pode participar do perfil.
+
+1.3. O perfil possui nome único dentro do mesmo PreventiveType.
+
+1.4. Perfil inativo não pode ser utilizado para criação de novas preventivas.
+
+1.5. Perfil já utilizado por uma Preventive não deve ser apagado fisicamente.
+     Ele deve ser desativado.
+
+1.6. Alterações futuras no perfil não podem alterar preventivas já criadas,
+     pois a Preventive possuirá seu próprio snapshot da configuração.
+
+
+2. FILIAIS
+────────────────────────────────────────
+
+2.1. Uma PreventiveProfile pode possuir várias filiais.
+
+2.2. A mesma filial não pode ser adicionada duas vezes ao mesmo perfil.
+
+2.3. Cada filial participante possui sua própria configuração de regras.
+
+2.4. Uma filial pode possuir várias regras SPECIFIC.
+
+2.5. Uma filial pode possuir somente uma regra ALL.
+
+
+3. REGRA ALL
+────────────────────────────────────────
+
+3.1. A regra ALL representa a configuração padrão da filial.
+
+3.2. A regra ALL não cadastra unidades individualmente.
+
+3.3. A regra ALL representa:
+
+        "Todas as unidades operacionais elegíveis desta filial"
+
+3.4. Novas unidades operacionais que posteriormente forem cadastradas
+     e forem elegíveis para o PreventiveType passam automaticamente
+     a obedecer à regra ALL.
+
+3.5. A regra ALL deve possuir pelo menos uma atividade.
+
+3.6. Não deve existir uma segunda regra ALL para a mesma filial.
+
+
+4. REGRA SPECIFIC
+────────────────────────────────────────
+
+4.1. SPECIFIC representa uma exceção à regra ALL.
+
+4.2. Uma regra SPECIFIC deve possuir uma ou mais unidades operacionais.
+
+4.3. Uma regra SPECIFIC deve possuir pelo menos uma atividade.
+
+4.4. Uma unidade operacional não pode participar de duas regras SPECIFIC
+     dentro da mesma filial/perfil.
+
+4.5. Uma unidade operacional que possui uma regra SPECIFIC deixa de utilizar
+     a configuração da regra ALL e passa a utilizar exclusivamente
+     sua configuração específica.
+
+4.6. Uma SPECIFIC pode possuir exatamente a mesma atividade da ALL
+     somente se isso for permitido pelo domínio.
+     Caso contrário, deve ser considerada uma configuração redundante.
+
+     REGRA ADOTADA:
+     uma SPECIFIC deve representar uma exceção real.
+
+4.7. Uma SPECIFIC pode conter uma ou várias atividades.
+
+Exemplo:
+
+ALL:
+    Teste Operacional
+    Teste de Impressão
+    Teste de SSD
+
+SPECIFIC:
+    PDV 05
+        Teste Operacional
+
+Resultado:
+
+PDV 05:
+    Teste Operacional
+
+Demais PDVs:
+    Teste Operacional
+    Teste de Impressão
+    Teste de SSD
+
+
+5. UNIDADES OPERACIONAIS
+────────────────────────────────────────
+
+5.1. Uma unidade operacional utilizada pelo perfil deve pertencer ao
+     mesmo UnitType do PreventiveType.
+
+Exemplo:
+
+PreventiveType:
+    Preventiva de PDV
+
+UnitType:
+    PDV
+
+Permitido:
+    PDV 01
+    PDV 02
+    PDV 03
+
+Não permitido:
+    Servidor 01
+    Impressora isolada
+    Ar-condicionado
+
+5.2. A unidade operacional deve pertencer à mesma filial da configuração
+     do perfil.
+
+5.3. Uma unidade operacional não pode aparecer em duas regras conflitantes
+     da mesma filial.
+
+5.4. A unidade operacional não precisa possuir uma configuração própria
+     no perfil quando estiver coberta pela regra ALL.
+
+
+6. ATIVIDADES
+────────────────────────────────────────
+
+6.1. Toda regra deve possuir pelo menos uma atividade.
+
+6.2. A atividade deve pertencer ao PreventiveType configurado no perfil.
+
+6.3. Não é permitido utilizar uma atividade de outro PreventiveType.
+
+6.4. Uma atividade pode ser utilizada em várias regras.
+
+6.5. Uma regra pode possuir várias atividades.
+
+6.6. A ordem das atividades não deve ser responsabilidade da regra neste
+     primeiro momento, salvo se o domínio posteriormente exigir sequência.
+
+
+7. CONSISTÊNCIA ENTRE FILIAL, UNIDADE E TIPO
+────────────────────────────────────────
+
+Para cada regra:
+
+    PreventiveProfile
+          ↓
+    PreventiveType
+          ↓
+    UnitType
+          ↓
+    PreventiveProfileBranch
+          ↓
+    OperationalUnit
+
+Deve ser verdadeiro:
+
+    OperationalUnit.unit_type_id
+        ==
+    PreventiveType.unit_type_id
+
+e:
+
+    OperationalUnit.branch_id
+        ==
+    PreventiveProfileBranch.branch_id
+
+
+8. COMPOSIÇÃO MÍNIMA
+────────────────────────────────────────
+
+Um perfil válido precisa possuir:
+
+    PreventiveProfile
+        ├── PreventiveType
+        └── pelo menos uma filial
+
+Cada filial precisa possuir:
+
+    PreventiveProfileBranch
+        └── exatamente uma regra ALL
+            └── uma ou mais atividades
+
+Podem existir:
+
+    └── zero ou várias regras SPECIFIC
+        ├── uma ou várias unidades
+        └── uma ou várias atividades
+
+
+9. PRECEDÊNCIA DAS REGRAS
+────────────────────────────────────────
+
+A resolução da configuração de uma unidade deve seguir:
+
+    1º SPECIFIC
+    2º ALL
+
+Exemplo:
+
+PDV 05 possui SPECIFIC?
+    SIM → utiliza SPECIFIC
+    NÃO → utiliza ALL
+
+
+10. NOVA UNIDADE OPERACIONAL
+────────────────────────────────────────
+
+Quando uma nova unidade operacional for cadastrada:
+
+    1. verificar seu UnitType;
+    2. verificar sua filial;
+    3. localizar perfis compatíveis;
+    4. se a filial participar do perfil,
+       a unidade passa automaticamente a estar
+       coberta pela regra ALL.
+
+Nenhum registro precisa ser criado em:
+
+    preventive_profile_rule_units
+
+para a regra ALL.
+
+
+11. ALTERAÇÃO DO PERFIL
+────────────────────────────────────────
+
+O perfil é um template reutilizável.
+
+Alterar o perfil:
+
+    NÃO altera Preventivas já criadas.
+
+Alterar o perfil:
+
+    afeta somente futuras Preventivas
+    que utilizarem aquele perfil.
+
+
+12. SNAPSHOT
+────────────────────────────────────────
+
+Ao criar uma Preventive a partir de um PreventiveProfile:
+
+    Preventive
+        ├── snapshot do PreventiveType
+        ├── snapshot das atividades
+        ├── snapshot das regras
+        ├── snapshot das unidades selecionadas
+        └── demais informações necessárias à execução
+
+A execução trabalha sobre o snapshot.
+
+Nunca deve depender da configuração atual do perfil.
+
+
+13. TRANSAÇÃO
+────────────────────────────────────────
+
+A criação ou atualização do perfil deve ocorrer dentro
+de uma única transação.
+
+Se qualquer parte falhar:
+
+    perfil
+    filiais
+    regras
+    unidades
+    atividades
+
+devem ser revertidos.
+
+
+14. RESPONSABILIDADE ARQUITETURAL
+────────────────────────────────────────
+
+FormRequest:
+
+    valida estrutura
+    valida tipos
+    valida campos obrigatórios
+    valida formatos
+
+Service / Domínio:
+
+    valida regras de negócio
+    resolve precedência
+    valida compatibilidade
+    cria composição
+    executa transação
+
+Controller:
+
+    recebe Request
+    chama Policy
+    chama Service
+    retorna resposta
+
+Controller NÃO deve conhecer as regras de composição.
+
+
+15. RESOLUÇÃO FINAL DE UMA UNIDADE
+────────────────────────────────────────
+
+Para descobrir quais atividades uma unidade deverá executar:
+
+    unidade pertence à filial?
+        ↓
+    unidade é compatível com o UnitType?
+        ↓
+    existe SPECIFIC para a unidade?
+        ├── SIM → atividades da SPECIFIC
+        └── NÃO → atividades da ALL
+
+Resultado:
+
+    unidade operacional
+        ↓
+    regra aplicável
+        ↓
+    atividades
+        ↓
+    execução da preventiva
+
+
+O perfil representa:
+
+"Como queremos configurar esse tipo de preventiva atualmente."
+
+O snapshot representa:
+
+"Como essa preventiva foi efetivamente configurada no momento em que foi criada."
+
+E a execução representa:
+
+"O que realmente aconteceu durante a realização daquela preventiva."
+
+São três conceitos diferentes e não devemos misturá-los.
+
+
+Sim. Eu recomendo separar por responsabilidade. Para esse módulo, um único preventive-profile.js tende a ficar grande porque o formulário terá várias responsabilidades: carregar dados, controlar filiais, montar unidades, gerenciar regras ALL/SPECIFIC, atividades e edição.
+
+Eu organizaria assim:
+
+resources/js/preventive-profile/
+├── form-data.js
+├── branches.js
+├── rules.js
+├── form.js
+└── index.js
+
+Responsabilidade de cada um:
+
+form-data.js
+    ↓
+Responsável pelas requisições AJAX.
+Busca os dados do formulário no backend.
+
+branches.js
+    ↓
+Responsável pelas filiais.
+Seleção/deseleção de filiais.
+Carregamento das unidades operacionais.
+
+rules.js
+    ↓
+Responsável pela configuração das regras.
+ALL / SPECIFIC.
+Seleção das unidades.
+Seleção das atividades.
+Validação visual de conflitos.
+
+form.js
+    ↓
+Orquestra o formulário.
+Inicialização.
+Eventos gerais.
+Integra form-data + branches + rules.
+Preparação para create/edit.
+
+index.js
+    ↓
+Entry point do módulo.
+Inicializa o comportamento quando a página correspondente
+estiver presente.
+
+
+Isso deixa uma divisão importante:
+
+AJAX
+    form-data.js
+
+DOM / interface
+    branches.js
+    rules.js
+
+Orquestração
+    form.js
+
+Entrada do módulo
+    index.js
+
+
+Isso também mantém uma separação importante no domínio:
+
+
+Perfil de Preventiva diz onde a preventiva pode ser aplicada.
+
+Regra ALL diz qual é a configuração padrão daquela filial.
+
+Regra específica modifica essa configuração para uma unidade operacional específica.
+
+Execução só acontece depois que a configuração mínima da filial está válida.
+
+
+Uma filial só pode ser vinculada a um Perfil de Preventiva se possuir pelo menos uma Unidade Operacional ativa compatível com o tipo de unidade definido pelo Tipo de Preventiva.
+
+
+TIPO DE PREVENTIVA
+    │
+    └── define o TIPO DE UNIDADE
+              │
+              ▼
+        PERFIL DE PREVENTIVA
+              │
+              └── FILIAIS elegíveis
+                    │
+                    └── precisam possuir
+                        ≥ 1 unidade operacional compatível
+                              │
+                              ▼
+                        REGRAS DA FILIAL
+                              │
+                              ├── ALL → obrigatória
+                              │
+                              └── SPECIFIC → exceções
+                                      │
+                                      ▼
+                                  EXECUÇÃO
+                                      │
+                                      └── valida novamente
+                                          unidades elegíveis
+
+
+O Perfil de Preventiva só pode receber filiais que possuam pelo menos uma Unidade Operacional ativa cujo unit_type_id seja compatível com o Tipo de Preventiva selecionado.
+
+
+Perfil ativo/inativo
+
+Um perfil inativo pode:
+
+ser editado;
+receber novas regras;
+alterar regras existentes;
+criar regras específicas;
+alterar configurações de filiais/unidades;
+ser reativado.
+
+A única diferença é que, na execução da preventiva, devemos considerar somente:

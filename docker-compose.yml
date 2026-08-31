@@ -1,0 +1,121 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+
+    container_name: preventivas-php
+    restart: unless-stopped
+    init: true
+    working_dir: /var/www/html
+    user: "${UID:-1000}:${GID:-1000}"
+
+    volumes:
+      - ./:/var/www/html
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    healthcheck:
+      test: ["CMD", "php", "-v"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+    networks:
+      - preventivas-network
+
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: preventivas-nginx
+    restart: unless-stopped
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./docker/nginx/ssl:/etc/nginx/ssl:ro
+
+    depends_on:
+      app:
+        condition: service_healthy
+
+    networks:
+      - preventivas-network
+
+
+  db:
+    image: mariadb:10.11
+    container_name: preventivas-db
+    restart: unless-stopped
+
+    environment:
+      TZ: America/Sao_Paulo
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: preventivas
+      MARIADB_USER: preventivas
+      MARIADB_PASSWORD: preventivas
+
+    ports:
+      - "3307:3306"
+
+    volumes:
+      - preventivas-db-data:/var/lib/mysql
+
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - preventivas-network
+
+
+  node:
+    profiles:
+      - dev
+
+    image: node:22
+    container_name: preventivas-node
+    restart: unless-stopped
+    working_dir: /var/www/html
+    user: "${UID:-1000}:${GID:-1000}"
+
+    tty: true
+    stdin_open: true
+
+    command: npm run dev -- --host 0.0.0.0
+
+    ports:
+      - "5173:5173"
+
+    volumes:
+      - ./:/var/www/html
+
+    depends_on:
+      app:
+        condition: service_healthy
+
+    networks:
+      - preventivas-network
+
+
+volumes:
+
+  preventivas-db-data:
+
+
+networks:
+
+  preventivas-network:
+    driver: bridge

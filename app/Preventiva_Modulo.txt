@@ -1,0 +1,399 @@
+1. Módulo Preventive
+
+Primeiro implementamos somente a criação e consulta da instância.
+
+Envolve:
+
+Model
+Preventive
+
+Policy
+PreventivePolicy
+
+Form Request
+StorePreventiveRequest
+
+Service
+CreatePreventiveService
+
+Controller
+PreventiveController
+
+Routes
+GET  /preventivas
+GET  /preventivas/create
+POST /preventivas
+GET  /preventivas/{preventive}
+
+O CreatePreventiveService será importante porque a criação não é simplesmente:
+
+Preventive::create(...)
+
+Ela precisa:
+
+validar dados
+   ↓
+verificar se filial + tipo já possui preventiva pendente
+   ↓
+buscar perfil
+   ↓
+resolver regras ALL / SPECIFIC
+   ↓
+determinar unidades elegíveis
+   ↓
+criar Preventive
+   ↓
+criar Snapshot
+   ↓
+criar Cycle 1
+
+Tudo isso posteriormente dentro de uma DB::transaction().
+
+Esse será provavelmente o primeiro Service realmente importante do módulo.
+
+2. Módulo Snapshot
+
+Aqui entram as cinco tabelas:
+
+preventive_snapshots
+preventive_snapshot_units
+preventive_snapshot_rules
+preventive_snapshot_rule_units
+preventive_snapshot_rule_activities
+
+Eu não criaria:
+
+CreateSnapshotUnitService
+CreateSnapshotRuleService
+CreateSnapshotRuleUnitService
+...
+
+Isso fragmentaria demais.
+
+Criaria algo como:
+
+PreventiveSnapshotService
+
+ou:
+
+CreatePreventiveSnapshotService
+
+Responsabilidade:
+
+Preventive
+   ↓
+Snapshot
+   ├── Units
+   └── Rules
+        ├── RuleUnits
+        └── RuleActivities
+
+Esse Service recebe a preventiva e monta o estado congelado.
+
+Por exemplo:
+
+$snapshotService->create($preventive);
+
+E internamente ele resolve:
+
+Perfil
+ ↓
+Regra ALL / SPECIFIC
+ ↓
+Atividades
+ ↓
+Unidades
+ ↓
+dados históricos
+ ↓
+Snapshot
+
+Essa separação é particularmente importante porque o snapshot é uma operação atômica do domínio.
+
+3. Módulo Cycle
+
+Depois implementamos o ciclo.
+
+Tabela:
+
+preventive_cycles
+
+Aqui entram:
+
+PreventiveCycle
+StatusCycleEnum
+PreventiveCyclePolicy
+PreventiveCycleService
+
+Responsabilidades:
+
+criar ciclo 1
+reabrir após reprovação
+incrementar sequence
+registrar revisão
+registrar observação
+
+O fluxo:
+
+Preventiva criada
+       ↓
+Cycle 1
+       ↓
+Técnico executa
+       ↓
+Finaliza
+       ↓
+Aguardando aprovação
+       ↓
+Gestor reprova
+       ↓
+Cycle 2
+       ↓
+Em andamento
+
+O ponto importante é que o Cycle não duplica o Snapshot.
+
+O snapshot continua representando a configuração congelada da preventiva.
+
+O ciclo representa a tentativa/revisão da execução.
+
+4. Módulo Execution
+
+Esse será o módulo mais interessante depois da estrutura inicial.
+
+Aqui eu não criaria novas tabelas imediatamente, porque precisamos aproveitar as estruturas que já existem no projeto para registrar as respostas das atividades.
+
+O domínio será algo como:
+
+Preventive
+    ↓
+Snapshot
+    ↓
+Snapshot Units
+    ↓
+Activities
+    ↓
+Technician responses
+
+Responsabilidades:
+
+abrir preventiva
+listar unidades
+listar atividades aplicáveis
+registrar resposta
+registrar conformidade
+registrar evidências
+finalizar execução
+
+O técnico não deveria manipular diretamente:
+
+preventive_snapshot_rules
+preventive_snapshot_rule_units
+preventive_snapshot_rule_activities
+
+Ele trabalha através do fluxo de execução.
+
+Isso é importante para manter a regra:
+
+O snapshot é somente a configuração congelada. A execução registra o que aconteceu.
+
+5. Módulo Review
+
+Por último, aprovação/reprovação.
+
+Aqui entra:
+
+PreventiveReviewService
+PreventiveReviewPolicy
+
+E as operações:
+
+aprovar
+reprovar
+
+A aprovação:
+
+Cycle
+   ↓
+approved
+   ↓
+Preventive
+   ↓
+approved
+
+A reprovação:
+
+Cycle 1
+   ↓
+rejected
+   ↓
+cria Cycle 2
+   ↓
+Preventive = in_progress
+
+E a observação fica registrada no ciclo reprovado.
+
+Assim conseguimos depois mostrar:
+
+Histórico da Preventiva
+
+Ciclo 1
+Status: Reprovado
+Revisado por: João
+Data: 26/08/2026
+Observação:
+"Validar novamente as unidades 10 e 15."
+
+Ciclo 2
+Status: Aguardando aprovação
+...
+Ordem prática de implementação
+
+Eu faria exatamente nesta sequência:
+
+FASE 1
+Preventive
+├── Policy
+├── Form Request
+├── Service
+├── Controller
+└── Routes
+
+        ↓
+
+FASE 2
+Snapshot
+├── Snapshot Service
+└── integração com criação da Preventive
+
+        ↓
+
+FASE 3
+Cycle
+├── Policy
+├── Service
+└── integração com Preventive
+
+        ↓
+
+FASE 4
+Execution
+├── Requests
+├── Policies
+├── Services
+└── Controllers
+
+        ↓
+
+FASE 5
+Review
+├── Policy
+├── Service
+├── Controller
+└── aprovação/reprovação
+
+        ↓
+
+FASE 6
+Blade
+├── listagem
+├── criação
+├── visualização
+├── execução
+└── aprovação
+
+E eu faria uma mudança importante em relação ao que você propôs: não começaria pelas Controllers.
+
+A ordem dentro de cada módulo seria:
+
+Enum
+ ↓
+Model
+ ↓
+Policy
+ ↓
+Form Request
+ ↓
+Service
+ ↓
+Controller
+ ↓
+Route
+ ↓
+Blade
+
+Porque assim a Controller fica fina:
+
+public function store(StorePreventiveRequest $request)
+{
+    $preventive = $this->createPreventiveService->execute(
+        $request->validated()
+    );
+
+    return redirect()->route(
+        'preventives.show',
+        $preventive
+    );
+}
+
+A Controller recebe a requisição e delega. Ela não deveria conter toda a lógica de:
+
+perfil
+regra ALL
+regra SPECIFIC
+unidades
+snapshot
+ciclo
+transaction
+
+Isso pertence ao Service/domínio.
+
+E o mais importante para o nosso MVP
+
+Eu não tentaria implementar tudo de uma vez.
+
+O primeiro objetivo seria conseguir fazer:
+
+Gestor
+ ↓
+Criar Preventiva
+ ↓
+Selecionar filial
+ ↓
+Selecionar tipo
+ ↓
+Selecionar perfil
+ ↓
+Selecionar técnico
+ ↓
+Data
+ ↓
+Criar
+ ↓
+Preventive
+ + Snapshot
+ + Cycle 1
+ ↓
+Preventiva "Nova"
+
+Se conseguirmos esse fluxo funcionando ponta a ponta, temos a primeira fatia vertical do módulo funcionando.
+
+Depois fazemos:
+
+Nova → Em andamento
+
+Depois:
+
+Em andamento → Aguardando aprovação
+
+Depois:
+
+Aguardando aprovação → Aprovada
+
+E finalmente:
+
+Aguardando aprovação → Reprovada
+                         ↓
+                      Cycle 2
+                         ↓
+                    Em andamento
