@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Configuration\Operational\OperationalUnit;
+
 use App\Enums\BranchType;
 use App\Enums\State;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
