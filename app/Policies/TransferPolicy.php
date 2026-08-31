@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Transfer;
+use App\Models\Equipment\Transfer;
 use App\Models\Access\User;
 use Illuminate\Auth\Access\Response;
 

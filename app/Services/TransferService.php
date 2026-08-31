@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Enums\TransferStatus;
 use App\Models\Equipment\Equipment;
-use App\Models\Transfer;
+use App\Models\Equipment\Transfer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;

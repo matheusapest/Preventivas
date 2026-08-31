@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Equipment;
 
+use App\Models\Equipment\Equipment;
+use App\Models\Organization\Branch;
+use App\Models\Access\User;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

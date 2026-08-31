@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ReceiveTransferRequest;
 use App\Http\Requests\StoreTransferRequest;
 use App\Models\Organization\Branch;
-use App\Models\Transfer;
+use App\Models\Equipment\Transfer;
 use App\Services\TransferService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;

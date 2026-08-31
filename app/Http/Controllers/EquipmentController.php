@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateEquipmentRequest;
 use App\Models\Organization\Branch;
 use App\Models\Equipment\Equipment;
 use App\Models\Equipment\EquipmentModel;
-use App\Models\Transfer;
+use App\Models\Equipment\Transfer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
