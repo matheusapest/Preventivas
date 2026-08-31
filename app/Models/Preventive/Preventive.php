@@ -6,7 +6,7 @@ use App\Enums\StatusPreventiveEnum;
 use App\Models\Organization\Branch;
 use App\Models\Configuration\Preventive\PreventiveProfile;
 use App\Models\Configuration\Preventive\PreventiveType;
-use App\Models\User;
+use App\Models\Access\User;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

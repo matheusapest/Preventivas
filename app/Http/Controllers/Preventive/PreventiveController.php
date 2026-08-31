@@ -13,7 +13,7 @@ use App\Models\Organization\Branch;
 use App\Models\Preventive\Preventive;
 use App\Models\Configuration\Preventive\PreventiveProfile;
 use App\Models\Configuration\Preventive\PreventiveType;
-use App\Models\User;
+use App\Models\Access\User;
 use App\Services\Preventive\Creation\CreatePreventiveService;
 use App\Services\Preventive\ResolvePreventiveConfigurationService;
 use App\Services\Preventive\Validation\GetPreventiveValidationService;

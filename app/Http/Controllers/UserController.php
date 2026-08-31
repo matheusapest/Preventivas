@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\Role;
-use App\Models\User;
+use App\Models\Access\Role;
+use App\Models\Access\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 

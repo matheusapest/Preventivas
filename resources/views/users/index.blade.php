@@ -20,7 +20,7 @@
 
         <x-slot:actions>
 
-            @can('create', App\Models\User::class)
+            @can('create', App\Models\Access\User::class)
 
                 <x-buttons.primary
                     :href="route('users.create')"

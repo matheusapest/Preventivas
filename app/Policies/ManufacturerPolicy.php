@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Equipment\Manufacturer;
-use App\Models\User;
+use App\Models\Access\User;
 use Illuminate\Auth\Access\Response;
 
 class ManufacturerPolicy

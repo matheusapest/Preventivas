@@ -6,7 +6,7 @@ namespace App\Policies;
 
 use App\Models\Maintenance\MaintenanceReceipt;
 use App\Models\Maintenance\MaintenanceShipment;
-use App\Models\User;
+use App\Models\Access\User;
 
 class MaintenanceReceiptPolicy
 {

@@ -3,7 +3,7 @@
 namespace App\Policies\Configuration\Preventive;
 
 use App\Models\Configuration\Preventive\PreventiveType;
-use App\Models\User;
+use App\Models\Access\User;
 use Illuminate\Auth\Access\Response;
 
 class PreventiveTypePolicy

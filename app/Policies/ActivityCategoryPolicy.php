@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Configuration\Preventive\ActivityCategory;
-use App\Models\User;
+use App\Models\Access\User;
 
 class ActivityCategoryPolicy
 {

@@ -7,7 +7,7 @@ use App\Models\Organization\Branch;
 use App\Models\Organization\Company;
 use App\Models\Maintenance\MaintenanceOrder;
 use App\Models\Maintenance\MaintenanceReceipt;
-use App\Models\User;
+use App\Models\Access\User;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

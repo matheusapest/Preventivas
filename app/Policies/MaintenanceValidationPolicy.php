@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Policies;
 
 use App\Models\Maintenance\MaintenanceValidation;
-use App\Models\User;
+use App\Models\Access\User;
 
 class MaintenanceValidationPolicy
 {

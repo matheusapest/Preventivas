@@ -9,7 +9,7 @@ use App\Enums\StatusPreventiveEnum;
 use App\Enums\StatusCycleEnum;
 use App\Models\Preventive\Preventive;
 use App\Models\Preventive\PreventiveCycle;
-use App\Models\User;
+use App\Models\Access\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 

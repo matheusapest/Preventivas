@@ -7,7 +7,7 @@ namespace App\Models\Maintenance;
 use App\Models\Organization\Branch;
 use App\Models\Maintenance\MaintenanceShipment;
 use App\Models\Maintenance\MaintenanceValidation;
-use App\Models\User;
+use App\Models\Access\User;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;

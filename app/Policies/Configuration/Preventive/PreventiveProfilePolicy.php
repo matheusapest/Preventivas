@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Policies\Configuration\Preventive;
 
 use App\Models\Configuration\Preventive\PreventiveProfile;
-use App\Models\User;
+use App\Models\Access\User;
 
 class PreventiveProfilePolicy
 {

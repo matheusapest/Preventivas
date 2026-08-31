@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Configuration\Operational\UnitType;
-use App\Models\User;
+use App\Models\Access\User;
 
 class UnitTypePolicy
 {

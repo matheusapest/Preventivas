@@ -3,7 +3,7 @@
 namespace App\Policies\Preventive;
 
 use App\Models\Preventive\Preventive;
-use App\Models\User;
+use App\Models\Access\User;
 
 class PreventiveExecutionPolicy
 {
