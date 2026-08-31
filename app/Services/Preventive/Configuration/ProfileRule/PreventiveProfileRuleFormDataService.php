@@ -7,7 +7,7 @@ namespace App\Services\Preventive\Configuration\ProfileRule;
 use App\Enums\PreventiveProfileRuleType;
 use App\Models\Activity;
 use App\Models\ActivityCategory;
-use App\Models\OperationalUnit;
+use App\Models\Configuration\Operational\OperationalUnit;
 use App\Models\Configuration\Preventive\PreventiveProfile;
 use App\Models\Configuration\Preventive\PreventiveProfileRule;
 

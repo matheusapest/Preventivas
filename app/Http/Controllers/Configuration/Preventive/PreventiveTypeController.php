@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Configuration\Preventive\StorePreventiveTypeRequest;
 use App\Http\Requests\Configuration\Preventive\UpdatePreventiveTypeRequest;
 use App\Models\Configuration\Preventive\PreventiveType;
-use App\Models\UnitType;
+use App\Models\Configuration\Operational\UnitType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 

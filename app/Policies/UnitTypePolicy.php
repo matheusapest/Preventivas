@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\UnitType;
+use App\Models\Configuration\Operational\UnitType;
 use App\Models\User;
 
 class UnitTypePolicy

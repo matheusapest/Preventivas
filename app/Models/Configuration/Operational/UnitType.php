@@ -1,6 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Configuration\Operational;
+
+use App\Models\Branch;
+use App\Models\Category;
+use App\Models\Configuration\Operational\OperationalProfile;
+use App\Models\Configuration\Preventive\PreventiveType;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;

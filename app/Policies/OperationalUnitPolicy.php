@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\OperationalUnit;
+use App\Models\Configuration\Operational\OperationalUnit;
 use App\Models\User;
 
 class OperationalUnitPolicy

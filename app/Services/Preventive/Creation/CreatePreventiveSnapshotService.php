@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Preventive\Creation;
 
-use App\Models\OperationalUnit;
+use App\Models\Configuration\Operational\OperationalUnit;
 use App\Services\Preventive\ResolvePreventiveConfigurationService;
 use App\Models\Preventive\Preventive;
 use App\Models\Preventive\PreventiveSnapshot;

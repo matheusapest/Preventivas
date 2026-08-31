@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUnitTypeRequest;
 use App\Http\Requests\UpdateUnitTypeRequest;
 use App\Models\Branch;
-use App\Models\UnitType;
+use App\Models\Configuration\Operational\UnitType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;

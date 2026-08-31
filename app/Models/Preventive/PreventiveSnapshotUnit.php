@@ -3,8 +3,8 @@
 namespace App\Models\Preventive;
 
 use App\Models\Configuration\Operational\OperationalProfile;
-use App\Models\OperationalUnit;
-use App\Models\UnitType;
+use App\Models\Configuration\Operational\OperationalUnit;
+use App\Models\Configuration\Operational\UnitType;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

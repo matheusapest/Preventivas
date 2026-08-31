@@ -6,7 +6,7 @@ use App\Http\Requests\StoreOperationalProfileRequest;
 use App\Http\Requests\UpdateOperationalProfileRequest;
 use App\Models\Category;
 use App\Models\Configuration\Operational\OperationalProfile;
-use App\Models\UnitType;
+use App\Models\Configuration\Operational\UnitType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;

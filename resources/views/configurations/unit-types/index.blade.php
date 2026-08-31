@@ -17,7 +17,7 @@
 
             <x-slot:actions>
 
-                @can('create', App\Models\UnitType::class)
+                @can('create', App\Models\Configuration\Operational\UnitType::class)
 
                     <div class="w-full sm:w-auto">
 
