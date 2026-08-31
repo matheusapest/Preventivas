@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\Activity;
+use App\Models\Configuration\Preventive\Activity;
 use App\Models\Configuration\Operational\UnitType;
 use App\Models\Configuration\Preventive\PreventiveProfile;
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreActivityCategoryRequest;
 use App\Http\Requests\UpdateActivityCategoryRequest;
-use App\Models\ActivityCategory;
+use App\Models\Configuration\Preventive\ActivityCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 

@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Activity;
+use App\Models\Configuration\Preventive\Activity;
 use App\Models\Configuration\Preventive\PreventiveProfileRule;
 
 class ActivityService

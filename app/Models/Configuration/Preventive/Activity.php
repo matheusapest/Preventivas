@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Configuration\Preventive;
 
 use App\Enums\ActivityKind;
+use App\Models\Configuration\Preventive\ActivityCategory;
+use App\Models\Configuration\Preventive\PreventiveType;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

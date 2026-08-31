@@ -8,7 +8,7 @@ use App\Models\Configuration\Operational\OperationalUnit;
 use App\Enums\PreventiveProfileRuleType;
 use App\Models\Configuration\Preventive\PreventiveProfile;
 use App\Models\Configuration\Preventive\PreventiveProfileRule;
-use App\Models\Activity;
+use App\Models\Configuration\Preventive\Activity;
 use Illuminate\Validation\ValidationException;
 
 

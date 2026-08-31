@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Configuration\Preventive;
 
+use App\Models\Configuration\Preventive\Activity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;

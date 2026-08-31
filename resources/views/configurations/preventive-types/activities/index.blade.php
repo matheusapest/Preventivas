@@ -29,7 +29,7 @@
 
                     {{-- Nova atividade --}}
 
-                    @can('create', App\Models\Activity::class)
+                    @can('create', App\Models\Configuration\Preventive\Activity::class)
                         <x-buttons.primary :href="route('configuracoes.tipos-preventivas.activities.create', $preventiveType)">
                             Nova Atividade
                         </x-buttons.primary>

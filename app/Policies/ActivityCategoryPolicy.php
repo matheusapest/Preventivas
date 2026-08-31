@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\ActivityCategory;
+use App\Models\Configuration\Preventive\ActivityCategory;
 use App\Models\User;
 
 class ActivityCategoryPolicy
