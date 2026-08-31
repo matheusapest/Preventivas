@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\MaintenanceReceiptController;
+use App\Http\Controllers\Maintenance\MaintenanceReceiptController;
 use Illuminate\Support\Facades\Route;
 
 /*

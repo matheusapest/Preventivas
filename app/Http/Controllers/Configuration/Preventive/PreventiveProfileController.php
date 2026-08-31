@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Configuration\Preventive;
 
 use App\Http\Controllers\Controller;
 
+
 use App\Http\Requests\Configuration\Preventive\StorePreventiveProfileRequest;
 use App\Http\Requests\Configuration\Preventive\UpdatePreventiveProfileRequest;
 use App\Models\Configuration\Preventive\PreventiveProfile;

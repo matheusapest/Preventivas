@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\TransferController;
+use App\Http\Controllers\Transfer\TransferController;
 use Illuminate\Support\Facades\Route;
 
 /*

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\ManufacturerController;
+use App\Http\Controllers\Equipment\ManufacturerController;
 use Illuminate\Support\Facades\Route;
 
 /*

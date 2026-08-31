@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\Equipment\EquipmentController;
 use Illuminate\Support\Facades\Route;
 
 /*

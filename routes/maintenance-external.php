@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\MaintenanceOrderController;
-use App\Http\Controllers\MaintenanceReceiptController;
-use App\Http\Controllers\MaintenanceShipmentController;
-use App\Http\Controllers\MaintenanceValidationController;
+use App\Http\Controllers\Maintenance\MaintenanceOrderController;
+use App\Http\Controllers\Maintenance\MaintenanceReceiptController;
+use App\Http\Controllers\Maintenance\MaintenanceShipmentController;
+use App\Http\Controllers\Maintenance\MaintenanceValidationController;
 use Illuminate\Support\Facades\Route;
 
 /*

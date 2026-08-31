@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\BranchCodeController;
+use App\Http\Controllers\Organization\BranchCodeController;
 use Illuminate\Support\Facades\Route;
 
 /*

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Configuration\Operational\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*

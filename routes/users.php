@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Access\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\OperationalUnitController;
+use App\Http\Controllers\Configuration\Operational\OperationalUnitController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'role:admin'])

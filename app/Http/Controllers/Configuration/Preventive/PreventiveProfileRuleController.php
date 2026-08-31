@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Configuration\Preventive;
 
 use App\Http\Controllers\Controller;
+
 use App\Http\Requests\Configuration\Preventive\StorePreventiveProfileRuleRequest;
 use App\Http\Requests\Configuration\Preventive\UpdatePreventiveProfileRuleRequest;
 use App\Http\Requests\Configuration\Preventive\StorePreventiveProfileSpecificRuleRequest;

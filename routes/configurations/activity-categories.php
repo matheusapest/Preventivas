@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ActivityCategoryController;
+use App\Http\Controllers\Configuration\Preventive\ActivityCategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'role:admin'])
