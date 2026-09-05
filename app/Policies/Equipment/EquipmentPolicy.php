@@ -31,7 +31,7 @@ class EquipmentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin();
+        return true;
     }
 
     /**
@@ -41,7 +41,7 @@ class EquipmentPolicy
         User $user,
         Equipment $equipment
     ): bool {
-        return $user->isAdmin();
+        return true;
     }
 
     /**

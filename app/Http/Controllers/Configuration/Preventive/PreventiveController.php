@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Configuration\Preventive;
 
 use App\Http\Controllers\Controller;
-
 use App\Http\Requests\Preventive\StorePreventiveRequest;
 use App\Http\Requests\Preventive\StorePreventiveContinuationRequest;
-
 use App\Services\Preventive\Continuation\CreatePreventiveContinuationService;
 use App\Models\Organization\Branch;
 use App\Models\Preventive\Preventive;
@@ -25,11 +23,11 @@ use App\Services\Preventive\Continuation\GetPreventiveContinuationService;
 use App\Services\Preventive\Continuation\GetPreventiveContinuationUnitsService;
 use App\Services\Preventive\Continuation\GetPreventiveContinuationActivitiesService;
 use App\Services\Preventive\Query\GetPreventivesService;
+use App\Enums\PreventiveProfileRuleType;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-
 
 class PreventiveController extends Controller
 {
@@ -59,33 +57,33 @@ class PreventiveController extends Controller
      * Exibe o formulário de criação.
      */
     public function create(): View
-{
-    $this->authorize('create', Preventive::class);
+    {
+        $this->authorize('create', Preventive::class);
 
-    $branches = Branch::query()
-    ->where('active', true)
-    ->orderBy('name')
-        ->get([
-            'id',
-            'name',
-        ]);
+        $branches = Branch::query()
+            ->where('active', true)
+            ->orderBy('name')
+            ->get([
+                'id',
+                'name',
+            ]);
 
-    $users = User::query()
-        ->where('active', true)
-        ->orderBy('name')
-        ->get([
-            'id',
-            'name',
-        ]);
+        $users = User::query()
+            ->where('active', true)
+            ->orderBy('name')
+            ->get([
+                'id',
+                'name',
+            ]);
 
-    return view(
-        'configurations.preventives.create',
-        [
-            'branches' => $branches,
-            'users' => $users,
-        ]
-    );
-}
+        return view(
+            'configurations.preventives.create',
+            [
+                'branches' => $branches,
+                'users' => $users,
+            ]
+        );
+    }
 
     /**
      * Retorna os tipos de preventiva disponíveis para uma filial.
@@ -118,6 +116,13 @@ class PreventiveController extends Controller
     /**
      * Retorna os perfis disponíveis para a combinação
      * filial + tipo de preventiva.
+     *
+     * Um perfil somente aparece quando:
+     *
+     * - está ativo;
+     * - pertence ao tipo selecionado;
+     * - está associado à filial;
+     * - possui uma regra ALL configurada para a filial.
      */
     public function profiles(
         Branch $branch,
@@ -129,7 +134,14 @@ class PreventiveController extends Controller
             ->where('preventive_type_id', $preventiveType->id)
             ->where('active', true)
             ->whereHas('branches', function ($query) use ($branch) {
-                $query->where('branch_id', $branch->id);
+                $query
+                    ->where('branch_id', $branch->id)
+                    ->whereHas('rules', function ($query) {
+                        $query->where(
+                            'rule_type',
+                            PreventiveProfileRuleType::ALL->value
+                        );
+                    });
             })
             ->orderBy('name')
             ->get([
@@ -161,6 +173,7 @@ class PreventiveController extends Controller
             )
         );
     }
+
     /**
      * Cria uma nova preventiva.
      */
@@ -177,7 +190,10 @@ class PreventiveController extends Controller
 
         return redirect()
             ->route('preventivas.show', $preventive)
-            ->with('success', 'Preventiva criada com sucesso.');
+            ->with(
+                'success',
+                'Preventiva criada com sucesso.'
+            );
     }
 
     /**
@@ -197,6 +213,9 @@ class PreventiveController extends Controller
         );
     }
 
+    /**
+     * Aprova uma preventiva.
+     */
     public function approve(
         Preventive $preventive,
         ApprovePreventiveService $service
@@ -216,6 +235,9 @@ class PreventiveController extends Controller
             );
     }
 
+    /**
+     * Reprova uma preventiva.
+     */
     public function reject(
         Request $request,
         Preventive $preventive,
@@ -249,6 +271,9 @@ class PreventiveController extends Controller
             );
     }
 
+    /**
+     * Retorna as unidades disponíveis para continuidade.
+     */
     public function continuationUnits(
         Preventive $preventive,
         Request $request,
@@ -264,6 +289,9 @@ class PreventiveController extends Controller
         );
     }
 
+    /**
+     * Retorna as atividades disponíveis para continuidade.
+     */
     public function continuationActivities(
         Preventive $preventive,
         int $operationalUnitId,
@@ -300,6 +328,9 @@ class PreventiveController extends Controller
         );
     }
 
+    /**
+     * Cria um novo ciclo de continuidade.
+     */
     public function storeContinuation(
         StorePreventiveContinuationRequest $request,
         Preventive $preventive,

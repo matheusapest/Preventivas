@@ -13,7 +13,7 @@ class PreventiveTypePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
@@ -23,7 +23,7 @@ class PreventiveTypePolicy
         User $user,
         PreventiveType $preventiveType
     ): bool {
-        return true;
+        return $user->isAdmin();
     }
 
     /**

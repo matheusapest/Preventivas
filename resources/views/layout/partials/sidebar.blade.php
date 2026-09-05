@@ -65,7 +65,7 @@
                 <p class="mt-1 text-[11px] text-slate-400 leading-relaxed">
                     Precisa de ajuda ou encontrou um problema?
                 </p>
-                <a href="suporteti.mastersonda.com.br" class="mt-2.5 inline-flex items-center gap-1 text-xs font-semibold text-blue-400 hover:text-blue-300 transition">
+                <a href="http://suporteti.mastersonda.com.br" class="mt-2.5 inline-flex items-center gap-1 text-xs font-semibold text-blue-400 hover:text-blue-300 transition">
                     <span>Abrir Chamado</span>
                     <span>&rarr;</span>
                 </a>

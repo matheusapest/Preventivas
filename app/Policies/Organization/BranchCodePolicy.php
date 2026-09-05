@@ -13,7 +13,7 @@ class BranchCodePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
@@ -23,8 +23,7 @@ class BranchCodePolicy
         User $user,
         BranchCode $branchCode
     ): bool {
-
-        return true;
+        return $user->isAdmin();
     }
 
     /**
@@ -42,7 +41,6 @@ class BranchCodePolicy
         User $user,
         BranchCode $branchCode
     ): bool {
-
         return $user->isAdmin();
     }
 
@@ -53,7 +51,6 @@ class BranchCodePolicy
         User $user,
         BranchCode $branchCode
     ): Response {
-
         if (! $user->isAdmin()) {
             return Response::deny(__('authorization.denied'));
         }

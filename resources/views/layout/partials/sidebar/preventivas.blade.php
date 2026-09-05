@@ -1,4 +1,9 @@
 @php
+    $canManagePreventives = auth()->user()->can(
+        'viewAny',
+        \App\Models\Preventive\Preventive::class
+    );
+
     $isOpen =
         request()->routeIs('configuracoes.tipos-unidade.*') ||
         request()->routeIs('configuracoes.perfis-operacionais.*') ||
@@ -33,6 +38,7 @@
         aria-expanded="{{ $isOpen ? 'true' : 'false' }}"
     >
         <div class="flex items-center gap-3">
+
             {{-- Ícone Escudo (Preventivas) --}}
             <svg
                 class="h-5 w-5 text-slate-400"
@@ -52,6 +58,7 @@
             <span class="font-semibold">
                 Preventivas
             </span>
+
         </div>
 
         {{-- Seta Indicadora --}}
@@ -71,6 +78,7 @@
                 d="M19 9l-7 7-7-7"
             />
         </svg>
+
     </button>
 
     {{-- Conteúdo Expansível / Submenu --}}
@@ -80,20 +88,38 @@
             'hidden' => !$isOpen,
         ])
     >
-        {{-- Configurações --}}
-        <div>
-            @include('layout.partials.sidebar.preventivas-configuracoes')
-        </div>
 
-        {{-- Programação --}}
-        <div class="border-t border-slate-800/60 pt-3">
-            @include('layout.partials.sidebar.preventivas-programacao')
-        </div>
+        {{-- ========================================= --}}
+        {{-- Áreas administrativas da preventiva      --}}
+        {{-- ========================================= --}}
+        @if ($canManagePreventives)
 
-        {{-- Execução --}}
-        <div class="border-t border-slate-800/60 pt-3">
-            @include('layout.partials.sidebar.preventivas-execucao')
-        </div>
+            {{-- Configurações --}}
+            <div>
+                @include('layout.partials.sidebar.preventivas-configuracoes')
+            </div>
+
+            {{-- Programação --}}
+            <div class="border-t border-slate-800/60 pt-3">
+                @include('layout.partials.sidebar.preventivas-programacao')
+            </div>
+
+            {{-- Execução --}}
+            <div class="border-t border-slate-800/60 pt-3">
+                @include('layout.partials.sidebar.preventivas-execucao')
+            </div>
+
+        @else
+
+            {{-- ========================================= --}}
+            {{-- Técnico: somente execução                 --}}
+            {{-- ========================================= --}}
+            <div>
+                @include('layout.partials.sidebar.preventivas-execucao')
+            </div>
+
+        @endif
+
     </div>
 
 </div>

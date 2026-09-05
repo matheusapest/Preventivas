@@ -4,8 +4,8 @@ namespace App\Policies\Preventive;
 
 use App\Enums\CycleReviewStatusEnum;
 use App\Enums\StatusPreventiveEnum;
-use App\Models\Preventive\Preventive;
 use App\Models\Access\User;
+use App\Models\Preventive\Preventive;
 
 class PreventivePolicy
 {
@@ -14,7 +14,7 @@ class PreventivePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
@@ -24,7 +24,7 @@ class PreventivePolicy
         User $user,
         Preventive $preventive
     ): bool {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
@@ -45,8 +45,8 @@ class PreventivePolicy
         User $user,
         Preventive $preventive
     ): bool {
-        return $preventive->status ===
-            StatusPreventiveEnum::PENDING_APPROVAL;
+        return $user->isAdmin()
+            && $preventive->status === StatusPreventiveEnum::PENDING_APPROVAL;
     }
 
     /**
@@ -57,8 +57,8 @@ class PreventivePolicy
         User $user,
         Preventive $preventive
     ): bool {
-        return $preventive->status ===
-            StatusPreventiveEnum::IN_PROGRESS
+        return $user->isAdmin()
+            && $preventive->status === StatusPreventiveEnum::IN_PROGRESS
             && $preventive->cycles()
                 ->where(
                     'sequence',

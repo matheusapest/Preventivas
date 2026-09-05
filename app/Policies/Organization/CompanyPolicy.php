@@ -13,7 +13,7 @@ class CompanyPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
@@ -23,7 +23,7 @@ class CompanyPolicy
         User $user,
         Company $company
     ): bool {
-        return true;
+        return $user->isAdmin();
     }
 
     /**

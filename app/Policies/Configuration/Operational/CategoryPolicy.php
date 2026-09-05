@@ -13,7 +13,7 @@ class CategoryPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
@@ -23,8 +23,7 @@ class CategoryPolicy
         User $user,
         Category $category
     ): bool {
-
-        return true;
+        return $user->isAdmin();
     }
 
     /**
@@ -42,7 +41,6 @@ class CategoryPolicy
         User $user,
         Category $category
     ): bool {
-
         return $user->isAdmin();
     }
 
@@ -53,7 +51,6 @@ class CategoryPolicy
         User $user,
         Category $category
     ): Response {
-
         if (! $user->isAdmin()) {
             return Response::deny(__('authorization.denied'));
         }

@@ -12,15 +12,17 @@ class ActivityCategoryPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
      * Visualizar uma categoria.
      */
-    public function view(User $user, ActivityCategory $activityCategory): bool
-    {
-        return true;
+    public function view(
+        User $user,
+        ActivityCategory $activityCategory
+    ): bool {
+        return $user->isAdmin();
     }
 
     /**
@@ -28,7 +30,7 @@ class ActivityCategoryPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
@@ -38,7 +40,7 @@ class ActivityCategoryPolicy
         User $user,
         ActivityCategory $activityCategory
     ): bool {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
@@ -48,6 +50,6 @@ class ActivityCategoryPolicy
         User $user,
         ActivityCategory $activityCategory
     ): bool {
-        return true;
+        return $user->isAdmin();
     }
 }

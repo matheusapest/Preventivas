@@ -145,6 +145,21 @@
                     </div>
 
 
+                    {{-- PERFIL --}}
+
+                    <div>
+
+                        <span class="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                            Perfil
+                        </span>
+
+                        <span class="block truncate text-xs font-medium text-slate-800">
+                            {{ $preventive->preventiveProfile->name ?? '-' }}
+                        </span>
+
+                    </div>
+
+
                     {{-- RESPONSÁVEL --}}
 
                     <div>
@@ -385,6 +400,13 @@
                         scope="col"
                         class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-slate-500"
                     >
+                        Perfil
+                    </th>
+
+                    <th
+                        scope="col"
+                        class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-slate-500"
+                    >
                         Filial
                     </th>
 
@@ -524,6 +546,17 @@
                                 @endif
 
                             </div>
+
+                        </td>
+
+
+                        {{-- PERFIL --}}
+
+                        <td class="whitespace-nowrap px-4 py-4">
+
+                            <span class="text-sm font-medium text-slate-700">
+                                {{ $preventive->preventiveProfile->name ?? '-' }}
+                            </span>
 
                         </td>
 
@@ -740,7 +773,7 @@
 
                     <tr>
 
-                        <td colspan="10" class="px-6 py-12 text-center">
+                        <td colspan="11" class="px-6 py-12 text-center">
 
                             <div class="flex flex-col items-center justify-center">
 

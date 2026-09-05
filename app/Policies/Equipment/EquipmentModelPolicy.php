@@ -13,7 +13,7 @@ class EquipmentModelPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
@@ -23,8 +23,7 @@ class EquipmentModelPolicy
         User $user,
         EquipmentModel $equipmentModel
     ): bool {
-
-        return true;
+        return $user->isAdmin();
     }
 
     /**
@@ -42,7 +41,6 @@ class EquipmentModelPolicy
         User $user,
         EquipmentModel $equipmentModel
     ): bool {
-
         return $user->isAdmin();
     }
 
@@ -53,7 +51,6 @@ class EquipmentModelPolicy
         User $user,
         EquipmentModel $equipmentModel
     ): Response {
-
         if (! $user->isAdmin()) {
             return Response::deny(__('authorization.denied'));
         }

@@ -8,42 +8,48 @@ use App\Models\Access\User;
 class ActivityPolicy
 {
     /**
-     * Determine whether the user can view any models.
+     * Listar atividades.
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
-     * Determine whether the user can view the model.
+     * Visualizar uma atividade.
      */
-    public function view(User $user, Activity $activity): bool
-    {
-        return true;
+    public function view(
+        User $user,
+        Activity $activity
+    ): bool {
+        return $user->isAdmin();
     }
 
     /**
-     * Determine whether the user can create models.
+     * Criar uma atividade.
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Editar uma atividade.
      */
-    public function update(User $user, Activity $activity): bool
-    {
-        return true;
+    public function update(
+        User $user,
+        Activity $activity
+    ): bool {
+        return $user->isAdmin();
     }
 
     /**
-     * Determine whether the user can toggle the active status.
+     * Ativar/Inativar uma atividade.
      */
-    public function toggleActive(User $user, Activity $activity): bool
-    {
-        return true;
+    public function toggleActive(
+        User $user,
+        Activity $activity
+    ): bool {
+        return $user->isAdmin();
     }
 }
