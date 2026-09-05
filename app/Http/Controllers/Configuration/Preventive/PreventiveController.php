@@ -59,31 +59,33 @@ class PreventiveController extends Controller
      * Exibe o formulário de criação.
      */
     public function create(): View
-    {
-        $this->authorize('create', Preventive::class);
+{
+    $this->authorize('create', Preventive::class);
 
-        $branches = Branch::query()
-            ->orderBy('name')
-            ->get([
-                'id',
-                'name',
-            ]);
+    $branches = Branch::query()
+    ->where('active', true)
+    ->orderBy('name')
+        ->get([
+            'id',
+            'name',
+        ]);
 
-        $users = User::query()
-            ->orderBy('name')
-            ->get([
-                'id',
-                'name',
-            ]);
+    $users = User::query()
+        ->where('active', true)
+        ->orderBy('name')
+        ->get([
+            'id',
+            'name',
+        ]);
 
-        return view(
-            'configurations.preventives.create',
-            [
-                'branches' => $branches,
-                'users' => $users,
-            ]
-        );
-    }
+    return view(
+        'configurations.preventives.create',
+        [
+            'branches' => $branches,
+            'users' => $users,
+        ]
+    );
+}
 
     /**
      * Retorna os tipos de preventiva disponíveis para uma filial.

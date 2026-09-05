@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\Preventive\Execution;
 
+use App\Enums\ActivityKind;
+use App\Enums\StatusCycleEnum;
+use App\Enums\StatusPreventiveEnum;
 use App\Enums\PreventiveActivityFinalStatusEnum;
 use App\Models\Preventive\Preventive;
 use App\Models\Preventive\PreventiveActivityResponse;
@@ -16,15 +19,31 @@ class GetPreventiveExecutionDetailsService
 {
     /**
      * Retorna os dados necessários para exibir
-     * a tela de execução da preventiva.
+     * a tela de execução/consulta da preventiva.
      *
-     * A execução utiliza exclusivamente
-     * a estrutura congelada do ciclo atual.
+     * A tela pode ser acessada mesmo quando o ciclo
+     * já estiver finalizado.
+     *
+     * A possibilidade de executar novas atividades
+     * é determinada separadamente através de
+     * "can_execute".
      */
     public function execute(Preventive $preventive): array
     {
+        /*
+         * Localiza sempre o ciclo atual.
+         *
+         * Não bloqueamos a consulta caso o ciclo
+         * esteja finalizado.
+         */
         $cycle = $this->getCurrentCycle($preventive);
 
+        /*
+         * Carrega a estrutura congelada do ciclo.
+         *
+         * Isso permite consultar inclusive ciclos
+         * já finalizados.
+         */
         $this->loadExecutionRelations($cycle);
 
         $units = $this->buildUnits($cycle);
@@ -40,35 +59,116 @@ class GetPreventiveExecutionDetailsService
             ),
         ]);
 
+        /*
+         * Define se o técnico ainda pode executar
+         * atividades neste ciclo.
+         */
+        $canExecute =
+            $this->canExecute(
+                $preventive,
+                $cycle
+            );
+
+        /*
+         * Define o motivo apresentado pela interface
+         * quando a execução estiver bloqueada.
+         */
+        $executionLockedReason =
+            $this->resolveExecutionLockedReason(
+                $preventive,
+                $cycle,
+                $canExecute
+            );
+
         return [
-            'preventive' => $preventive,
-
             /*
             |--------------------------------------------------------------------------
-            | Compatibilidade com a Blade atual
+            | Preventiva
             |--------------------------------------------------------------------------
             */
 
-            'cycle' => $cycle,
-
-            'units' => $units,
-
-            'pendingUnits' => $pendingUnits,
-
-            'progress' => $progress,
+            'preventive' =>
+                $preventive,
 
             /*
             |--------------------------------------------------------------------------
-            | Estrutura padronizada
+            | Ciclo atual
             |--------------------------------------------------------------------------
             */
 
-            'cycles' => $cycles,
+            'cycle' =>
+                $cycle,
+
+            /*
+            |--------------------------------------------------------------------------
+            | Unidades
+            |--------------------------------------------------------------------------
+            */
+
+            'units' =>
+                $units,
+
+            /*
+            |--------------------------------------------------------------------------
+            | Unidades pendentes
+            |--------------------------------------------------------------------------
+            */
+
+            'pendingUnits' =>
+                $pendingUnits,
+
+            /*
+            |--------------------------------------------------------------------------
+            | Progresso
+            |--------------------------------------------------------------------------
+            */
+
+            'progress' =>
+                $progress,
+
+            /*
+            |--------------------------------------------------------------------------
+            | Ciclos
+            |--------------------------------------------------------------------------
+            */
+
+            'cycles' =>
+                $cycles,
+
+            /*
+            |--------------------------------------------------------------------------
+            | Permissão de execução
+            |--------------------------------------------------------------------------
+            |
+            | Importante:
+            |
+            | Este valor controla somente a possibilidade
+            | de executar novas atividades.
+            |
+            | Ele NÃO impede a visualização do ciclo.
+            |
+            */
+
+            'can_execute' =>
+                $canExecute,
+
+            /*
+            |--------------------------------------------------------------------------
+            | Motivo do bloqueio
+            |--------------------------------------------------------------------------
+            */
+
+            'execution_locked_reason' =>
+                $executionLockedReason,
         ];
     }
 
     /**
      * Localiza o ciclo atual da preventiva.
+     *
+     * O ciclo atual continua sendo carregado mesmo
+     * quando estiver finalizado, pois a tela também
+     * possui função de consulta/histórico.
      */
     private function getCurrentCycle(
         Preventive $preventive
@@ -95,8 +195,141 @@ class GetPreventiveExecutionDetailsService
     }
 
     /**
+     * Determina se o técnico pode executar novas
+     * atividades no ciclo atual.
+     *
+     * Esta regra NÃO controla a visualização.
+     *
+     * Um ciclo finalizado continua podendo ser consultado,
+     * porém nunca pode receber novas respostas.
+     */
+    private function canExecute(
+        Preventive $preventive,
+        PreventiveCycle $cycle
+    ): bool {
+        /*
+        |--------------------------------------------------------------------------
+        | Status da Preventiva
+        |--------------------------------------------------------------------------
+        |
+        | Somente preventivas novas ou em execução
+        | podem receber novas respostas.
+        |
+        */
+
+        if (
+            ! in_array(
+                $preventive->status,
+                [
+                    StatusPreventiveEnum::NEW,
+                    StatusPreventiveEnum::IN_PROGRESS,
+                ],
+                true
+            )
+        ) {
+            return false;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Status do Cycle
+        |--------------------------------------------------------------------------
+        |
+        | Um ciclo FINISHED é imutável.
+        |
+        | Caso a preventiva esteja em IN_PROGRESS e o
+        | ciclo atual esteja FINISHED, significa que
+        | normalmente estamos aguardando o gestor criar
+        | o próximo ciclo.
+        |
+        */
+
+        if (
+            $cycle->status ===
+            StatusCycleEnum::FINISHED
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Resolve a mensagem apresentada quando
+     * novas atividades não podem ser executadas.
+     */
+    private function resolveExecutionLockedReason(
+        Preventive $preventive,
+        PreventiveCycle $cycle,
+        bool $canExecute
+    ): ?string {
+        if ($canExecute) {
+            return null;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Preventiva reprovada / aguardando novo ciclo
+        |--------------------------------------------------------------------------
+        |
+        | A Preventiva permanece IN_PROGRESS após uma
+        | reprovação, enquanto o ciclo anterior fica
+        | FINISHED.
+        |
+        */
+
+        if (
+            $preventive->status ===
+            StatusPreventiveEnum::IN_PROGRESS
+            &&
+            $cycle->status ===
+            StatusCycleEnum::FINISHED
+        ) {
+            return
+                'A preventiva foi reprovada e aguarda a criação de um novo ciclo pelo gestor.';
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Aguardando aprovação
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            $preventive->status ===
+            StatusPreventiveEnum::PENDING_APPROVAL
+        ) {
+            return
+                'A preventiva está aguardando a validação do gestor.';
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Aprovada
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            $preventive->status ===
+            StatusPreventiveEnum::APPROVED
+        ) {
+            return
+                'A preventiva foi aprovada e não possui novas atividades para execução.';
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Demais situações
+        |--------------------------------------------------------------------------
+        */
+
+        return
+            'Esta preventiva não está disponível para novas atividades.';
+    }
+
+    /**
      * Carrega toda a estrutura congelada necessária
-     * para a tela de execução.
+     * para a tela de execução/consulta.
      */
     private function loadExecutionRelations(
         PreventiveCycle $cycle
@@ -104,7 +337,7 @@ class GetPreventiveExecutionDetailsService
         $cycle->load([
             'units.snapshotUnit',
             'units.activities.snapshotRuleActivity',
-            'units.activityResponses',
+            'units.activityResponses.photo',
         ]);
     }
 
@@ -116,15 +349,19 @@ class GetPreventiveExecutionDetailsService
         Collection $units
     ): array {
         return [
-            'cycle' => $cycle,
+            'cycle' =>
+                $cycle,
 
-            'sequence' => $cycle->sequence,
+            'sequence' =>
+                $cycle->sequence,
 
-            'units' => $units,
+            'units' =>
+                $units,
 
-            'summary' => $this->buildGeneralSummary(
-                $units
-            ),
+            'summary' =>
+                $this->buildGeneralSummary(
+                    $units
+                ),
         ];
     }
 
@@ -138,9 +375,10 @@ class GetPreventiveExecutionDetailsService
             ->map(
                 fn (
                     PreventiveCycleUnit $cycleUnit
-                ): array => $this->buildUnit(
-                    $cycleUnit
-                )
+                ): array =>
+                    $this->buildUnit(
+                        $cycleUnit
+                    )
             )
             ->values();
     }
@@ -155,14 +393,19 @@ class GetPreventiveExecutionDetailsService
             $cycleUnit->snapshotUnit;
 
         $activities =
-            $this->buildActivities($cycleUnit);
+            $this->buildActivities(
+                $cycleUnit
+            );
 
         $totalActivities =
             $activities->count();
 
         $answeredActivities =
             $activities
-                ->where('answered', true)
+                ->where(
+                    'answered',
+                    true
+                )
                 ->count();
 
         $pendingActivities =
@@ -186,7 +429,7 @@ class GetPreventiveExecutionDetailsService
 
         $unitStatus =
             $this->resolveUnitStatus(
-                $responses,
+                $activities,
                 $completed
             );
 
@@ -311,6 +554,9 @@ class GetPreventiveExecutionDetailsService
     /**
      * Monta as atividades da unidade juntamente
      * com suas respectivas respostas.
+     *
+     * Cada tipo de atividade possui seu próprio
+     * contrato de apresentação.
      */
     private function buildActivities(
         PreventiveCycleUnit $cycleUnit
@@ -325,45 +571,39 @@ class GetPreventiveExecutionDetailsService
                             ->snapshotRuleActivity;
 
                     $response =
-                        $cycleUnit->activityResponses
+                        $cycleUnit
+                            ->activityResponses
                             ->firstWhere(
                                 'snapshot_rule_activity_id',
                                 $cycleUnitActivity
                                     ->snapshot_rule_activity_id
                             );
 
-                    return [
-                        /*
-                        |--------------------------------------------------------------------------
-                        | Atividade
-                        |--------------------------------------------------------------------------
-                        */
+                    $activityType =
+                        $this->resolveActivityKind(
+                            $activity?->activity_type
+                        );
 
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Dados comuns
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $data = [
                         'cycle_unit_activity' =>
                             $cycleUnitActivity,
 
                         'activity' =>
                             $activity,
 
-                        /*
-                        |--------------------------------------------------------------------------
-                        | Dados de apresentação da atividade
-                        |--------------------------------------------------------------------------
-                        */
-
                         'activity_type' =>
-                            $activity?->activity_type,
+                            $activityType?->value,
 
                         'activity_type_label' =>
                             $this->resolveActivityTypeLabel(
-                                $activity?->activity_type
+                                $activityType
                             ),
-
-                        /*
-                        |--------------------------------------------------------------------------
-                        | Resposta
-                        |--------------------------------------------------------------------------
-                        */
 
                         'response' =>
                             $response,
@@ -373,115 +613,270 @@ class GetPreventiveExecutionDetailsService
 
                         /*
                         |--------------------------------------------------------------------------
-                        | Resultado da inspeção
+                        | Resultado
                         |--------------------------------------------------------------------------
-                        |
-                        | Exemplos:
-                        |
-                        | conforme
-                        | nao_conforme
-                        |
                         */
 
-                        'status' =>
-                            $response
-                                ? (
-                                    $response->result
-                                    ?? 'pending'
-                                )
-                                : 'pending',
+                        'result' =>
+                            null,
+
+                        'result_label' =>
+                            null,
 
                         /*
                         |--------------------------------------------------------------------------
                         | Situação final
                         |--------------------------------------------------------------------------
-                        |
-                        | O Model possui cast para:
-                        |
-                        | PreventiveActivityFinalStatusEnum
-                        |
                         */
 
                         'final_status' =>
-                            $this->resolveActivityFinalStatus(
-                                $response
-                            ),
+                            null,
+
+                        'final_status_label' =>
+                            null,
 
                         /*
                         |--------------------------------------------------------------------------
-                        | Componentes com falha
+                        | Dados específicos
                         |--------------------------------------------------------------------------
                         */
 
                         'failed_components' =>
-                            $this->resolveFailedComponentNames(
+                            [],
+
+                        'photo' =>
+                            null,
+
+                        'response_data' =>
+                            $response?->response_data,
+
+                        'observation' =>
+                            $response?->observation,
+                    ];
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Tipo inválido ou inexistente
+                    |--------------------------------------------------------------------------
+                    */
+
+                    if (! $activityType) {
+                        return $data;
+                    }
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Contrato específico de cada atividade
+                    |--------------------------------------------------------------------------
+                    */
+
+                    return match ($activityType) {
+                        ActivityKind::OPERATIONAL_COMPOSITION =>
+                            array_merge(
+                                $data,
+                                $this->buildOperationalCompositionData(
+                                    $response
+                                )
+                            ),
+
+                        ActivityKind::PHOTO =>
+                            array_merge(
+                                $data,
+                                $this->buildPhotoData(
+                                    $response
+                                )
+                            ),
+
+                        ActivityKind::TEXT,
+                        ActivityKind::NUMBER,
+                        ActivityKind::BOOLEAN =>
+                            $this->buildGenericActivityData(
+                                $data,
                                 $response
                             ),
-                    ];
+                    };
                 }
             )
             ->values();
     }
 
     /**
-     * Resolve o label do tipo da atividade.
+     * Resolve o ActivityKind.
+     */
+    private function resolveActivityKind(
+        mixed $activityType
+    ): ?ActivityKind {
+        if (
+            $activityType
+            instanceof ActivityKind
+        ) {
+            return $activityType;
+        }
+
+        if (! is_string($activityType)) {
+            return null;
+        }
+
+        return ActivityKind::tryFrom(
+            $activityType
+        );
+    }
+
+    /**
+     * Resolve o label amigável do tipo da atividade.
      *
-     * O objetivo é impedir que valores internos como:
-     *
-     * operational_composition
-     *
-     * sejam enviados diretamente para a Blade.
-     *
-     * Quando o atributo já estiver convertido para um Enum
-     * que possua o método label(), o próprio Enum será utilizado.
+     * O Enum é a fonte oficial da apresentação.
      */
     private function resolveActivityTypeLabel(
-        mixed $activityType
+        ?ActivityKind $activityType
     ): string {
-        if ($activityType === null) {
+        if (! $activityType) {
             return '—';
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Enum com método label()
-        |--------------------------------------------------------------------------
-        */
+        return $activityType->label();
+    }
 
-        if (
-            is_object($activityType)
-            && method_exists($activityType, 'label')
-        ) {
-            return (string) $activityType->label();
+    /**
+     * Monta os dados específicos da composição operacional.
+     *
+     * Somente este tipo trabalha com:
+     *
+     * - result
+     * - final_status
+     * - failed_components
+     */
+    private function buildOperationalCompositionData(
+        ?PreventiveActivityResponse $response
+    ): array {
+        if (! $response) {
+            return [
+                'result' =>
+                    null,
+
+                'result_label' =>
+                    null,
+
+                'final_status' =>
+                    null,
+
+                'final_status_label' =>
+                    null,
+
+                'failed_components' =>
+                    [],
+            ];
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Valor string
-        |--------------------------------------------------------------------------
-        |
-        | Compatibilidade enquanto o cast do Model não estiver
-        | disponível ou para registros antigos.
-        |--------------------------------------------------------------------------
-        */
+        $result =
+            $response->result;
 
-        if (is_string($activityType)) {
-            return match ($activityType) {
-                'operational_composition' =>
-                    'Composição operacional',
+        $finalStatus =
+            $this->resolveActivityFinalStatus(
+                $response
+            );
 
-                default =>
-                    $activityType,
-            };
+        return [
+            'result' =>
+                $result,
+
+            'result_label' =>
+                $this->resolveResultLabel(
+                    $result
+                ),
+
+            'final_status' =>
+                $finalStatus,
+
+            'final_status_label' =>
+                $this->resolveActivityFinalStatusLabel(
+                    $finalStatus
+                ),
+
+            'failed_components' =>
+                $this->resolveFailedComponentNames(
+                    $response
+                ),
+        ];
+    }
+
+    /**
+     * Monta os dados específicos de uma atividade fotográfica.
+     *
+     * PHOTO não possui:
+     *
+     * - result
+     * - final_status
+     *
+     * Sua resposta é composta pela evidência fotográfica
+     * e pela observação.
+     */
+    private function buildPhotoData(
+        ?PreventiveActivityResponse $response
+    ): array {
+        if (! $response) {
+            return [
+                'photo' =>
+                    null,
+
+                'observation' =>
+                    null,
+            ];
         }
 
-        return '—';
+        return [
+            'photo' =>
+                $response->photo,
+
+            'observation' =>
+                $response->observation,
+        ];
+    }
+
+    /**
+     * Monta os dados das atividades genéricas.
+     *
+     * TEXT, NUMBER e BOOLEAN não possuem
+     * avaliação operacional.
+     */
+    private function buildGenericActivityData(
+        array $data,
+        ?PreventiveActivityResponse $response
+    ): array {
+        return array_merge(
+            $data,
+            [
+                'response_data' =>
+                    $response?->response_data,
+
+                'observation' =>
+                    $response?->observation,
+            ]
+        );
+    }
+
+    /**
+     * Resolve o label amigável do resultado.
+     */
+    private function resolveResultLabel(
+        ?string $result
+    ): ?string {
+        return match ($result) {
+            'conforme' =>
+                'Conforme',
+
+            'nao_conforme' =>
+                'Não conforme',
+
+            default =>
+                null,
+        };
     }
 
     /**
      * Retorna a situação final da atividade.
      *
-     * O Model já possui cast para o Enum.
+     * O Model possui cast para o Enum.
      */
     private function resolveActivityFinalStatus(
         ?PreventiveActivityResponse $response
@@ -522,26 +917,39 @@ class GetPreventiveExecutionDetailsService
     }
 
     /**
+     * Resolve o label da situação final.
+     */
+    private function resolveActivityFinalStatusLabel(
+        ?PreventiveActivityFinalStatusEnum $finalStatus
+    ): ?string {
+        if (! $finalStatus) {
+            return null;
+        }
+
+        return $finalStatus->label();
+    }
+
+    /**
      * Resolve o status geral da unidade.
      *
-     * O status da unidade é baseado no resultado
-     * das atividades:
+     * Somente atividades que possuem resultado
+     * participam da avaliação de conformidade.
      *
-     * - pending
-     * - conforme
-     * - nao_conforme
+     * Atividades como PHOTO não possuem result
+     * e portanto não podem, sozinhas, marcar uma
+     * unidade como não conforme.
      */
     private function resolveUnitStatus(
-        Collection $responses,
+        Collection $activities,
         bool $completed
     ): string {
         /*
         |--------------------------------------------------------------------------
-        | Nenhuma atividade respondida
+        | Nenhuma atividade
         |--------------------------------------------------------------------------
         */
 
-        if ($responses->isEmpty()) {
+        if ($activities->isEmpty()) {
             return 'pending';
         }
 
@@ -557,20 +965,49 @@ class GetPreventiveExecutionDetailsService
 
         /*
         |--------------------------------------------------------------------------
-        | Unidade concluída
+        | Considera somente atividades avaliativas
+        |--------------------------------------------------------------------------
+        */
+
+        $evaluatedActivities =
+            $activities->filter(
+                fn (
+                    array $activity
+                ): bool =>
+                    $activity['result'] !== null
+            );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Não existe resultado operacional
         |--------------------------------------------------------------------------
         |
-        | Se qualquer atividade foi não conforme,
-        | a unidade inteira é considerada não conforme.
+        | Exemplo:
+        |
+        | Unidade com apenas atividade PHOTO.
+        |
+        | A unidade está concluída, mas não foi
+        | submetida a uma avaliação de conformidade.
         |
         */
 
+        if ($evaluatedActivities->isEmpty()) {
+            return 'conforme';
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Existe alguma atividade não conforme
+        |--------------------------------------------------------------------------
+        */
+
         if (
-            $responses->contains(
+            $evaluatedActivities->contains(
                 fn (
-                    PreventiveActivityResponse $response
+                    array $activity
                 ): bool =>
-                    $response->result === 'nao_conforme'
+                    $activity['result'] ===
+                    'nao_conforme'
             )
         ) {
             return 'nao_conforme';
@@ -578,7 +1015,7 @@ class GetPreventiveExecutionDetailsService
 
         /*
         |--------------------------------------------------------------------------
-        | Todas as atividades foram concluídas
+        | Todas as atividades avaliativas estão conformes
         |--------------------------------------------------------------------------
         */
 
@@ -626,22 +1063,30 @@ class GetPreventiveExecutionDetailsService
             )
             ->filter()
             ->filter(
-                fn (array $component): bool =>
+                fn (
+                    array $component
+                ): bool =>
                     ($component['status'] ?? null)
                     === 'failed'
             )
             ->map(
-                fn (array $component): ?string =>
+                fn (
+                    array $component
+                ): ?string =>
                     $component['component_name']
                     ?? null
             )
             ->filter(
-                fn (?string $name): bool =>
+                fn (
+                    ?string $name
+                ): bool =>
                     is_string($name)
                     && trim($name) !== ''
             )
             ->map(
-                fn (string $name): string =>
+                fn (
+                    string $name
+                ): string =>
                     trim($name)
             )
             ->unique()
@@ -698,7 +1143,8 @@ class GetPreventiveExecutionDetailsService
      * Suporta:
      *
      * - array já convertido pelo cast;
-     * - JSON armazenado como string.
+     * - JSON armazenado como string;
+     * - array contendo JSON strings.
      */
     private function normalizeResponseData(
         mixed $responseData
@@ -731,12 +1177,16 @@ class GetPreventiveExecutionDetailsService
         return $responses
             ->pluck('observation')
             ->filter(
-                fn ($observation): bool =>
+                fn (
+                    $observation
+                ): bool =>
                     is_string($observation)
                     && trim($observation) !== ''
             )
             ->map(
-                fn (string $observation): string =>
+                fn (
+                    string $observation
+                ): string =>
                     trim($observation)
             )
             ->values()
@@ -752,7 +1202,9 @@ class GetPreventiveExecutionDetailsService
     ): Collection {
         return $units
             ->filter(
-                fn (array $unit): bool =>
+                fn (
+                    array $unit
+                ): bool =>
                     $unit['progress']['pending'] > 0
             )
             ->values();
@@ -766,19 +1218,25 @@ class GetPreventiveExecutionDetailsService
     ): array {
         $totalActivities =
             $units->sum(
-                fn (array $unit): int =>
+                fn (
+                    array $unit
+                ): int =>
                     $unit['progress']['total']
             );
 
         $answeredActivities =
             $units->sum(
-                fn (array $unit): int =>
+                fn (
+                    array $unit
+                ): int =>
                     $unit['progress']['answered']
             );
 
         $pendingActivities =
             $units->sum(
-                fn (array $unit): int =>
+                fn (
+                    array $unit
+                ): int =>
                     $unit['progress']['pending']
             );
 
@@ -810,52 +1268,71 @@ class GetPreventiveExecutionDetailsService
         $completedUnits =
             $units
                 ->filter(
-                    fn (array $unit): bool =>
+                    fn (
+                        array $unit
+                    ): bool =>
                         $unit['progress']['completed']
                 )
                 ->count();
 
         $conformingUnits =
             $units
-                ->where('status', 'conforme')
+                ->where(
+                    'status',
+                    'conforme'
+                )
                 ->count();
 
         $nonConformingUnits =
             $units
-                ->where('status', 'nao_conforme')
+                ->where(
+                    'status',
+                    'nao_conforme'
+                )
                 ->count();
 
         $pendingUnits =
             $units
                 ->filter(
-                    fn (array $unit): bool =>
+                    fn (
+                        array $unit
+                    ): bool =>
                         ! $unit['progress']['completed']
                 )
                 ->count();
 
         $totalActivities =
             $units->sum(
-                fn (array $unit): int =>
+                fn (
+                    array $unit
+                ): int =>
                     $unit['progress']['total']
             );
 
         $answeredActivities =
             $units->sum(
-                fn (array $unit): int =>
+                fn (
+                    array $unit
+                ): int =>
                     $unit['progress']['answered']
             );
 
         $pendingActivities =
             $units->sum(
-                fn (array $unit): int =>
+                fn (
+                    array $unit
+                ): int =>
                     $unit['progress']['pending']
             );
 
         $failedComponents =
             $units
                 ->flatMap(
-                    fn (array $unit): array =>
-                        $unit['failed_components'] ?? []
+                    fn (
+                        array $unit
+                    ): array =>
+                        $unit['failed_components']
+                        ?? []
                 )
                 ->values()
                 ->all();
@@ -863,11 +1340,16 @@ class GetPreventiveExecutionDetailsService
         $observations =
             $units
                 ->flatMap(
-                    fn (array $unit): array =>
-                        $unit['observations'] ?? []
+                    fn (
+                        array $unit
+                    ): array =>
+                        $unit['observations']
+                        ?? []
                 )
                 ->filter(
-                    fn ($observation): bool =>
+                    fn (
+                        $observation
+                    ): bool =>
                         is_string($observation)
                         && trim($observation) !== ''
                 )

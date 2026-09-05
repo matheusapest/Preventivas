@@ -8,14 +8,11 @@
         title="Usuários"
         description="Cadastro de usuários do sistema."
     >
-
         <x-slot:breadcrumb>
-
             Dashboard /
             Configurações /
             Segurança /
             Usuários
-
         </x-slot:breadcrumb>
 
         <x-slot:actions>
@@ -31,8 +28,12 @@
             @endcan
 
         </x-slot:actions>
-
     </x-layout.page-header>
+
+
+    {{-- Mensagens do sistema --}}
+    <x-alerts.flash />
+
 
     <x-cards.card>
 
@@ -74,21 +75,25 @@
 
                         <tr class="hover:bg-slate-50">
 
+                            {{-- Nome --}}
                             <td class="px-6 py-4 font-medium text-slate-900">
                                 {{ $user->name }}
                             </td>
 
+                            {{-- E-mail --}}
                             <td class="px-6 py-4 text-slate-600">
                                 {{ $user->email }}
                             </td>
 
+                            {{-- Perfil --}}
                             <td class="px-6 py-4 text-slate-600">
                                 {{ $user->role->name }}
                             </td>
 
+                            {{-- Status --}}
                             <td class="px-6 py-4 text-center">
 
-                                @if($user->active)
+                                @if ($user->active)
 
                                     <x-badges.success>
                                         Ativo
@@ -104,6 +109,7 @@
 
                             </td>
 
+                            {{-- Ações --}}
                             <td class="px-6 py-4">
 
                                 <div class="flex justify-center gap-2">
@@ -118,6 +124,7 @@
 
                                     @endcan
 
+
                                     @can('toggleActive', $user)
 
                                         <form
@@ -126,9 +133,10 @@
                                         >
 
                                             @csrf
+
                                             @method('PATCH')
 
-                                            @if($user->active)
+                                            @if ($user->active)
 
                                                 <x-buttons.danger
                                                     type="submit"
@@ -176,6 +184,7 @@
             </table>
 
         </x-tables.table>
+
 
         <div class="border-t border-slate-200 px-6 py-4">
 

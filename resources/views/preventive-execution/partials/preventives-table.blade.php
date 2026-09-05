@@ -6,6 +6,7 @@
 
     {{-- CABEÇALHO --}}
     <div class="border-b border-gray-200 px-4 py-4 sm:px-6">
+
         <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
 
             <div>
@@ -23,6 +24,7 @@
             </div>
 
         </div>
+
     </div>
 
 
@@ -40,6 +42,7 @@
                 <div class="flex items-start justify-between gap-2">
 
                     <div>
+
                         <span class="text-base font-bold text-gray-900">
                             #{{ $preventive->id }}
                         </span>
@@ -47,6 +50,7 @@
                         <span class="mt-0.5 block text-xs text-gray-500">
                             {{ $preventive->preventiveType?->name ?? 'Preventiva' }}
                         </span>
+
                     </div>
 
                     <span
@@ -63,6 +67,7 @@
 
                     {{-- FILIAL --}}
                     <div>
+
                         <span class="block font-semibold uppercase tracking-wider text-gray-400">
                             Filial
                         </span>
@@ -70,11 +75,13 @@
                         <span class="block truncate font-medium text-gray-900">
                             {{ $preventive->branch?->name ?? '—' }}
                         </span>
+
                     </div>
 
 
                     {{-- PERFIL --}}
                     <div>
+
                         <span class="block font-semibold uppercase tracking-wider text-gray-400">
                             Perfil
                         </span>
@@ -82,6 +89,7 @@
                         <span class="block truncate font-medium text-gray-900">
                             {{ $preventive->preventiveProfile?->name ?? '—' }}
                         </span>
+
                     </div>
 
 
@@ -111,10 +119,14 @@
                 </div>
 
 
-                {{-- BOTÃO DE AÇÃO --}}
+                {{-- =================================================
+                    AÇÃO
+                ================================================== --}}
+
                 <div class="pt-1">
 
-                    @if ($preventive->status->isExecutable())
+                    {{-- PODE EXECUTAR --}}
+                    @if ($preventive->can_execute)
 
                         <a
                             href="{{ route('preventivas.execucao.show', $preventive) }}"
@@ -123,6 +135,26 @@
                             Executar
                         </a>
 
+
+                    {{-- EM ANDAMENTO, MAS SEM CICLO EXECUTÁVEL --}}
+                    @elseif (
+                        $preventive->status === \App\Enums\StatusPreventiveEnum::IN_PROGRESS
+                    )
+
+                        <div class="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
+
+                            <div class="text-sm font-semibold text-gray-700">
+                                Reprovada
+                            </div>
+
+                            <div class="mt-0.5 text-xs text-gray-500">
+                                Aguardando novo ciclo do gestor.
+                            </div>
+
+                        </div>
+
+
+                    {{-- DEMAIS SITUAÇÕES --}}
                     @else
 
                         <a
@@ -289,10 +321,14 @@
                         </td>
 
 
-                        {{-- AÇÃO --}}
+                        {{-- =================================================
+                            AÇÃO
+                        ================================================== --}}
+
                         <td class="whitespace-nowrap px-4 py-3.5 text-right">
 
-                            @if ($preventive->status->isExecutable())
+                            {{-- PODE EXECUTAR --}}
+                            @if ($preventive->can_execute)
 
                                 <a
                                     href="{{ route('preventivas.execucao.show', $preventive) }}"
@@ -301,6 +337,26 @@
                                     Executar
                                 </a>
 
+
+                            {{-- EM ANDAMENTO, MAS SEM CICLO EXECUTÁVEL --}}
+                            @elseif (
+                                $preventive->status === \App\Enums\StatusPreventiveEnum::IN_PROGRESS
+                            )
+
+                                <div class="text-right">
+
+                                    <div class="text-xs font-semibold text-gray-700">
+                                        Reprovada
+                                    </div>
+
+                                    <div class="mt-0.5 text-xs text-gray-500">
+                                        Aguardando novo ciclo
+                                    </div>
+
+                                </div>
+
+
+                            {{-- DEMAIS SITUAÇÕES --}}
                             @else
 
                                 <a
@@ -320,7 +376,10 @@
 
                     <tr>
 
-                        <td colspan="7" class="px-6 py-12 text-center">
+                        <td
+                            colspan="7"
+                            class="px-6 py-12 text-center"
+                        >
 
                             <div class="text-sm font-medium text-gray-900">
                                 Nenhuma preventiva encontrada
