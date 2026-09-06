@@ -127,8 +127,8 @@ class GetPreventivesService
 
                 $currentCycle = $preventive->cycles
                     ->first(
-                        fn ($cycle) =>
-                            $cycle->sequence ===
+                        fn($cycle) =>
+                        $cycle->sequence ===
                             $preventive->current_cycle
                     );
 
@@ -139,9 +139,9 @@ class GetPreventivesService
                 $canContinue =
                     $currentCycle !== null
                     && $currentCycle->status ===
-                        StatusCycleEnum::FINISHED
+                    StatusCycleEnum::FINISHED
                     && $currentCycle->review_status ===
-                        CycleReviewStatusEnum::REJECTED;
+                    CycleReviewStatusEnum::REJECTED;
 
                 /*
                  * Dados auxiliares para a Blade.
@@ -287,7 +287,41 @@ class GetPreventivesService
                 );
             }
         }
+        /*
+ * ============================================================
+ * ESTADO DE EXECUÇÃO
+ * ============================================================
+ */
 
+        if (! empty($filters['execution_state'])) {
+
+            match ($filters['execution_state']) {
+
+                'programmed' => $query
+                    ->where('status', StatusPreventiveEnum::NEW)
+                    ->whereDate('start_date', '>', today()),
+
+                'pending_execution' => $query
+                    ->where('status', StatusPreventiveEnum::NEW)
+                    ->whereDate('start_date', '<=', today()),
+
+                'rejected_awaiting_cycle' => $query
+                    ->where('status', StatusPreventiveEnum::IN_PROGRESS)
+                    ->whereHas('cycles', function (Builder $query) {
+                        $query
+                            ->whereColumn(
+                                'preventive_cycles.sequence',
+                                'preventives.current_cycle'
+                            )
+                            ->where(
+                                'review_status',
+                                CycleReviewStatusEnum::REJECTED
+                            );
+                    }),
+
+                default => null,
+            };
+        }
 
         /*
          * ============================================================

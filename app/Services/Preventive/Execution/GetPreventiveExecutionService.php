@@ -39,6 +39,17 @@ class GetPreventiveExecutionService
                 'status',
                 StatusPreventiveEnum::NEW
             )
+            ->whereHas('cycles', function (Builder $query) {
+                $query
+                    ->whereColumn(
+                        'preventive_cycles.sequence',
+                        'preventives.current_cycle'
+                    )
+                    ->whereIn('status', [
+                        StatusCycleEnum::NEW,
+                        StatusCycleEnum::IN_PROGRESS,
+                    ]);
+            })
             ->count();
 
         /*

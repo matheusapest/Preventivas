@@ -3,7 +3,7 @@
 use App\Http\Controllers\Configuration\Preventive\PreventiveController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth'])
+Route::middleware(['auth', 'role:admin'])
     ->prefix('preventivas')
     ->name('preventivas.')
     ->group(function () {
@@ -58,26 +58,22 @@ Route::middleware(['auth'])
         |--------------------------------------------------------------------------
         */
 
-        Route::middleware('role:admin')
-            ->group(function () {
+        Route::get('/criar', [
+            PreventiveController::class,
+            'create',
+        ])->name('create');
 
-                Route::get('/criar', [
-                    PreventiveController::class,
-                    'create',
-                ])->name('create');
-
-                Route::post('/', [
-                    PreventiveController::class,
-                    'store',
-                ])->name('store');
-            });
+        Route::post('/', [
+            PreventiveController::class,
+            'store',
+        ])->name('store');
 
 
         /*
-|--------------------------------------------------------------------------
-| Validação da preventiva
-|--------------------------------------------------------------------------
-*/
+        |--------------------------------------------------------------------------
+        | Validação da preventiva
+        |--------------------------------------------------------------------------
+        */
 
         Route::get(
             '/{preventive}/validacao',
@@ -96,10 +92,10 @@ Route::middleware(['auth'])
 
 
         /*
-|--------------------------------------------------------------------------
-| Continuidade da preventiva
-|--------------------------------------------------------------------------
-*/
+        |--------------------------------------------------------------------------
+        | Continuidade da preventiva
+        |--------------------------------------------------------------------------
+        */
 
         Route::get(
             '/{preventive}/continuidade',
@@ -110,15 +106,18 @@ Route::middleware(['auth'])
             '/{preventive}/continuidade',
             [PreventiveController::class, 'storeContinuation']
         )->name('continuation.store');
+
+
         /*
-|--------------------------------------------------------------------------
-| Dados da continuidade
-|--------------------------------------------------------------------------
-*/
+        |--------------------------------------------------------------------------
+        | Dados da continuidade
+        |--------------------------------------------------------------------------
+        */
+
         Route::get(
-    '/{preventive}/continuidade/unidades',
-    [PreventiveController::class, 'continuationUnits']
-)->name('continuation.units');
+            '/{preventive}/continuidade/unidades',
+            [PreventiveController::class, 'continuationUnits']
+        )->name('continuation.units');
 
         Route::get(
             '/{preventive}/continuidade/unidades/{operationalUnitId}/atividades',

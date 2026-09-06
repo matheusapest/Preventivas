@@ -38,11 +38,17 @@ class PreventiveController extends Controller
         Request $request,
         GetPreventivesService $service
     ): View {
+        abort_unless(
+            $request->user()?->isAdmin(),
+            403
+        );
+
         $filters = $request->only([
             'search',
             'status',
             'branch_id',
             'preventive_type_id',
+            'execution_state',
         ]);
 
         $data = $service->execute($filters);
@@ -52,7 +58,6 @@ class PreventiveController extends Controller
             $data
         );
     }
-
     /**
      * Exibe o formulário de criação.
      */
