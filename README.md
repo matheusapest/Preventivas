@@ -1,58 +1,458 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Preventivas
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema web para planejamento, execução e validação de manutenções
+preventivas de equipamentos e unidades operacionais.
 
-## About Laravel
+O projeto foi desenvolvido com foco em um cenário real de operação de
+TI, no qual uma preventiva pode envolver múltiplas filiais, unidades
+operacionais, atividades, responsáveis, evidências e etapas de
+aprovação.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+> Projeto desenvolvido por Matheus Apestegui como aplicação prática de
+> desenvolvimento com PHP, Laravel e Docker.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Visão geral
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+O Preventivas organiza o ciclo completo de uma manutenção preventiva:
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+``` text
+Configuração
+    │
+    ├── Tipos de Unidade
+    ├── Perfis Operacionais
+    ├── Unidades Operacionais
+    ├── Tipos de Preventiva
+    └── Atividades
+            │
+            ▼
+      Perfil de Preventiva
+            │
+       ALL / SPECIFIC
+            │
+            ▼
+        Preventiva
+            │
+         Snapshot
+            │
+            ▼
+   Execução por unidade
+            │
+            ▼
+        Validação
+            │
+            ▼
+    Aprovação do gestor
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+A aplicação foi estruturada para separar configuração, regras de negócio
+e execução. Uma preventiva criada não depende das configurações futuras
+para manter seu histórico: a configuração utilizada é materializada em
+snapshots no momento da criação.
 
-## Contributing
+## Principais funcionalidades
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Gestão de preventivas
 
-## Code of Conduct
+-   Criação de preventivas por tipo, filial e responsável.
+-   Definição das unidades operacionais participantes.
+-   Associação de atividades às unidades.
+-   Controle de status da preventiva.
+-   Acompanhamento das preventivas em execução.
+-   Finalização pelo técnico.
+-   Envio para aprovação.
+-   Aprovação, reprovação e reabertura pelo gestor.
+-   Dashboard com visão geral das preventivas.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Perfis de preventiva
 
-## Security Vulnerabilities
+Os perfis funcionam como templates reutilizáveis para determinar como um
+tipo de preventiva será aplicado às unidades de uma ou mais filiais.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+O modelo utiliza duas regras principais:
 
-## License
+-   `ALL`: configuração padrão para todas as unidades elegíveis.
+-   `SPECIFIC`: exceção aplicada a uma ou mais unidades específicas.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Exemplo:
+
+``` text
+ALL
+├── Teste Operacional
+├── Teste de Impressão
+└── Teste de SSD
+
+SPECIFIC
+└── PDV 05
+    └── Teste Operacional
+```
+
+Nesse caso, o PDV 05 utiliza somente a configuração específica, enquanto
+as demais unidades utilizam a configuração padrão.
+
+### Snapshot
+
+Um dos pontos centrais da arquitetura é a preservação histórica.
+
+Quando uma preventiva é criada, o sistema resolve a configuração do
+perfil e grava uma fotografia daquele estado:
+
+``` text
+Perfil
+  │
+  ├── Regras ALL / SPECIFIC
+  │
+  ▼
+Resolução das regras
+  │
+  ▼
+Snapshot da preventiva
+  │
+  ├── Unidades
+  ├── Atividades
+  └── Relação unidade × atividade
+  │
+  ▼
+Execução
+```
+
+Alterações futuras em perfis, atividades ou unidades não devem modificar
+preventivas históricas já criadas.
+
+### Execução
+
+O técnico trabalha somente com as preventivas atribuídas a ele e executa
+as atividades por unidade operacional.
+
+O fluxo contempla:
+
+1.  Seleção da preventiva.
+2.  Início da execução.
+3.  Seleção da unidade.
+4.  Execução das atividades.
+5.  Registro dos resultados.
+6.  Registro de observações.
+7.  Inclusão de evidência fotográfica quando aplicável.
+8.  Finalização.
+9.  Envio para aprovação.
+
+### Validação
+
+Após a finalização pelo técnico, a preventiva passa para análise do
+gestor.
+
+``` text
+PENDING
+   ↓
+IN_PROGRESS
+   ↓
+AWAITING_APPROVAL
+   ├──→ APPROVED
+   │
+   └──→ REOPENED
+           ↓
+       IN_PROGRESS
+```
+
+A reabertura permite que o gestor devolva uma preventiva para correção
+ou complementação pelo técnico.
+
+## Arquitetura
+
+A aplicação utiliza uma separação de responsabilidades baseada em
+camadas:
+
+``` text
+Migration
+    ↓
+Model
+    ↓
+Policy
+    ↓
+Form Request
+    ↓
+Service / Domain
+    ↓
+Controller
+    ↓
+Route
+    ↓
+Blade / JavaScript
+```
+
+Responsabilidades principais:
+
+  Camada         Responsabilidade
+  -------------- ---------------------------------------------------
+  Migration      Estrutura, relacionamentos e integridade do banco
+  Model          Entidades e relacionamentos Eloquent
+  Policy         Autorização e controle de acesso
+  Form Request   Validação dos dados recebidos
+  Service        Regras de negócio e operações transacionais
+  Controller     Coordenação do fluxo HTTP
+  Route          Definição dos endpoints
+  Blade          Interface da aplicação
+  JavaScript     Interações e carregamento assíncrono
+
+A aplicação também utiliza Services separados por responsabilidade,
+incluindo fluxos de configuração, criação, execução, consulta,
+continuação e validação.
+
+## Tecnologias
+
+### Backend
+
+-   PHP 8.3
+-   Laravel 13
+-   Eloquent ORM
+-   PHPUnit
+-   Composer
+
+### Banco de dados
+
+-   MariaDB 10.11
+-   Migrations
+-   Relacionamentos e integridade referencial
+
+### Frontend
+
+-   Blade
+-   JavaScript
+-   Tailwind CSS 4
+-   Vite 8
+-   Laravel Vite Plugin
+
+### Imagens e documentos
+
+-   Intervention Image
+-   Laravel DomPDF
+
+Utilizados para processamento de evidências fotográficas e geração de
+documentos PDF.
+
+### Infraestrutura
+
+-   Docker
+-   Docker Compose
+-   PHP-FPM
+-   Nginx
+-   Node.js 22
+-   Redis
+-   Xdebug
+-   Linux
+
+A aplicação possui ambiente Dockerizado com containers separados para
+aplicação PHP, Nginx, MariaDB e ambiente Node para desenvolvimento
+frontend.
+
+## Estrutura do projeto
+
+A estrutura principal segue o padrão do Laravel, com organização
+adicional por domínio e responsabilidade:
+
+``` text
+app/
+├── Http/
+│   ├── Controllers/
+│   ├── Requests/
+│   └── ...
+├── Models/
+├── Policies/
+├── Services/
+│   ├── Configuration/
+│   ├── Continuation/
+│   ├── Creation/
+│   ├── Execution/
+│   ├── Query/
+│   └── Validation/
+└── ...
+
+database/
+├── factories/
+├── migrations/
+└── seeders/
+
+docker/
+├── nginx/
+└── php/
+
+resources/
+├── css/
+├── js/
+└── views/
+
+routes/
+tests/
+```
+
+## Ambiente Docker
+
+O projeto utiliza Docker Compose para padronizar o ambiente de
+desenvolvimento.
+
+Serviços principais:
+
+``` text
+preventivas-php
+    PHP 8.3-FPM
+
+preventivas-nginx
+    Nginx + HTTPS
+
+preventivas-db
+    MariaDB 10.11
+
+preventivas-node
+    Node.js 22 + Vite
+```
+
+O container PHP também possui extensões necessárias para banco de dados,
+imagens, internacionalização, processamento de arquivos e
+desenvolvimento.
+
+## Como executar
+
+### Pré-requisitos
+
+-   Docker
+-   Docker Compose
+-   Git
+
+### Clone
+
+``` bash
+git clone https://github.com/matheusapest/Preventivas.git
+cd Preventivas
+```
+
+### Configuração
+
+``` bash
+cp .env.example .env
+```
+
+Suba os containers:
+
+``` bash
+docker compose up -d --build
+```
+
+Instale as dependências PHP:
+
+``` bash
+docker compose exec app composer install
+```
+
+Gere a chave da aplicação:
+
+``` bash
+docker compose exec app php artisan key:generate
+```
+
+Execute as migrations:
+
+``` bash
+docker compose exec app php artisan migrate
+```
+
+Para desenvolvimento frontend, utilize o profile `dev`:
+
+``` bash
+docker compose --profile dev up -d node
+```
+
+Para gerar os assets:
+
+``` bash
+docker compose exec node npm install
+docker compose exec node npm run build
+```
+
+As configurações de banco, domínio e demais parâmetros da aplicação
+devem ser definidas no arquivo `.env`.
+
+## Interface
+
+O sistema possui um dashboard administrativo para acompanhamento do
+estado das manutenções e preventivas.
+
+Indicadores apresentados incluem:
+
+-   Preventivas programadas.
+-   Preventivas pendentes.
+-   Preventivas em execução.
+-   Preventivas aguardando aprovação.
+-   Preventivas executadas.
+-   Preventivas aprovadas.
+-   Preventivas reprovadas.
+-   Equipamentos aguardando recebimento.
+-   Itens que demandam atenção do gestor.
+
+![Dashboard do Preventivas](docs/screenshots/dashboard.png)
+
+## Regras de negócio relevantes
+
+O domínio foi modelado considerando alguns princípios:
+
+-   Unidade operacional representa uma identidade física dentro de uma
+    filial.
+-   Perfil operacional representa a composição de uma unidade.
+-   Tipo de unidade representa sua classificação.
+-   Tipo de preventiva define as atividades disponíveis.
+-   Perfil de preventiva funciona como template.
+-   `ALL` define o comportamento padrão de uma filial.
+-   `SPECIFIC` representa exceções à configuração padrão.
+-   Uma preventiva recebe uma configuração congelada por snapshot.
+-   O Controller não deve concentrar regras complexas de domínio.
+-   Operações que alteram múltiplas entidades devem ocorrer dentro de
+    transações.
+-   Registros históricos não devem depender de alterações futuras em
+    configurações.
+
+## Integração com o cenário de ativos
+
+O projeto foi concebido para trabalhar com unidades operacionais sem
+transformar o módulo de preventivas em um segundo sistema de inventário.
+
+Em um cenário corporativo, informações detalhadas de ativos podem
+permanecer em um sistema de gestão patrimonial, enquanto o Preventivas
+mantém o contexto necessário para planejar, executar e auditar as
+manutenções.
+
+## Objetivos técnicos do projeto
+
+O desenvolvimento deste projeto teve como foco a aplicação prática de
+conceitos de engenharia de software, incluindo:
+
+-   Modelagem de domínio.
+-   Separação de responsabilidades.
+-   Regras de negócio no backend.
+-   Autorização através de Policies.
+-   Validação através de Form Requests.
+-   Services para operações complexas.
+-   Operações transacionais.
+-   Snapshots para preservação histórica.
+-   Relacionamentos Eloquent.
+-   Dockerização do ambiente.
+-   Processamento de imagens.
+-   Geração de documentos.
+-   Interface responsiva.
+-   Organização de código para evolução futura.
+
+## Status
+
+O projeto está em desenvolvimento e serve também como projeto de
+portfólio para demonstrar experiência prática com PHP, Laravel, Docker,
+banco de dados e modelagem de aplicações web.
+
+## Autor
+
+**Matheus Apestegui**
+
+Desenvolvedor PHP / Laravel
+
+-   GitHub: https://github.com/matheusapest
+-   Projeto: https://github.com/matheusapest/Preventivas
+
+## Licença
+
+Este projeto utiliza a licença MIT.
