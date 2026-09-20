@@ -387,7 +387,7 @@ Indicadores apresentados incluem:
 -   Equipamentos aguardando recebimento.
 -   Itens que demandam atenção do gestor.
 
-![Dashboard do Preventivas](docs/screenshots/dashboard.png)
+![Dashboard do Preventivas](docs/dashboard.png)
 
 ## Regras de negócio relevantes
 
